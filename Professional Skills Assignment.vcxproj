@@ -53,8 +53,8 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)Debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
+    <IncludePath>$(TLPath)\include;$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
+    <LibraryPath>#(TLPath)\include;$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
