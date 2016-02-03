@@ -1,0 +1,14 @@
+﻿Build started 03/02/2016 13:37:06.
+     1>Project "C:\Users\mhartley3\Source\Repos\GameProject\Professional Skills Assignment.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Professional Skills Assignment.vcxproj -> C:\Users\mhartley3\Source\Repos\GameProject\\Professional Skills Assignment.exe
+       PostBuildEvent:
+         copy "C:\ProgramData\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\Irrlicht.dll" "C:\Users\mhartley3\Source\Repos\GameProject\\" > NUL
+         copy "C:\ProgramData\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "C:\Users\mhartley3\Source\Repos\GameProject\\" > NUL
+         
+         :VCEnd
+     1>Done Building Project "C:\Users\mhartley3\Source\Repos\GameProject\Professional Skills Assignment.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.24

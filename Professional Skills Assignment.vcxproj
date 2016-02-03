@@ -62,7 +62,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Program Files\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <PrecompiledHeader>
@@ -76,7 +76,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\Program Files\TL-Engine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TLPath)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Professional Skills Assignment.pdb</ProgramDatabaseFile>
       <DataExecutionPrevention>
@@ -88,14 +88,14 @@
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
-      <Command>copy "D:\Program Files\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "$(OutDir)" &gt; NUL
-copy "D:\Program Files\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
+      <Command>copy "$(TLPath)\3rd Party\Irrlicht-0.7\bin\VisualStudio\IrrlichtDebug.dll" "$(OutDir)" &gt; NUL
+copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Program Files\TL-Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -107,7 +107,7 @@ copy "D:\Program Files\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\Program Files\TL-Engine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TLPath)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <DataExecutionPrevention>
@@ -118,8 +118,8 @@ copy "D:\Program Files\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
-      <Command>copy "D:\Program Files\TL-Engine\3rd Party\Irrlicht-0.7\bin\VisualStudio\Irrlicht.dll" "$(OutDir)" &gt; NUL
-copy "D:\Program Files\TL-Engine\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
+      <Command>copy "$(TLPath)\3rd Party\Irrlicht-0.7\bin\VisualStudio\Irrlicht.dll" "$(OutDir)" &gt; NUL
+copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
