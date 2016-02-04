@@ -125,6 +125,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
+    <ClCompile Include="CState.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +133,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
+    <ClInclude Include="CState.h" />
     <ClInclude Include="Globals.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
