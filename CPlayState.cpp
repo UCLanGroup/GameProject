@@ -42,7 +42,6 @@ void CPlayState::Update(CGameStateHandler * game)
 	{
 		if (mMoveUp)
 		{
-
 			mBackground->MoveY(150.0f * -mDelta);
 			if (mBackground->GetY() < 100.0f)
 			{
