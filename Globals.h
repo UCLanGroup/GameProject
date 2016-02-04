@@ -16,4 +16,5 @@ const string INTROBG = "good.png";					// Temporary background image
 
 
 // Key codes
-const EKeyCode EXIT_KEY = tle::Key_Escape;
+const EKeyCode KEY_EXIT = tle::Key_Escape;
+const EKeyCode KEY_START = tle::Key_Space;
