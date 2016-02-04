@@ -1,6 +1,7 @@
 #include "CAnimation.h"
 #include "Globals.h"
 
+
 CAnimation::CAnimation(SpriteVector& sprites, float x, float y, float z, float rate, bool looped)
 {
 	mSprites = sprites;
