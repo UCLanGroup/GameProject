@@ -129,6 +129,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CIntroState.cpp" />
     <ClCompile Include="CPlayState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -140,6 +141,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CIntroState.h" />
     <ClInclude Include="CPlayState.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

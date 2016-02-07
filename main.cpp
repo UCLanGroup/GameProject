@@ -12,13 +12,12 @@ using namespace tle;
 // declared as extern in 'Globals.h'
 I3DEngine* gEngine = New3DEngine(kTLX);
 
-
-
 void main()
 {
 	// Initialise the game
 	CGameStateHandler game;
 	game.Init();
+
 	
 	// Intro screen
 	game.ChangeState(CIntroState::Instance());
