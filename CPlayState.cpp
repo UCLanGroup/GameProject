@@ -8,7 +8,7 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
-	mBackground = gEngine->CreateSprite(INTROBG, 500.0f, 200.0f, 0.0f);
+	mBackground = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);
 }
 
 void CPlayState::Cleanup()

@@ -16,9 +16,15 @@ extern tle::I3DEngine* gEngine;
 
 
 // Constants
-const string WINDOWCAPTION	= "Space Rockets WT";
+		// Window
+const string WINDOWCAPTION	= "Shooty Game WT";
+
+		// Intro screen
 const string INTROBG		= "menu.png";				// Temporary background image
 const string INTROSTART		= "menustart.png";			// Temporary start text
+
+		// Gameplay
+const string UI				= "ui.png";					// Tempororay user interface
 
 
 // Key codes
