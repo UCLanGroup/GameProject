@@ -10,12 +10,14 @@ CIntroState CIntroState::mIntroState;
 void CIntroState::Init()
 {
 	// Menu screen goes here
-	mBackground = gEngine->CreateSprite(INTROBG, 200.0f, 200.0f, 0.0f);
+	mBackground = gEngine->CreateSprite(INTROBG, 0.0f, 0.0f, 1.0f);
+	mText = gEngine->CreateSprite(INTROSTART, 0.0f, 0.0f, 0.9f);
 }
 
 void CIntroState::Cleanup() 
 {
 	gEngine->RemoveSprite(mBackground);
+	gEngine->RemoveSprite(mText);
 }
 
 
@@ -43,31 +45,30 @@ void CIntroState::Update(CGameStateHandler* game)
 	mDelta = gEngine->Timer();
 
 	// Animations go here
-
-	// GOOD ANIMATION TEMP
 	mMove += mDelta;
 
+	// Start text
 	if (mMove > 0.0001f)
 	{
-		if (mMoveRight)
+		if (mMoveUp)
 		{
-	
-			mBackground->MoveX(150.0f * mDelta);
-			if (mBackground->GetX() > 800.0f)
+			mText->MoveY(15.0f * -mDelta);
+			if (mText->GetY() < -5.0f)
 			{
-				mMoveRight = !mMoveRight;
+				mMoveUp = !mMoveUp;
 			}
 		}
 		else
 		{
-			mBackground->MoveX(150.0f * -mDelta);
-			if (mBackground->GetX() < 200.0f)
+			mText->MoveY(15.0f * mDelta);
+			if (mText->GetY() > 5.0f)
 			{
-				mMoveRight = !mMoveRight;
+				mMoveUp = !mMoveUp;
 			}
 		}
 		mMove = 0.0f;
 	}
+
 }
 
 void CIntroState::Draw(CGameStateHandler* game)

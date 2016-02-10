@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameStateHandler.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CIntroState.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayState.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CAnimation.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameState.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameStateHandler.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CIntroState.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayState.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{48ed576a-28ed-44cd-a7c4-8d06e0388817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{9f3191a4-70b2-49ff-a380-8ff7f84c61eb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
