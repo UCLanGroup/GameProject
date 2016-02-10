@@ -2,13 +2,14 @@
 
 #include <TL-Engine.h>
 #include "globals.h"
+#include "ICollidable.h"
 
 using namespace tle;
 
-class CPlayer
+class CPlayer : public ICollidable
 {
 private:
-	IMesh* mesh;
+	IMesh* mMesh;
 	float mSpeed = 20.0f; // speed to move plane
 	
 
@@ -18,6 +19,10 @@ public:
 	void Init();
 
 	void Move(float);
+
+	//Inherited from ICollidable
+	virtual Vector3 GetCenterPoint();
+	virtual bool GetMeshAndMatrix(IMesh* mesh, float* matrix);
 
 	~CPlayer();
 

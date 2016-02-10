@@ -2,8 +2,8 @@
 
 void CPlayer::Init()
 {
-	mesh = gEngine->LoadMesh(PLAYERMESH);
-	model = mesh->CreateModel(0.0f, 0.0f, 0.0f);
+	mMesh = gEngine->LoadMesh(PLAYERMESH);
+	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
 }
 
 void CPlayer::Move(float dt)
@@ -24,6 +24,26 @@ void CPlayer::Move(float dt)
 	{
 		model->MoveX(mSpeed * dt);
 	}
+}
+
+//Inherited from ICollidable
+Vector3 CPlayer::GetCenterPoint()
+{
+	return Vector3(model->GetX(), model->GetY(), model->GetY());
+}
+
+bool CPlayer::GetMeshAndMatrix(IMesh* mesh, float* matrix)
+{
+	//Check if mesh and model exists
+	if (mMesh == 0 || model == 0)
+	{
+		return false;
+	}
+
+	mesh = mMesh;
+	model->GetMatrix(matrix); //Fills in the matrix
+
+	return true;
 }
 
 CPlayer::~CPlayer()
