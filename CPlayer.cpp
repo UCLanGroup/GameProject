@@ -4,6 +4,8 @@ void CPlayer::Init()
 {
 	mMesh = gEngine->LoadMesh(PLAYERMESH);
 	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
+	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
+	mWeapon.reset(new CWeapon(model, bulletMesh, 1, 50.0f, 0.1f));
 }
 
 void CPlayer::Move(float dt)
@@ -24,6 +26,11 @@ void CPlayer::Move(float dt)
 	{
 		model->MoveX(mSpeed * dt);
 	}
+}
+
+CWeapon* CPlayer::GetWeapon()
+{
+	return mWeapon.get();
 }
 
 //Inherited from ICollidable

@@ -5,6 +5,7 @@
 
 #include "CGameState.h"
 #include "CPlayer.h"
+#include "CProjectile.h"
 
 using namespace tle;
 
@@ -19,6 +20,9 @@ private:
 	IModel* mFloor;
 
 	CPlayer mPlayer1;
+
+	vector_ptr<CProjectile> mPBullets; //Player Projectiles
+	vector_ptr<CProjectile> mEBullets; //Enemy Projectiles
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
 

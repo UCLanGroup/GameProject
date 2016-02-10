@@ -29,6 +29,12 @@ const string GROUNDSKIN		= "ground.png";
 
 const string GROUNDMESH		= "ground.x";
 const string PLAYERMESH		= "mig29.x";
+const string BULLET_MESH	= "Bullet.x";
+
+const float AREA_BOUNDS_TOP		= 300.0f;
+const float AREA_BOUNDS_RIGHT	= 300.0f;
+const float AREA_BOUNDS_LEFT	= -300.0f;
+const float AREA_BOUNDS_BOTTOM	= -300.0f;
 
 
 // Key codes
@@ -39,3 +45,5 @@ const EKeyCode KEY_LEFT = tle::Key_Left;
 const EKeyCode KEY_RIGHT = tle::Key_Right;
 const EKeyCode KEY_UP = tle::Key_Up;
 const EKeyCode KEY_DOWN = tle::Key_Down;
+
+const EKeyCode KEY_FIRE = tle::Key_Space;

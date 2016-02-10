@@ -1,5 +1,11 @@
 #include "ICollidable.h"
 
+
+float ICollidable::GetBoundingRadius()
+{
+	return mRadius;
+}
+
 //Checks if the collidables bounding spheres collide
 bool ICollidable::CollidesSphere(ICollidable* c)
 {

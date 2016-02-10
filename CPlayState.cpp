@@ -27,6 +27,8 @@ void CPlayState::Cleanup()
 	gEngine->RemoveCamera(mCam);
 	mFloorMesh->RemoveModel(mFloor);
 	gEngine->RemoveMesh(mFloorMesh);
+	mPBullets.clear();
+	mEBullets.clear();
 }
 
 void CPlayState::Pause() {}
@@ -52,6 +54,27 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	mPlayer1.Move(mDelta);
 
+	if (gEngine->KeyHeld(KEY_FIRE))
+	{
+		mPlayer1.GetWeapon()->Update(mDelta, mPBullets);
+	}
+
+	//Update all player projectiles
+	for (auto it = mPBullets.begin(); it != mPBullets.end(); it++)
+	{
+		(*it)->Update(mDelta);
+
+		//Check collision with enemy
+	}
+
+	//Update all enemy projectiles
+	for (auto it = mEBullets.begin(); it != mEBullets.end(); it++)
+	{
+		(*it)->Update(mDelta);
+
+		//Check collision with Player
+		mPlayer1.CollidesSphere( it->get() );
+	}
 }
 
 void CPlayState::Draw(CGameStateHandler * game)

@@ -28,6 +28,12 @@
     <ClCompile Include="ICollidable.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectile.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -58,6 +64,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CMatrix4x4.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CWeapon.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectile.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
