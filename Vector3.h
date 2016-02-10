@@ -29,7 +29,6 @@ public:
 	Vector3 operator*(float scale) const;
 	Vector3 operator^(const Vector3& v) const;	//Cross Product
 	float operator*(const Vector3& v) const;	//Dot Product
+	friend Vector3 operator*(float scale, const Vector3& v);
 };
 
-//Operator overloads where vector is not the first operand need to be placed outside the class
-Vector3 operator*(float scale, const Vector3& v);

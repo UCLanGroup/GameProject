@@ -94,7 +94,7 @@ Vector3 Vector3::operator*(float scale) const
 //Scale
 Vector3 operator*(float scale, const Vector3& v)
 {
-	return v * scale;
+	return Vector3(scale * v.mX, scale * v.mY, scale * v.mZ);
 }
 
 //Cross product 

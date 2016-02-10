@@ -141,6 +141,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CIntroState.h" />
     <ClInclude Include="CPlayState.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ICollidable.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
