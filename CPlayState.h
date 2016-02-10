@@ -15,8 +15,6 @@ private:
 	ISprite* mBackground;
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
-	float mMove = 0.0f;			// For background animation
-	bool mMoveUp = true;
 
 public:
 	// Setup and destroy state

@@ -13,10 +13,11 @@ private:
 	static CIntroState mIntroState;
 
 	ISprite* mBackground;
+	ISprite* mText;
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
-	float mMove = 0.0f;			// For background animation
-	bool mMoveRight = true;
+	float mMove = 0.0f;			// For text animation
+	bool mMoveUp = true;
 
 public:
 	// Setup and destroy state

@@ -35,29 +35,6 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	// Animations go here
 
-	// GOOD ANIMATION TEMP
-	mMove += mDelta;
-
-	if (mMove > 0.0001f)
-	{
-		if (mMoveUp)
-		{
-			mBackground->MoveY(150.0f * -mDelta);
-			if (mBackground->GetY() < 100.0f)
-			{
-				mMoveUp = !mMoveUp;
-			}
-		}
-		else
-		{
-			mBackground->MoveY(150.0f * mDelta);
-			if (mBackground->GetY() > 400.0f)
-			{
-				mMoveUp = !mMoveUp;
-			}
-		}
-		mMove = 0.0f;
-	}
 }
 
 void CPlayState::Draw(CGameStateHandler * game)

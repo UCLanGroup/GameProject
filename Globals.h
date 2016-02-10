@@ -16,8 +16,9 @@ extern tle::I3DEngine* gEngine;
 
 
 // Constants
-const string WINDOWCAPTION = "Space Rockets WT";
-const string INTROBG = "good.png";					// Temporary background image
+const string WINDOWCAPTION	= "Space Rockets WT";
+const string INTROBG		= "menu.png";				// Temporary background image
+const string INTROSTART		= "menustart.png";			// Temporary start text
 
 
 // Key codes
