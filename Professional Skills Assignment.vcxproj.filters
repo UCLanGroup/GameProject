@@ -19,6 +19,9 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -40,6 +43,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

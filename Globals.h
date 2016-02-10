@@ -25,8 +25,17 @@ const string INTROSTART		= "menustart.png";			// Temporary start text
 
 		// Gameplay
 const string UI				= "ui.png";					// Tempororay user interface
+const string GROUNDSKIN		= "ground.png";
+
+const string GROUNDMESH		= "ground.x";
+const string PLAYERMESH		= "mig29.x";
 
 
 // Key codes
 const EKeyCode KEY_EXIT = tle::Key_Escape;
 const EKeyCode KEY_START = tle::Key_Space;
+
+const EKeyCode KEY_LEFT = tle::Key_Left;
+const EKeyCode KEY_RIGHT = tle::Key_Right;
+const EKeyCode KEY_UP = tle::Key_Up;
+const EKeyCode KEY_DOWN = tle::Key_Down;

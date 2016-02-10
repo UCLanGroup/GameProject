@@ -4,6 +4,7 @@
 #include <TL-Engine.h>
 
 #include "CGameState.h"
+#include "CPlayer.h"
 
 using namespace tle;
 
@@ -12,7 +13,12 @@ class CPlayState : public CGameState
 private:
 	static CPlayState mPlayState;
 
-	ISprite* mBackground;
+	ICamera* mCam;
+	ISprite* mUI;
+	IMesh* mFloorMesh;
+	IModel* mFloor;
+
+	CPlayer mPlayer1;
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
 
