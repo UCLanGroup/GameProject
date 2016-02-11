@@ -11,7 +11,8 @@ using namespace tle;
 void CGameStateHandler::Init()
 {
 	// Create the window
-	gEngine->StartWindowed();
+	gEngine->StartWindowed(1280, 1024);
+
 	gEngine->SetWindowCaption(WINDOWCAPTION);
 
 	// Add default folder for meshes and other media

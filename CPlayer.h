@@ -11,7 +11,7 @@ class CPlayer : public ICollidable
 {
 private:
 	IMesh* mMesh;
-	float mSpeed = 20.0f; // speed to move plane
+	float mSpeed = 50.0f; // speed to move plane
 
 	unique_ptr<CWeapon> mWeapon;
 

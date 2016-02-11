@@ -32,8 +32,8 @@ const string PLAYERMESH		= "mig29.x";
 const string BULLET_MESH	= "Bullet.x";
 
 const float AREA_BOUNDS_TOP		= 50.0f;
-const float AREA_BOUNDS_RIGHT	= 90.0f;
-const float AREA_BOUNDS_LEFT	= -90.0f;
+const float AREA_BOUNDS_RIGHT	= 60.0f;
+const float AREA_BOUNDS_LEFT	= -60.0f;
 const float AREA_BOUNDS_BOTTOM	= -50.0f;
 
 

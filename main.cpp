@@ -25,9 +25,12 @@ void main()
 	// Main game loop
 	while (gEngine->IsRunning())
 	{
-		game.HandleEvents();
-		game.Update();
-		game.Draw();
+		if(gEngine->IsActive())
+		{
+			game.HandleEvents();
+			game.Update();
+			game.Draw();
+		}
 	}
 
 	// Cleanup states before exit
