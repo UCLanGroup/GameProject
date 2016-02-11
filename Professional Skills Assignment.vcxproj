@@ -127,7 +127,6 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CGameStateHandler.cpp" />
     <ClCompile Include="CIntroState.cpp" />
-    <ClCompile Include="CMatrix4x4.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayState.cpp" />
     <ClCompile Include="CProjectile.cpp" />
@@ -144,7 +143,6 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CGameState.h" />
     <ClInclude Include="CGameStateHandler.h" />
     <ClInclude Include="CIntroState.h" />
-    <ClInclude Include="CMatrix4x4.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayState.h" />
     <ClInclude Include="CProjectile.h" />

@@ -22,9 +22,6 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="CMatrix4x4.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="ICollidable.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollidable.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CMatrix4x4.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CWeapon.h">
