@@ -60,20 +60,29 @@ void CPlayState::Update(CGameStateHandler * game)
 	}
 
 	//Update all player projectiles
-	for (auto it = mPBullets.begin(); it != mPBullets.end(); it++)
+	for (auto bullet = mPBullets.begin(); bullet != mPBullets.end(); )
 	{
-		(*it)->Update(mDelta);
-
-		//Check collision with enemy
+		(*bullet)->Update(mDelta);
+		
+		if ((*bullet)->IsOutOfBounds())
+		{
+			//Remove if out of bounds
+			bullet = mPBullets.erase(bullet);
+		}
+		else
+		{
+			//Incremenet if current bullet was not removed
+			bullet++;
+		}
 	}
 
 	//Update all enemy projectiles
-	for (auto it = mEBullets.begin(); it != mEBullets.end(); it++)
+	for (auto bullet = mEBullets.begin(); bullet != mEBullets.end(); bullet++)
 	{
-		(*it)->Update(mDelta);
+		(*bullet)->Update(mDelta);
 
 		//Check collision with Player
-		mPlayer1.CollidesSphere( it->get() );
+		mPlayer1.CollidesSphere(bullet->get() );
 	}
 }
 

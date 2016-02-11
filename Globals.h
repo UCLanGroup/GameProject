@@ -31,10 +31,10 @@ const string GROUNDMESH		= "ground.x";
 const string PLAYERMESH		= "mig29.x";
 const string BULLET_MESH	= "Bullet.x";
 
-const float AREA_BOUNDS_TOP		= 300.0f;
-const float AREA_BOUNDS_RIGHT	= 300.0f;
-const float AREA_BOUNDS_LEFT	= -300.0f;
-const float AREA_BOUNDS_BOTTOM	= -300.0f;
+const float AREA_BOUNDS_TOP		= 50.0f;
+const float AREA_BOUNDS_RIGHT	= 90.0f;
+const float AREA_BOUNDS_LEFT	= -90.0f;
+const float AREA_BOUNDS_BOTTOM	= -50.0f;
 
 
 // Key codes

@@ -30,8 +30,8 @@ tle::IModel* CProjectile::GetModel()
 
 bool CProjectile::IsOutOfBounds()
 {
-	return  mModel->GetX() > AREA_BOUNDS_LEFT  ||
-			mModel->GetX() < AREA_BOUNDS_RIGHT ||
+	return  mModel->GetX() < AREA_BOUNDS_LEFT  ||
+			mModel->GetX() > AREA_BOUNDS_RIGHT ||
 			mModel->GetZ() > AREA_BOUNDS_TOP   ||
 			mModel->GetZ() < AREA_BOUNDS_BOTTOM;
 }
@@ -40,7 +40,7 @@ bool CProjectile::IsOutOfBounds()
 
 Vector3 CProjectile::GetCenterPoint()
 {
-	return Vector3(mModel->GetX(), mModel->GetY(), mModel->GetY());
+	return Vector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());
 }
 
 bool CProjectile::GetMeshAndMatrix(tle::IMesh* mesh, float* matrix)
