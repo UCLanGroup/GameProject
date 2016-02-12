@@ -18,6 +18,10 @@ void CPlayState::Init()
 
 	mPlayer1.Init();
 	mPlayer1.model->Scale(1.0f);
+	
+	mExplosions = CExplosionPool::Instance();
+	mExplosions->Init();
+
 	float x = mPlayer1.model->GetX();
 }
 
@@ -29,6 +33,7 @@ void CPlayState::Cleanup()
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
+	mExplosions->CleanUp();
 }
 
 void CPlayState::Pause() {}
@@ -59,6 +64,8 @@ void CPlayState::Update(CGameStateHandler * game)
 		mPlayer1.GetWeapon()->Update(mDelta, mPBullets);
 	}
 
+	mExplosions->Update(mDelta);
+
 	//Update all player projectiles
 	for (auto bullet = mPBullets.begin(); bullet != mPBullets.end(); )
 	{
@@ -66,6 +73,8 @@ void CPlayState::Update(CGameStateHandler * game)
 		
 		if ((*bullet)->IsOutOfBounds())
 		{
+			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, 0.0f, 5.0f); //Test code - Remove
+
 			//Remove if out of bounds
 			bullet = mPBullets.erase(bullet);
 		}

@@ -31,6 +31,13 @@ const string GROUNDMESH		= "ground.x";
 const string PLAYERMESH		= "mig29.x";
 const string BULLET_MESH	= "Bullet.x";
 
+		//Explosions
+const string EXPLOSION_MESH = "Explosion.x";
+const string EXPLOSION_SPRITE = "Explosion";
+const int EXPLOSION_SPRITE_COUNT = 34;
+const float EXPLODE_RATE = 0.03f;
+
+		//Collision
 const float AREA_BOUNDS_TOP		= 50.0f;
 const float AREA_BOUNDS_RIGHT	= 60.0f;
 const float AREA_BOUNDS_LEFT	= -60.0f;

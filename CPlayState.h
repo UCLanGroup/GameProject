@@ -6,6 +6,7 @@
 #include "CGameState.h"
 #include "CPlayer.h"
 #include "CProjectile.h"
+#include "CExplosionPool.h"
 
 using namespace tle;
 
@@ -20,6 +21,8 @@ private:
 	IModel* mFloor;
 
 	CPlayer mPlayer1;
+
+	CExplosionPool* mExplosions;
 
 	vector_ptr<CProjectile> mPBullets; //Player Projectiles
 	vector_ptr<CProjectile> mEBullets; //Enemy Projectiles

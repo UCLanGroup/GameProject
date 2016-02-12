@@ -31,6 +31,9 @@
     <ClCompile Include="CProjectile.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CExplosionPool.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -64,6 +67,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CProjectile.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CExplosionPool.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

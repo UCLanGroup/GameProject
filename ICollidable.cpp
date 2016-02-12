@@ -20,8 +20,8 @@ bool ICollidable::CollidesSphere(ICollidable* c)
 //Expensive Mesh to Mesh collision detection
 bool ICollidable::CollidesMesh(ICollidable* collidable)
 {
-	tle::IMesh* meshA;
-	tle::IMesh* meshB;
+	tle::IMesh* meshA = 0;
+	tle::IMesh* meshB = 0;
 
 	float matrixA[16];
 	float matrixB[16];

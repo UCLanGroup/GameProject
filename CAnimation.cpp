@@ -24,7 +24,8 @@ CAnimation::CAnimation(SpriteVector& sprites, float x, float y, float z, float r
 	//Move all other sprites off screen
 	for (; mActiveSprite != mSprites.end(); mActiveSprite++)
 	{
-		(*mActiveSprite)->SetPosition(gEngine->GetWidth(), gEngine->GetHeight());
+		(*mActiveSprite)->SetPosition(static_cast<float>(gEngine->GetWidth()),
+									  static_cast<float>(gEngine->GetHeight()));
 	}
 	mActiveSprite = mSprites.begin();
 }
@@ -44,7 +45,8 @@ void CAnimation::Animate(float delta)
 	while (mTimePassed > mAnimationRate)
 	{
 		//Remove the previous sprite
-		(*mActiveSprite)->SetPosition(gEngine->GetWidth(), gEngine->GetHeight());
+		(*mActiveSprite)->SetPosition(static_cast<float>(gEngine->GetWidth()),
+									  static_cast<float>(gEngine->GetHeight()));
 
 		//Increment sprite pointer
 		mActiveSprite++;
@@ -79,7 +81,8 @@ void CAnimation::Reset()
 	if (mSprites.size())
 	{
 		//Move the previous sprite off screen
-		(*mActiveSprite)->SetPosition(gEngine->GetWidth(), gEngine->GetHeight());
+		(*mActiveSprite)->SetPosition(static_cast<float>(gEngine->GetWidth()),
+									  static_cast<float>(gEngine->GetHeight()));
 
 		//Move back to the start
 		mActiveSprite = mSprites.begin();
