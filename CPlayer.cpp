@@ -4,6 +4,10 @@ void CPlayer::Init()
 {
 	mMesh = gEngine->LoadMesh(PLAYERMESH);
 	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
+	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
+	mShieldModel = mShieldMesh->CreateModel(0.0f, 0.0f, 0.0f);
+	mShieldModel->Scale(12.0f);
+	mShieldModel->AttachToParent(model);
 	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
 	mWeapon.reset(new CWeapon(model, bulletMesh, 1, 100.0f, 0.1f));
 }

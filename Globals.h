@@ -16,6 +16,9 @@ extern tle::I3DEngine* gEngine;
 
 
 // Constants
+		//File paths
+const string MEDIA_FOLDER	= ".\\Media";
+
 		// Window
 const string WINDOWCAPTION	= "Shooty Game WT";
 
@@ -30,6 +33,9 @@ const string GROUNDSKIN		= "ground.png";
 const string GROUNDMESH		= "ground.x";
 const string PLAYERMESH		= "mig29.x";
 const string BULLET_MESH	= "Bullet.x";
+const string SHIELD_MESH	= "Shield.x";
+
+const string DEFAULT_ENEMY_MESH = "f16.x";
 
 		//Explosions
 const string EXPLOSION_MESH = "Explosion.x";
@@ -38,10 +44,10 @@ const int EXPLOSION_SPRITE_COUNT = 34;
 const float EXPLODE_RATE = 0.03f;
 
 		//Collision
-const float AREA_BOUNDS_TOP		= 50.0f;
-const float AREA_BOUNDS_RIGHT	= 60.0f;
-const float AREA_BOUNDS_LEFT	= -60.0f;
-const float AREA_BOUNDS_BOTTOM	= -50.0f;
+const float AREA_BOUNDS_TOP		= 100.0f;
+const float AREA_BOUNDS_RIGHT	= 120.0f;
+const float AREA_BOUNDS_LEFT	= -120.0f;
+const float AREA_BOUNDS_BOTTOM	= -100.0f;
 
 
 // Key codes

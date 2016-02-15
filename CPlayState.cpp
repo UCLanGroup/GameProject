@@ -13,11 +13,13 @@ void CPlayState::Init()
 
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);
 
-	mCam = gEngine->CreateCamera(kManual, 0.0f, 100.0f, 0.0f);
+	mCam = gEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mCam->RotateLocalX(90.0f);
 
 	mPlayer1.Init();
 	mPlayer1.model->Scale(1.0f);
+
+	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
@@ -33,6 +35,7 @@ void CPlayState::Cleanup()
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
+	mEnemyManager.release();
 	mExplosions->CleanUp();
 }
 
@@ -63,6 +66,8 @@ void CPlayState::Update(CGameStateHandler * game)
 	{
 		mPlayer1.GetWeapon()->Update(mDelta, mPBullets);
 	}
+
+	mEnemyManager->Update(mDelta);
 
 	mExplosions->Update(mDelta);
 

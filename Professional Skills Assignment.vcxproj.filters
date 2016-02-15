@@ -34,6 +34,12 @@
     <ClCompile Include="CExplosionPool.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyManager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -70,6 +76,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CExplosionPool.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyManager.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

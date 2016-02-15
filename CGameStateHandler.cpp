@@ -16,7 +16,7 @@ void CGameStateHandler::Init()
 	gEngine->SetWindowCaption(WINDOWCAPTION);
 
 	// Add default folder for meshes and other media
-	gEngine->AddMediaFolder( ".\\Media" );
+	gEngine->AddMediaFolder( MEDIA_FOLDER );
 }
 
 void CGameStateHandler::Cleanup()

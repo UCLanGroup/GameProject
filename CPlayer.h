@@ -10,7 +10,9 @@ using namespace tle;
 class CPlayer : public ICollidable
 {
 private:
+	IMesh* mShieldMesh;
 	IMesh* mMesh;
+	IModel* mShieldModel;
 	float mSpeed = 50.0f; // speed to move plane
 
 	unique_ptr<CWeapon> mWeapon;

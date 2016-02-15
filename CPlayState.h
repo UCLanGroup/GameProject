@@ -6,6 +6,7 @@
 #include "CGameState.h"
 #include "CPlayer.h"
 #include "CProjectile.h"
+#include "CEnemyManager.h"
 #include "CExplosionPool.h"
 
 using namespace tle;
@@ -21,6 +22,8 @@ private:
 	IModel* mFloor;
 
 	CPlayer mPlayer1;
+
+	unique_ptr<CEnemyManager> mEnemyManager;
 
 	CExplosionPool* mExplosions;
 
