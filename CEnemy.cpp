@@ -6,6 +6,7 @@ CEnemy::CEnemy(Path* path, Vector3& offset)
 	//Model
 	mMesh = gEngine->LoadMesh(DEFAULT_ENEMY_MESH);
 	mModel = mMesh->CreateModel(offset.GetX(), offset.GetY(), offset.GetZ());
+	mRadius = 5.0f;
 
 	//Pathing
 	mpPath = path;
@@ -79,7 +80,7 @@ void CEnemy::Move(float delta)
 		mMoveTimer -= 1.0f;
 		mPathPos++;
 	}
-	if (mPathPos < mpPath->size() - 2)
+	if (mPathPos < (mpPath->size() - 2))
 	{
 		//spline
 		int highestPoint = mpPath->size() - 1;
@@ -107,6 +108,15 @@ void CEnemy::Move(float delta)
 void CEnemy::Update(float delta)
 {
 	Move(delta);
+}
+
+void CEnemy::TakeDamage(int damage)
+{
+	mHealth -= damage;
+	if (mHealth <= 1)
+	{
+		mFinished = true;
+	}
 }
 
 //Inherited from ICollidable

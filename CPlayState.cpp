@@ -75,12 +75,30 @@ void CPlayState::Update(CGameStateHandler * game)
 	for (auto bullet = mPBullets.begin(); bullet != mPBullets.end(); )
 	{
 		(*bullet)->Update(mDelta);
-		
-		if ((*bullet)->IsOutOfBounds())
-		{
-			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, 0.0f, 5.0f); //Test code - Remove
 
-			//Remove if out of bounds
+		auto enemy = mEnemyManager->GetEnemies().begin();
+		auto enemyEnd = mEnemyManager->GetEnemies().end();
+
+		bool hit = false;
+
+		//Some collision detection - This will be changed tomorrow
+		while (enemy != enemyEnd && !hit)
+		{
+			if ((*enemy)->CollidesSphere(bullet->get()))
+			{
+				(*enemy)->TakeDamage((*bullet)->GetDamage());
+				hit = true;
+			}
+			enemy++;
+		}
+		
+		if (hit)
+		{
+			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), 5.0f);
+			bullet = mPBullets.erase(bullet);
+		}
+		else if ((*bullet)->IsOutOfBounds())
+		{
 			bullet = mPBullets.erase(bullet);
 		}
 		else

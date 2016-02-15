@@ -30,12 +30,15 @@ public:
 
 	virtual void Move(float delta);
 	virtual void Update(float delta);
+	virtual void TakeDamage(int damage);
 
+	//Sets
 	void SetHealth(int health);
 	void SetSpeed(float speed);
 	void AddWeapon(CWeapon w);
 	void SetValue(int value);
 
+	//Gets
 	int GetHealth();
 	float GetSpeed();
 	std::vector<CWeapon>* GetWeapons();

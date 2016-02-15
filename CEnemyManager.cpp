@@ -6,8 +6,12 @@ CEnemyManager::CEnemyManager(string levelFile)
 {
 	ReadInPaths(MEDIA_FOLDER + "\\Paths.txt");
 	ReadInLevel(MEDIA_FOLDER + "\\" + levelFile);
+
+	mNumOfEnemies = 0;
+	mNumOfKills = 0;
 }
 
+//Upate all enemies
 void CEnemyManager::Update(float delta)
 {
 	//Move all enemies
@@ -20,6 +24,10 @@ void CEnemyManager::Update(float delta)
 		//Iterate by either erasing or incrementing
 		if ((*enemy)->IsFinished())
 		{
+			if ((*enemy)->GetHealth() <= 0)
+			{
+				mNumOfKills++;
+			}
 			enemy = mEnemies.erase(enemy);
 		}
 		else
@@ -64,6 +72,7 @@ void CEnemyManager::Update(float delta)
 	}
 }
 
+//Read in the list of paths (each path is a list of waypoints)
 void CEnemyManager::ReadInPaths(string& file)
 {
 	ifstream inFile(file);
@@ -100,6 +109,7 @@ void CEnemyManager::ReadInPaths(string& file)
 	}
 }
 
+//Read in the level data
 void CEnemyManager::ReadInLevel(string& file)
 {
 	//Open file
@@ -131,6 +141,8 @@ void CEnemyManager::ReadInLevel(string& file)
 			spawner->mpPath = mPaths[pathID].get();
 			spawner->mOffset = Vector3(x, y, z);
 
+			mNumOfEnemies += spawner->mEnemyAmount;
+
 			mSpawners.push_back(move(spawner));
 		}
 
@@ -139,6 +151,7 @@ void CEnemyManager::ReadInLevel(string& file)
 	}
 }
 
+//Create an enemy of a given type that follows the specified path with the given positional offset
 CEnemy* CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
 {
 	switch (type)

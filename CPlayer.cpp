@@ -10,6 +10,7 @@ void CPlayer::Init()
 	mShieldModel->AttachToParent(model);
 	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
 	mWeapon.reset(new CWeapon(model, bulletMesh, 1, 100.0f, 0.1f));
+	mRadius = 5.0f;
 }
 
 void CPlayer::Move(float dt)

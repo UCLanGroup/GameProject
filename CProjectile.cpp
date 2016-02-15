@@ -11,6 +11,7 @@ CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float spee
 
 	mDamage = damage;
 	mSpeed = speed;
+	mRadius = 2.0f;
 }
 
 void CProjectile::Update(float delta)
