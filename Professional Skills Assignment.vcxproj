@@ -135,6 +135,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CWeapon.cpp" />
     <ClCompile Include="ICollidable.cpp" />
+    <ClCompile Include="IDebug.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CWeapon.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ICollidable.h" />
+    <ClInclude Include="IDebug.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

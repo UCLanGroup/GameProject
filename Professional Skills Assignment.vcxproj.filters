@@ -40,6 +40,9 @@
     <ClCompile Include="CEnemyManager.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="IDebug.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -82,6 +85,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyManager.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IDebug.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
