@@ -10,7 +10,7 @@ void CExplosionPool::Init()
 	for (int i = 0; i < 100; i++)
 	{
 		explosion.reset(new SExplosion);
-		explosion->mModel = mMesh->CreateModel(0.0f, 210.0f, 0.0f);
+		explosion->mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 		explosion->mStage = 1;
 		explosion->mTimer = 0.0f;
 		mInActive.push_back( move(explosion) );
@@ -39,7 +39,7 @@ void CExplosionPool::Reset()
 {
 	for (auto explosion = mActive.begin(); explosion != mActive.end(); explosion++)
 	{
-		(*explosion)->mModel->SetPosition(0.0f, 210.0f, 0.0f);
+		(*explosion)->mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 		(*explosion)->mModel->ResetScale();
 		(*explosion)->mModel->SetSkin(EXPLOSION_SPRITE + "1.png");
 		(*explosion)->mTimer = 0.0f;
@@ -72,7 +72,7 @@ void CExplosionPool::Update(float delta)
 		//Remove explosion once finished
 		if ((*explosion)->mStage > EXPLOSION_SPRITE_COUNT)
 		{
-			(*explosion)->mModel->SetPosition(0.0f, 210.0, 0.0f);
+			(*explosion)->mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 			(*explosion)->mModel->ResetScale();
 			(*explosion)->mStage = 1;
 			mInActive.push_back( move(*explosion) );

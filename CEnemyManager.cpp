@@ -159,6 +159,7 @@ CEnemy* CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
 	case Basic:
 		return new CEnemy(path, offset);
 	default:
+		return 0;
 		break;
 	}
 }

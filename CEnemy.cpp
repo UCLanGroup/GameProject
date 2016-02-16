@@ -1,6 +1,17 @@
 #include "CEnemy.h"
 #include <algorithm>
 
+CEnemy::CEnemy()
+{
+	//Model
+	mMesh = gEngine->LoadMesh(DEFAULT_ENEMY_MESH);
+	mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
+	mRadius = 5.0f;
+
+	//All other stats are reset
+	Reset();
+}
+
 CEnemy::CEnemy(Path* path, Vector3& offset)
 {
 	//Model
@@ -11,63 +22,22 @@ CEnemy::CEnemy(Path* path, Vector3& offset)
 	//Pathing
 	mpPath = path;
 	mOffset = offset;
+
+	//All other stats are reset
+	Reset();
+}
+
+void CEnemy::Reset()
+{
+	//Pathing
 	mPathPos = 0;
 	mMoveTimer = 0.0f;
 	mFinished = false;
 
 	//Default
-	mHealth = 1;
+	mHealth = 1; //Hard coded, yay!
 	mSpeed = 1.0f;
 	mValue = 10;
-}
-
-//Sets
-
-void CEnemy::SetHealth(int health)
-{
-	mHealth = health;
-}
-
-void CEnemy::SetSpeed(float speed)
-{
-	mSpeed = speed;
-}
-
-void CEnemy::AddWeapon(CWeapon w) //Perposely use copy constructor
-{
-	mWeapons.push_back(w);
-}
-
-void CEnemy::SetValue(int value)
-{
-	mValue = value;
-}
-
-//Gets
-
-int CEnemy::GetHealth()
-{
-	return mHealth;
-}
-
-float CEnemy::GetSpeed()
-{
-	return mSpeed;
-}
-
-std::vector<CWeapon>* CEnemy::GetWeapons()
-{
-	return &mWeapons;
-}
-
-int CEnemy::GetValue()
-{
-	return mValue;
-}
-
-bool CEnemy::IsFinished()
-{
-	return mFinished;
 }
 
 //Updates
@@ -80,7 +50,7 @@ void CEnemy::Move(float delta)
 		mMoveTimer -= 1.0f;
 		mPathPos++;
 	}
-	if (mPathPos < (mpPath->size() - 2))
+	if (mPathPos < static_cast<int>(mpPath->size() - 2))
 	{
 		//spline
 		int highestPoint = mpPath->size() - 1;
@@ -117,6 +87,61 @@ void CEnemy::TakeDamage(int damage)
 	{
 		mFinished = true;
 	}
+}
+
+//Sets
+
+void CEnemy::SetHealth(int health)
+{
+	mHealth = health;
+}
+
+void CEnemy::SetSpeed(float speed)
+{
+	mSpeed = speed;
+}
+
+void CEnemy::AddWeapon(CWeapon w) //Perposely use copy constructor
+{
+	mWeapons.push_back(w);
+}
+
+void CEnemy::SetValue(int value)
+{
+	mValue = value;
+}
+
+void CEnemy::SetPath(Path* path, Vector3& offset)
+{
+	mpPath = path;
+	mOffset = offset;
+}
+
+//Gets
+
+int CEnemy::GetHealth()
+{
+	return mHealth;
+}
+
+float CEnemy::GetSpeed()
+{
+	return mSpeed;
+}
+
+std::vector<CWeapon>* CEnemy::GetWeapons()
+{
+	return &mWeapons;
+}
+
+int CEnemy::GetValue()
+{
+	return mValue;
+}
+
+bool CEnemy::IsFinished()
+{
+	return mFinished;
 }
 
 //Inherited from ICollidable

@@ -26,8 +26,12 @@ private:
 	bool mFinished;
 
 public:
+	CEnemy();
 	CEnemy(Path* path, Vector3& offset);
 
+	virtual void Reset();
+
+	//Updates
 	virtual void Move(float delta);
 	virtual void Update(float delta);
 	virtual void TakeDamage(int damage);
@@ -37,6 +41,7 @@ public:
 	void SetSpeed(float speed);
 	void AddWeapon(CWeapon w);
 	void SetValue(int value);
+	void SetPath(Path* path, Vector3& offset);
 
 	//Gets
 	int GetHealth();
