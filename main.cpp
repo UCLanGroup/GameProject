@@ -6,7 +6,7 @@
 #include "Globals.h"
 #include "CGameStateHandler.h"
 #include "CIntroState.h"
-
+#include "IDebug.h"
 using namespace tle;
 
 // declared as extern in 'Globals.h'
@@ -14,6 +14,9 @@ I3DEngine* gEngine = New3DEngine(kTLX);
 
 void main()
 {
+	IDebug::Open("game.log");
+	Log("Log started at function: %s", __FUNCTION__);
+
 	// Initialise the game
 	CGameStateHandler game;
 	game.Init();
@@ -36,4 +39,5 @@ void main()
 	// Cleanup states before exit
 	game.Cleanup();
 	gEngine->Delete();
+	IDebug::Close();
 }
