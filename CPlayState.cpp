@@ -35,7 +35,7 @@ void CPlayState::Cleanup()
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
-	mEnemyManager.release();
+	mEnemyManager.reset();
 	mExplosions->CleanUp();
 }
 

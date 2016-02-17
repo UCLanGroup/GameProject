@@ -4,6 +4,9 @@
 
 CEnemyManager::CEnemyManager(string levelFile)
 {
+	mEnemyPool = CPool<CEnemy>::GetInstance();
+	mEnemyPool->Init(50);
+
 	ReadInPaths(MEDIA_FOLDER + "\\Paths.txt");
 	ReadInLevel(MEDIA_FOLDER + "\\" + levelFile);
 
@@ -50,7 +53,7 @@ void CEnemyManager::Update(float delta)
 			(*spawner)->mEnemyAmount--;
 
 			//Create the enemy
-			std::unique_ptr<CEnemy> enemy(CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset));
+			CPool<CEnemy>::resource_ptr enemy = move( CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset) );
 
 			//mTimer is currently the amount of time passed since the enemy should have spawned
 			//So update enemy with mTimer for delta
@@ -152,12 +155,16 @@ void CEnemyManager::ReadInLevel(string& file)
 }
 
 //Create an enemy of a given type that follows the specified path with the given positional offset
-CEnemy* CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
+CPool<CEnemy>::resource_ptr CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
 {
+	CPool<CEnemy>::resource_ptr enemy;
 	switch (type)
 	{
 	case Basic:
-		return new CEnemy(path, offset);
+		enemy = move( mEnemyPool->GetRes() );
+		enemy->SetPath(path, offset);
+
+		return move(enemy);
 	default:
 		return 0;
 		break;
@@ -166,5 +173,5 @@ CEnemy* CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
 
 CEnemyManager::~CEnemyManager()
 {
-
+	mEnemyPool->Clear();
 }

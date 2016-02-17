@@ -1,6 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include "CEnemy.h"
+#include "CPool.h"
 
 class CEnemyManager
 {
@@ -20,8 +21,10 @@ private:
 	};
 
 	vector_ptr<Path> mPaths;
-	vector_ptr<CEnemy> mEnemies;
+	std::vector<CPool<CEnemy>::resource_ptr> mEnemies;
 	vector_ptr<SSpawner> mSpawners;
+
+	CPool<CEnemy>* mEnemyPool;
 
 	//Statistics
 
@@ -30,7 +33,7 @@ private:
 
 	void ReadInPaths(string& file);
 	void ReadInLevel(string& file);
-	CEnemy* CreateEnemy(EnemyType type, Path* path, Vector3& offset);
+	CPool<CEnemy>::resource_ptr CreateEnemy(EnemyType type, Path* path, Vector3& offset);
 
 public:
 	CEnemyManager(string levelFile);
@@ -40,7 +43,7 @@ public:
 	int GetNumOfEnemies() { return mNumOfEnemies; }
 	int GetNumOfKills() { return mNumOfKills; }
 
-	vector_ptr<CEnemy>& GetEnemies() { return mEnemies; }
+	std::vector<CPool<CEnemy>::resource_ptr>& GetEnemies() { return mEnemies; }
 
 	void Update(float delta);
 

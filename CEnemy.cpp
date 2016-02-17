@@ -12,19 +12,11 @@ CEnemy::CEnemy()
 	Reset();
 }
 
-CEnemy::CEnemy(Path* path, Vector3& offset)
+CEnemy::CEnemy(Path* path, Vector3& offset) : CEnemy()
 {
-	//Model
-	mMesh = gEngine->LoadMesh(DEFAULT_ENEMY_MESH);
-	mModel = mMesh->CreateModel(offset.GetX(), offset.GetY(), offset.GetZ());
-	mRadius = 5.0f;
-
 	//Pathing
 	mpPath = path;
 	mOffset = offset;
-
-	//All other stats are reset
-	Reset();
 }
 
 void CEnemy::Reset()

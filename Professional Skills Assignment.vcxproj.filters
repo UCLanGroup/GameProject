@@ -43,6 +43,9 @@
     <ClCompile Include="IDebug.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CPool.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -88,6 +91,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="IDebug.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPool.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
