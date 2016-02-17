@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <list>
 #include <mutex>
 #include "Globals.h"
 
@@ -35,7 +36,7 @@ private:
 	static std::mutex mPoolMutex;
 	static std::shared_ptr<CPool<T>> mPool;
 
-	vector_ptr<T> mResources;
+	std::list<std::unique_ptr<T>> mResources;
 
 	CPool() {}
 public:

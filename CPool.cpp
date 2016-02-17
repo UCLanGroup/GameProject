@@ -43,6 +43,7 @@ typename CPool<T>::resource_ptr CPool<T>::GetRes()
 {
 	resource_ptr ptr(mResources.back().release(),
 		ResourceDeleter{std::weak_ptr<CPool>(mPool)});
+	ptr.get()->Reset();
 	mResources.pop_back();
 	return move(ptr);
 }
@@ -50,6 +51,7 @@ typename CPool<T>::resource_ptr CPool<T>::GetRes()
 template <class T>
 void CPool<T>::AddRes(T* resource)
 {
+	resource->Hide();
 	unique_ptr<T> res(resource);
 	mResources.push_back(move(res));
 }

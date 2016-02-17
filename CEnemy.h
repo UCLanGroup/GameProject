@@ -3,10 +3,11 @@
 #include "Vector3.h"
 #include "CWeapon.h"
 #include "ICollidable.h"
+#include "IResource.h"
 
 using Path = std::vector<Vector3>;
 
-class CEnemy : public ICollidable
+class CEnemy : public ICollidable, public IResource
 {
 private:
 	//Stats
@@ -28,8 +29,6 @@ private:
 public:
 	CEnemy();
 	CEnemy(Path* path, Vector3& offset);
-
-	virtual void Reset();
 
 	//Updates
 	virtual void Move(float delta);
@@ -53,6 +52,10 @@ public:
 	//Inherited from ICollidable
 	virtual Vector3 GetCenterPoint();
 	virtual bool GetMeshAndMatrix(tle::IMesh* mesh, float* matrix);
+
+	//Inherited from IResource
+	virtual void Hide();
+	virtual void Reset();
 
 	~CEnemy();
 };

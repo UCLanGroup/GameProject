@@ -1,12 +1,17 @@
 #include "CEnemy.h"
 #include <algorithm>
 
+const int kHealth = 1;
+const float kSpeed = 1.0f;
+const int kValue = 10;
+const float kRadius = 5.0f;
+
 CEnemy::CEnemy()
 {
 	//Model
 	mMesh = gEngine->LoadMesh(DEFAULT_ENEMY_MESH);
 	mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
-	mRadius = 5.0f;
+	mRadius = kRadius;
 
 	//All other stats are reset
 	Reset();
@@ -17,19 +22,6 @@ CEnemy::CEnemy(Path* path, Vector3& offset) : CEnemy()
 	//Pathing
 	mpPath = path;
 	mOffset = offset;
-}
-
-void CEnemy::Reset()
-{
-	//Pathing
-	mPathPos = 0;
-	mMoveTimer = 0.0f;
-	mFinished = false;
-
-	//Default
-	mHealth = 1; //Hard coded, yay!
-	mSpeed = 1.0f;
-	mValue = 10;
 }
 
 //Updates
@@ -156,6 +148,26 @@ bool CEnemy::GetMeshAndMatrix(tle::IMesh* mesh, float* matrix)
 		return true;
 	}
 	return false;
+}
+
+//Inherited from IResource
+
+void CEnemy::Reset()
+{
+	//Pathing
+	mPathPos = 0;
+	mMoveTimer = 0.0f;
+	mFinished = false;
+
+	//Default
+	mHealth = kHealth;
+	mSpeed = kSpeed;
+	mValue = kValue;
+}
+
+void CEnemy::Hide()
+{
+	mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 }
 
 CEnemy::~CEnemy()
