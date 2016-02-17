@@ -53,7 +53,7 @@ void CEnemyManager::Update(float delta)
 			(*spawner)->mEnemyAmount--;
 
 			//Create the enemy
-			CPool<CEnemy>::resource_ptr enemy = move( CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset) );
+			res_ptr<CEnemy> enemy = move( CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset) );
 
 			//mTimer is currently the amount of time passed since the enemy should have spawned
 			//So update enemy with mTimer for delta
@@ -155,9 +155,9 @@ void CEnemyManager::ReadInLevel(string& file)
 }
 
 //Create an enemy of a given type that follows the specified path with the given positional offset
-CPool<CEnemy>::resource_ptr CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
+res_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
 {
-	CPool<CEnemy>::resource_ptr enemy;
+	res_ptr<CEnemy> enemy;
 	switch (type)
 	{
 	case Basic:

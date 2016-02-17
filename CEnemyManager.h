@@ -21,7 +21,7 @@ private:
 	};
 
 	vector_ptr<Path> mPaths;
-	std::vector<CPool<CEnemy>::resource_ptr> mEnemies;
+	std::vector<res_ptr<CEnemy>> mEnemies;
 	vector_ptr<SSpawner> mSpawners;
 
 	CPool<CEnemy>* mEnemyPool;
@@ -33,7 +33,7 @@ private:
 
 	void ReadInPaths(string& file);
 	void ReadInLevel(string& file);
-	CPool<CEnemy>::resource_ptr CreateEnemy(EnemyType type, Path* path, Vector3& offset);
+	res_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, Vector3& offset);
 
 public:
 	CEnemyManager(string levelFile);
@@ -43,7 +43,7 @@ public:
 	int GetNumOfEnemies() { return mNumOfEnemies; }
 	int GetNumOfKills() { return mNumOfKills; }
 
-	std::vector<CPool<CEnemy>::resource_ptr>& GetEnemies() { return mEnemies; }
+	std::vector<res_ptr<CEnemy>>& GetEnemies() { return mEnemies; }
 
 	void Update(float delta);
 

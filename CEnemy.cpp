@@ -79,7 +79,7 @@ void CEnemy::Move(float delta)
 		//Calculate bearing from north
 		float xDif = newPos.GetX() - mModel->GetX();
 		float zDif = newPos.GetZ() - mModel->GetZ();
-		float angle = 90.0f - atan2f(zDif, xDif) * (180.0f / M_PI);
+		float angle = 90.0f - atan2f(zDif, xDif) * (180.0f / static_cast<float>(M_PI));
 		
 		//Reset orientation then apply new angle
 		mModel->ResetOrientation();

@@ -54,3 +54,9 @@ public:
 
 	~CPool();
 };
+
+//A more short form type name to avoid having to put the CPool<T>::
+//Also makes it written in the same way a unique_ptr
+// eg. res_ptr<T> is more comparable to unique_ptr<T> than CPool<T>::resource_ptr
+template<class T>
+using res_ptr = typename CPool<T>::resource_ptr; 
