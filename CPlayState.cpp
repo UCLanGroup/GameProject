@@ -84,7 +84,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		//Some collision detection - This will be changed tomorrow
 		while (enemy != enemyEnd && !hit)
 		{
-			if ((*enemy)->CollidesSphere(bullet->get()))
+			if ((*enemy)->CollidesSphere(bullet->get()) && (*enemy)->GetHealth() > 0) //Only collide if a previous bullet hasn't killed the enemy
 			{
 				(*enemy)->TakeDamage((*bullet)->GetDamage());
 				hit = true;

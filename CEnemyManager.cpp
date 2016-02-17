@@ -173,5 +173,6 @@ CPool<CEnemy>::resource_ptr CEnemyManager::CreateEnemy(EnemyType type, Path* pat
 
 CEnemyManager::~CEnemyManager()
 {
+	mEnemies.clear();
 	mEnemyPool->Clear();
 }
