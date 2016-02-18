@@ -94,7 +94,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		
 		if (hit)
 		{
-			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), 5.0f);
+			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetBoundingRadius());
 			bullet = mPBullets.erase(bullet);
 		}
 		else if ((*bullet)->IsOutOfBounds())

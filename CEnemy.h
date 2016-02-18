@@ -9,15 +9,15 @@ using Path = std::vector<Vector3>;
 
 class CEnemy : public ICollidable, public IResource
 {
-private:
+protected:
 	//Stats
 	int mHealth;
 	float mSpeed;
 	std::vector<CWeapon> mWeapons;
 	int mValue;
 
-	IMesh* mMesh;
-	IModel* mModel;
+	IMesh* mMesh = 0;
+	IModel* mModel = 0;
 
 	//Pathing
 	Path* mpPath;
@@ -36,6 +36,8 @@ public:
 	virtual void TakeDamage(int damage);
 
 	//Sets
+	void SetMesh(string meshFile);
+	void SetMesh(IMesh* mesh);
 	void SetHealth(int health);
 	void SetSpeed(float speed);
 	void AddWeapon(CWeapon w);

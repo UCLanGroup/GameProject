@@ -46,6 +46,9 @@ public:
 	void Update(CGameStateHandler* game);
 	void Draw(CGameStateHandler* game);
 
+	inline CPlayer* GetPlayer1() { return &mPlayer1; }
+	//inline CPlayer* GetPlayer2() { return &mPlayer2; }
+
 	static CPlayState* Instance()
 	{
 		return &mPlayState;

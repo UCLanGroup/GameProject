@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "CEnemy.h"
+#include "CMeshCache.h"
 #include <algorithm>
 
 const int kHealth = 1;
@@ -10,7 +11,7 @@ const float kRadius = 5.0f;
 CEnemy::CEnemy()
 {
 	//Model
-	mMesh = gEngine->LoadMesh(DEFAULT_ENEMY_MESH);
+	mMesh = CMeshCache::GetInstance()->LoadMesh(DEFAULT_ENEMY_MESH);
 	mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 	mRadius = kRadius;
 
@@ -109,6 +110,24 @@ void CEnemy::TakeDamage(int damage)
 
 //Sets
 
+void CEnemy::SetMesh(string meshFile)
+{
+	SetMesh( CMeshCache::GetInstance()->LoadMesh(meshFile) );
+}
+
+void CEnemy::SetMesh(IMesh* mesh)
+{
+	if (mMesh != mesh && mesh != 0)
+	{
+		if (mModel != 0)
+		{
+			mMesh->RemoveModel(mModel);
+		}
+		mMesh = mesh;
+		mModel = mMesh->CreateModel();
+	}
+}
+
 void CEnemy::SetHealth(int health)
 {
 	mHealth = health;
@@ -206,7 +225,7 @@ void CEnemy::Hide()
 
 CEnemy::~CEnemy()
 {
-	if (mMesh != 0)
+	if (mMesh != 0 && gEngine != 0)
 	{
 		mMesh->RemoveModel(mModel);
 	}

@@ -1,5 +1,7 @@
 #pragma once
 #include "CEnemyManager.h"
+#include "CEnemyBoss.h"
+#include "CExplosionPool.h"
 #include <fstream>
 
 CEnemyManager::CEnemyManager(string levelFile)
@@ -30,6 +32,8 @@ void CEnemyManager::Update(float delta)
 			if ((*enemy)->GetHealth() <= 0)
 			{
 				mNumOfKills++;
+				Vector3 loc = (*enemy)->GetCenterPoint();
+				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
 			}
 			enemy = mEnemies.erase(enemy);
 		}
@@ -164,6 +168,9 @@ res_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& 
 		enemy = move( mEnemyPool->GetRes() );
 		enemy->SetPath(path, offset);
 
+		return move(enemy);
+	case Boss:
+		enemy.reset(new CEnemyBoss());
 		return move(enemy);
 	default:
 		return 0;
