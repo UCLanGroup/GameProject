@@ -36,6 +36,7 @@ const string BULLET_MESH	= "Bullet.x";
 const string SHIELD_MESH	= "Shield.x";
 
 const string DEFAULT_ENEMY_MESH = "f16.x";
+const string HAVOC_BOSS_MESH = "Mi28Havoc.x";
 
 		//Explosions
 const string EXPLOSION_MESH = "Explosion.x";

@@ -46,6 +46,12 @@
     <ClCompile Include="CPool.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="CEnemyBoss.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeshCache.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -97,6 +103,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="IResource.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeshCache.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyBoss.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

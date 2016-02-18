@@ -10,7 +10,7 @@
 using namespace tle;
 
 // declared as extern in 'Globals.h'
-I3DEngine* gEngine = New3DEngine(kTLX);
+I3DEngine* gEngine = 0;
 
 void main()
 {
@@ -18,6 +18,7 @@ void main()
 	Log("Log started at function: %s", __FUNCTION__);
 
 	// Initialise the game
+	gEngine = New3DEngine(kTLX);
 	CGameStateHandler game;
 	game.Init();
 
@@ -39,5 +40,6 @@ void main()
 	// Cleanup states before exit
 	game.Cleanup();
 	gEngine->Delete();
+	gEngine = 0;
 	IDebug::Close();
 }

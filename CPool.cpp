@@ -28,7 +28,7 @@ void CPool<T>::Init(int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		mResources.push_back(unique_ptr<T>(new T));
+		AddRes(new T);
 	}
 }
 
@@ -41,6 +41,10 @@ void CPool<T>::Clear()
 template <class T>
 typename CPool<T>::resource_ptr CPool<T>::GetRes()
 {
+	if (mResources.empty())
+	{
+		AddRes(new T);
+	}
 	resource_ptr ptr(mResources.back().release(),
 		ResourceDeleter{std::weak_ptr<CPool>(mPool)});
 	ptr.get()->Reset();
