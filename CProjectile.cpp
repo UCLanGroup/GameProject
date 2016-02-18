@@ -1,9 +1,10 @@
 #include "CProjectile.h"
 #include "Globals.h"
+#include "CMeshCache.h"
 
 CProjectile::CProjectile()
 {
-	mMesh = gEngine->LoadMesh(BULLET_MESH);
+	mMesh = CMeshCache::GetInstance()->LoadMesh(BULLET_MESH);
 	mModel = mMesh->CreateModel();
 	//mModel->SetMatrix(matrix);
 
