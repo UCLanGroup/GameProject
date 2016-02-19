@@ -163,3 +163,15 @@ void IEntity::Hide()
 		mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 	}
 }
+
+
+//////////////////Destructor//////////////////
+
+
+IEntity::~IEntity()
+{
+	if (mModel && mMesh && gEngine)
+	{
+		mMesh->RemoveModel(mModel);
+	}
+}

@@ -10,7 +10,7 @@ CWeapon::CWeapon(tle::IModel* parent, tle::IMesh* mesh, int damage, float projSp
 	mTimer = 0.0f;
 }
 
-void CWeapon::Update(float delta, vector_ptr<CProjectile>& projectiles)
+void CWeapon::Update(float delta, BulletList& projectiles)
 {
 	mTimer += delta;
 	while (mTimer > mFireRate)
@@ -18,9 +18,12 @@ void CWeapon::Update(float delta, vector_ptr<CProjectile>& projectiles)
 		float matrix[16];
 		mParent->GetMatrix(matrix);
 
-		unique_ptr<CProjectile> p(new CProjectile(mProjectileMesh, matrix, mDamage, mProjectileSpeed));
+		res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
+		newBullet->SetMatrix(matrix);
+		newBullet->SetDamage(mDamage);
+		newBullet->SetSpeed(mProjectileSpeed);
 
-		projectiles.push_back(move(p));
+		projectiles.push_back(move(newBullet));
 
 		mTimer -= mFireRate;
 	}

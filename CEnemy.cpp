@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "CEnemy.h"
+#include "CExplosionPool.h"
 #include <algorithm>
 
 const int kHealth = 1;
@@ -11,7 +12,7 @@ CEnemy::CEnemy()
 {
 	//Model
 	SetMesh(DEFAULT_ENEMY_MESH);
-	mRadius = kRadius;
+	SetRadius(kRadius);
 
 	//All other stats are reset
 	Reset();
@@ -106,9 +107,31 @@ void CEnemy::TakeDamage(int damage)
 	}
 }
 
-bool CEnemy::CheckCollision()
+void CEnemy::CheckCollision()
 {
-	return false; //No collision check atm
+	auto bullet = mpPlayerBullets->begin();
+	while (bullet != mpPlayerBullets->end())
+	{
+		if (CollidesSphere(bullet->get()))
+		{
+			TakeDamage((*bullet)->GetDamage());
+			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
+			bullet = mpPlayerBullets->erase(bullet);
+			
+			if (GetHealth() <= 0)	//If killed by the bullet
+			{
+				Vector3 loc = GetCenterPoint();
+				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
+
+				//Don't collide with any of the remaining bullets when dead
+				return;
+			}
+		}
+		else
+		{
+			bullet++;
+		}
+	}
 }
 
 //Sets
@@ -139,6 +162,13 @@ void CEnemy::SetPath(Path* path, Vector3& offset)
 	mOffset = offset;
 }
 
+void CEnemy::SetLists(std::list<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
+{
+	mpPlayers = players;
+	mpPlayerBullets = playerBullets;
+	mpEnemyBullets = enemyBullets;
+}
+
 //Gets
 
 int CEnemy::GetHealth()
@@ -166,6 +196,11 @@ bool CEnemy::IsFinished()
 	return mFinished;
 }
 
+bool CEnemy::IsDead()
+{
+	return mHealth <= 0;
+}
+
 //Inherited from IResource
 
 void CEnemy::Reset()
@@ -183,8 +218,5 @@ void CEnemy::Reset()
 
 CEnemy::~CEnemy()
 {
-	if (mMesh != 0 && gEngine != 0)
-	{
-		mMesh->RemoveModel(mModel);
-	}
+
 }

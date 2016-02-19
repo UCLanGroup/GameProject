@@ -27,7 +27,7 @@ public:
 	void Init();
 
 	void Move(float);
-	virtual bool CheckCollision();
+	virtual void CheckCollision();
 
 	void TakeDamage(int damage);
 

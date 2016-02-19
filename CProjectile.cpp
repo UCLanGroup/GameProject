@@ -4,26 +4,24 @@
 
 CProjectile::CProjectile()
 {
-	mMesh = CMeshCache::GetInstance()->LoadMesh(BULLET_MESH);
-	mModel = mMesh->CreateModel();
+	SetMesh(BULLET_MESH);
 	//mModel->SetMatrix(matrix);
 
 	mDamage = 0;
 	mSpeed = 0.0;
-	mRadius = 2.0f;
+	SetRadius(2.0f);
 }
 
 //The matrix should be the matrix gained from the parent model (the plane/spaceship)
 //This will give the projectile the exact same rotation and location as the parent
 CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float speed)
 {
-	mMesh = mesh;
-	mModel = mMesh->CreateModel();
-	mModel->SetMatrix(matrix);
+	SetMesh(mesh);
+	SetMatrix(matrix);
 
 	mDamage = damage;
 	mSpeed = speed;
-	mRadius = 2.0f;
+	SetRadius(2.0f);
 }
 
 void CProjectile::Update(float delta)
@@ -31,9 +29,9 @@ void CProjectile::Update(float delta)
 	mModel->MoveLocalZ(delta * mSpeed);
 }
 
-bool CProjectile::CheckCollision()
+void CProjectile::CheckCollision()
 {
-	return false; //No collision check atm
+	//No collision check atm
 }
 
 //Gets
@@ -74,8 +72,5 @@ void CProjectile::Reset()
 
 CProjectile::~CProjectile()
 {
-	if (gEngine != 0 && mMesh != 0)
-	{
-		mMesh->RemoveModel(mModel);
-	}
+
 }

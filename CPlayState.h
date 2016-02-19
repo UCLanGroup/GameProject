@@ -27,8 +27,8 @@ private:
 
 	CExplosionPool* mExplosions;
 
-	vector_ptr<CProjectile> mPBullets; //Player Projectiles
-	vector_ptr<CProjectile> mEBullets; //Enemy Projectiles
+	BulletList mPBullets; //Player Projectiles
+	BulletList mEBullets; //Enemy Projectiles
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
 

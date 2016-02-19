@@ -23,6 +23,8 @@ IMesh* CMeshCache::LoadMesh(string s)
 
 void CMeshCache::Clear()
 {
+	if (gEngine == 0) return;
+
 	for (auto mesh = mMeshMap.begin(); mesh != mMeshMap.end(); mesh++)
 	{
 		gEngine->RemoveMesh(mesh->second);

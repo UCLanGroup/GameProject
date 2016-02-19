@@ -25,7 +25,7 @@ void CPlayer::Init()
 	mShieldRegenRate = 0.25f;
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
-	mRadius = 5.0f;
+	SetRadius(5.0f);
 }
 
 void CPlayer::Move(float dt)
@@ -83,9 +83,9 @@ void CPlayer::Move(float dt)
 	}
 }
 
-bool CPlayer::CheckCollision()
+void CPlayer::CheckCollision()
 {
-	return false; //No collision check atm
+	//No collision check atm
 }
 
 void CPlayer::TakeDamage(int damage)

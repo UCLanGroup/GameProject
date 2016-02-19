@@ -1,8 +1,11 @@
 #pragma once
 #include "Globals.h"
-#include <vector>
+#include <list>
 #include <TL-Engine.h>
 #include "CProjectile.h"
+#include "CPool.h"
+
+using BulletList = std::list<res_ptr<CProjectile>>;
 
 class CWeapon
 {
@@ -17,5 +20,5 @@ private:
 public:
 	CWeapon(tle::IModel* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate);
 
-	void Update(float delta, vector_ptr<CProjectile>& projectiles);
+	void Update(float delta, BulletList& projectiles);
 };

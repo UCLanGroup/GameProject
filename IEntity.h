@@ -8,16 +8,18 @@ using namespace tle;
 
 class IEntity : public ICollidable, public ICollider, public IResource
 {
-protected:
+private:
 	string name = "Null";
 	IMesh* mMesh = 0;
+
+protected:
 	IModel* mModel = 0;
 
 public:
 	//Update
 	virtual void Move(float delta);
 	virtual void Update(float delta);
-	virtual bool CheckCollision() = 0;
+	virtual void CheckCollision() = 0;
 
 	//Sets
 	void SetName(string& name);
@@ -42,4 +44,7 @@ public:
 	//Inherited from IResource
 	virtual void Hide();
 	virtual void Reset() = 0;
+
+	//Destructor
+	~IEntity();
 };

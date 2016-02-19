@@ -7,7 +7,7 @@ class ICollidable;
 class ICollider
 {
 public:
-	virtual bool CheckCollision() = 0;
+	virtual void CheckCollision() = 0;
 
 	//Allow for custom collision
 	virtual bool CollidesSphere(ICollidable* collidable) = 0;

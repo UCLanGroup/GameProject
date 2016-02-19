@@ -20,9 +20,9 @@ void CEnemyBoss::Move(float delta)
 	if (mState == State::Enter)
 	{
 		//Move downwards
-		mModel->MoveZ(-mSpeed * delta);
+		mModel->MoveZ(GetSpeed() * -delta);
 
-		if (AREA_BOUNDS_TOP - (2.0f * mRadius) > mModel->GetZ())
+		if (AREA_BOUNDS_TOP - (2.0f * GetRadius()) > mModel->GetZ())
 		{
 			mState = State::Attack1;
 		}
@@ -33,37 +33,37 @@ void CEnemyBoss::Move(float delta)
 		mBobbing += delta;
 		if(delta > (2.0f * M_PI)) mBobbing = 0.0f;
 
-		float bobAmount = sin(mBobbing) * mRadius * 0.5f;
+		float bobAmount = sin(mBobbing) * GetRadius() * 0.5f;
 
-		mModel->SetZ(AREA_BOUNDS_TOP - (2.0f * mRadius) + bobAmount);
+		mModel->SetZ(AREA_BOUNDS_TOP - (2.0f * GetRadius()) + bobAmount);
 
 		//Avoid player 1, don't give a crap about the weakling player 2
 
 		CPlayer* player = CPlayState::Instance()->GetPlayer1();
 		Vector3 locDif = player->GetCenterPoint() - GetCenterPoint();
 
-		if (abs(locDif.GetX()) < mRadius) //Check if player is below
+		if (abs(locDif.GetX()) < GetRadius()) //Check if player is below
 		{
 			if (locDif.GetX() > 0.0f) //Dodge left
 			{
-				if (AREA_BOUNDS_LEFT < mModel->GetX() - mRadius)
+				if (AREA_BOUNDS_LEFT < mModel->GetX() - GetRadius())
 				{
-					mModel->MoveX(-mSpeed * delta);
+					mModel->MoveX(GetSpeed() * -delta);
 				}
 				else
 				{
-					mModel->MoveX(mSpeed * delta);
+					mModel->MoveX(GetSpeed() * delta);
 				}
 			}
 			else //Dodge right
 			{
-				if (AREA_BOUNDS_RIGHT > mModel->GetX() + mRadius)
+				if (AREA_BOUNDS_RIGHT > mModel->GetX() + GetRadius())
 				{
-					mModel->MoveX(mSpeed * delta);
+					mModel->MoveX(GetSpeed() * delta);
 				}
 				else
 				{
-					mModel->MoveX(-mSpeed * delta);
+					mModel->MoveX(GetSpeed() * -delta);
 				}
 			}
 		}
@@ -93,13 +93,13 @@ void CEnemyBoss::Update(float delta)
 void CEnemyBoss::TakeDamage(int damage)
 {
 	//Take damage? Potential invulnerable state
-	mHealth -= damage;
+	SetHealth( GetHealth() - damage );
 
-	if (mHealth < 20)
+	if (GetHealth() < 20)
 	{
 		mState = State::Overdrive;
 	}
-	if (mHealth <= 0)
+	if (GetHealth() <= 0)
 	{
 		mFinished = true;
 	}
@@ -108,9 +108,9 @@ void CEnemyBoss::TakeDamage(int damage)
 void CEnemyBoss::Reset()
 {
 	mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_TOP + 20.0f);
-	mHealth = 100;
-	mRadius = 20.0f;
-	mSpeed = 20.0f;
+	SetHealth(100);
+	SetRadius(20.0f);
+	SetSpeed(20.0f);
 	mBobbing = 0.0f;
 	mState = State::Enter;
 }

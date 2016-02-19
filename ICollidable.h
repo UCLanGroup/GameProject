@@ -4,7 +4,7 @@
 
 class ICollidable
 {
-protected:
+private:
 	float mRadius;
 public:
 	virtual float GetRadius() { return mRadius; }
