@@ -84,12 +84,22 @@ void CPlayState::Update(CGameStateHandler * game)
 		//Some collision detection - This will be changed tomorrow
 		while (enemy != enemyEnd && !hit)
 		{
-			if ((*enemy)->CollidesSphere(bullet->get()) && (*enemy)->GetHealth() > 0) //Only collide if a previous bullet hasn't killed the enemy
+			if ((*enemy)->CollidesSphere(bullet->get()))
 			{
 				(*enemy)->TakeDamage((*bullet)->GetDamage());
+				if ((*enemy)->GetHealth() <= 0) //If killed by the bullet
+				{
+					Vector3 loc = (*enemy)->GetCenterPoint();
+					mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
+					mEnemyManager->GetEnemies().erase(enemy);
+				}
 				hit = true;
+				//No need to iterate if bullet hit since it breaks out of the loop
 			}
-			enemy++;
+			else
+			{
+				enemy++;
+			}
 		}
 		
 		if (hit)
@@ -109,12 +119,47 @@ void CPlayState::Update(CGameStateHandler * game)
 	}
 
 	//Update all enemy projectiles
-	for (auto bullet = mEBullets.begin(); bullet != mEBullets.end(); bullet++)
+	for (auto bullet = mEBullets.begin(); bullet != mEBullets.end(); )
 	{
 		(*bullet)->Update(mDelta);
 
 		//Check collision with Player
-		mPlayer1.CollidesSphere(bullet->get() );
+		if (mPlayer1.CollidesSphere(bullet->get()))
+		{
+			mPlayer1.TakeDamage((*bullet)->GetDamage());
+			bullet = mEBullets.erase(bullet);
+		}
+		else
+		{
+			bullet++;
+		}
+	}
+
+	//Collision between the enemies themselves and the player
+	for (auto enemy = mEnemyManager->GetEnemies().begin(); enemy != mEnemyManager->GetEnemies().end(); /*NO*/ )
+	{
+		if (mPlayer1.CollidesSphere((*enemy).get()))
+		{
+			//Do a lot of damage on collision
+			mPlayer1.TakeDamage(50); 
+			(*enemy)->TakeDamage(50);
+		}
+		/*if (mPlayer2.CollidesSphere((*enemy).get()))
+		{
+			mPlayer2.TakeDamage(50);
+			(*enemy)->TakeDamage(50);
+		}*/
+
+		if ((*enemy)->GetHealth() <= 0) //If killed by the collision
+		{
+			Vector3 loc = (*enemy)->GetCenterPoint();
+			mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
+			enemy = mEnemyManager->GetEnemies().erase(enemy);
+		}
+		else
+		{
+			enemy++;
+		}
 	}
 }
 

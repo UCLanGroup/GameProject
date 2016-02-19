@@ -74,7 +74,7 @@ void CPlayer::Move(float dt)
 		{
 			if (mShield == 0) //Reattach shield if hidden
 			{
-				mShieldModel->SetPosition(model->GetX(), model->GetY(), model->GetZ());
+				mShieldModel->SetPosition(0.0f, 0.0f, 0.0f);
 				mShieldModel->AttachToParent(model);
 			}
 			mShield++;
