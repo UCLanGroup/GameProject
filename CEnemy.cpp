@@ -101,14 +101,17 @@ void CEnemy::Update(float delta)
 void CEnemy::TakeDamage(int damage)
 {
 	mHealth -= damage;
-	if (mHealth <= 1)
+	if (mHealth <= 0)
 	{
+		SetDead(true);
 		mFinished = true;
 	}
 }
 
 void CEnemy::CheckCollision()
 {
+	if (mpPlayerBullets == 0) return;
+
 	auto bullet = mpPlayerBullets->begin();
 	while (bullet != mpPlayerBullets->end())
 	{
@@ -118,7 +121,7 @@ void CEnemy::CheckCollision()
 			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
 			bullet = mpPlayerBullets->erase(bullet);
 			
-			if (GetHealth() <= 0)	//If killed by the bullet
+			if (IsDead())	//If killed by the bullet
 			{
 				Vector3 loc = GetCenterPoint();
 				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
@@ -162,7 +165,7 @@ void CEnemy::SetPath(Path* path, Vector3& offset)
 	mOffset = offset;
 }
 
-void CEnemy::SetLists(std::list<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
+void CEnemy::SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
 {
 	mpPlayers = players;
 	mpPlayerBullets = playerBullets;
@@ -196,11 +199,6 @@ bool CEnemy::IsFinished()
 	return mFinished;
 }
 
-bool CEnemy::IsDead()
-{
-	return mHealth <= 0;
-}
-
 //Inherited from IResource
 
 void CEnemy::Reset()
@@ -209,6 +207,7 @@ void CEnemy::Reset()
 	mPathPos = 0;
 	mMoveTimer = 0.0f;
 	mFinished = false;
+	SetDead(false);
 
 	//Default
 	mHealth = kHealth;

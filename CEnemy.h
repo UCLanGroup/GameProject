@@ -28,7 +28,7 @@ private:
 	int mValue;
 
 protected:
-	std::list<CPlayer*>* mpPlayers = 0;
+	std::vector<CPlayer*>* mpPlayers = 0;
 	BulletList* mpPlayerBullets = 0;
 	BulletList* mpEnemyBullets = 0;
 
@@ -51,7 +51,7 @@ public:
 	void SetValue(int value);
 	void SetPath(Path* path, Vector3& offset);
 
-	void SetLists(std::list<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
+	void SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
 
 	//Gets
 	int GetHealth();
@@ -59,7 +59,6 @@ public:
 	std::vector<CWeapon>* GetWeapons();
 	int GetValue();
 	bool IsFinished();
-	bool IsDead();
 
 	//Inherited from IEntity : IResource
 	virtual void Reset();

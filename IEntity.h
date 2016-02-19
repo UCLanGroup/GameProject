@@ -11,6 +11,7 @@ class IEntity : public ICollidable, public ICollider, public IResource
 private:
 	string name = "Null";
 	IMesh* mMesh = 0;
+	bool mIsDead;
 
 protected:
 	IModel* mModel = 0;
@@ -26,11 +27,13 @@ public:
 	void SetMesh(string meshFile);
 	void SetMesh(IMesh* mesh);
 	void SetPosition(Vector3& pos);
+	void SetDead(bool dead);
 
 	//Gets
 	string& GetName();
 	IModel* GetModel();
 	bool IsOutOfBounds();
+	bool IsDead();
 
 	//Inherited from ICollidable
 	virtual Vector3 GetCenterPoint();

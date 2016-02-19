@@ -16,6 +16,13 @@ CEnemyManager::CEnemyManager(string levelFile)
 	mNumOfKills = 0;
 }
 
+void CEnemyManager::SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
+{
+	mpPlayers = players;
+	mpPlayerBullets = playerBullets;
+	mpEnemyBullets = enemyBullets;
+}
+
 //Upate all enemies
 void CEnemyManager::Update(float delta)
 {
@@ -25,16 +32,16 @@ void CEnemyManager::Update(float delta)
 	while (enemy != mEnemies.end())
 	{
 		(*enemy)->Update(delta);
+		(*enemy)->CheckCollision();
 
 		//Iterate by either erasing or incrementing
-		if ((*enemy)->IsFinished())
+		if ((*enemy)->IsDead())
 		{
-			if ((*enemy)->GetHealth() <= 0)
-			{
-				mNumOfKills++;
-				Vector3 loc = (*enemy)->GetCenterPoint();
-				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
-			}
+			mNumOfKills++;
+			enemy = mEnemies.erase(enemy);
+		}
+		else if ((*enemy)->IsFinished())
+		{
 			enemy = mEnemies.erase(enemy);
 		}
 		else
@@ -167,11 +174,14 @@ res_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& 
 	case Basic:
 		enemy = move( mEnemyPool->GetRes() );
 		enemy->SetPath(path, offset);
-
+		enemy->SetLists(mpPlayers, mpPlayerBullets, mpEnemyBullets);
 		return move(enemy);
+
 	case Boss:
 		enemy.reset(new CEnemyBoss());
+		enemy->SetLists(mpPlayers, mpPlayerBullets, mpEnemyBullets);
 		return move(enemy);
+
 	default:
 		return 0;
 		break;

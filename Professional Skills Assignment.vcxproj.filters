@@ -4,18 +4,6 @@
     <ClCompile Include="main.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="CGameStateHandler.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CIntroState.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayState.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -34,45 +22,45 @@
     <ClCompile Include="CEnemyManager.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="IDebug.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="CEnemyBoss.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="IEntity.cpp">
-      <Filter>EngineExtension\source</Filter>
+      <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="ICollider.cpp">
-      <Filter>EngineExtension\source</Filter>
+      <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="CAnimation.cpp">
-      <Filter>EngineExtension\source</Filter>
+      <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="CPool.cpp">
-      <Filter>EngineExtension\source</Filter>
+      <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="CMeshCache.cpp">
-      <Filter>EngineExtension\source</Filter>
+      <Filter>Core\source</Filter>
+    </ClCompile>
+    <ClCompile Include="IDebug.cpp">
+      <Filter>Core\source</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Core\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CIntroState.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameStateHandler.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayState.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameState.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CGameStateHandler.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CIntroState.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayState.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
@@ -93,32 +81,50 @@
     <ClInclude Include="CEnemyManager.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="IDebug.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="CEnemyBoss.h">
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollider.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="IEntity.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollidable.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="IResource.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="CAnimation.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="CPool.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="CMeshCache.h">
-      <Filter>EngineExtension\headers</Filter>
+      <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IDebug.h">
+      <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameStateHandler.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CIntroState.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayState.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameState.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,14 +137,23 @@
     <Filter Include="headers">
       <UniqueIdentifier>{9f3191a4-70b2-49ff-a380-8ff7f84c61eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineExtension">
+    <Filter Include="Core">
       <UniqueIdentifier>{d9128046-eb7c-4ffd-a3fc-35b46f22ff0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineExtension\headers">
+    <Filter Include="Core\headers">
       <UniqueIdentifier>{2cace449-50a2-46fe-9b74-c867d640f65c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EngineExtension\source">
+    <Filter Include="Core\source">
       <UniqueIdentifier>{58942f5e-dd82-4104-8f34-30aa92502b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{5ba5a1de-244d-463a-bd6f-5fc3ed17a638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\headers">
+      <UniqueIdentifier>{a1a5831b-ca47-4d4c-9bed-8bf15f103c3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\source">
+      <UniqueIdentifier>{8a6ce3c7-f628-4279-be09-4e93f3ea9cc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

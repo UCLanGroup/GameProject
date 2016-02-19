@@ -64,6 +64,11 @@ void IEntity::SetPosition(Vector3& pos)
 	}
 }
 
+void IEntity::SetDead(bool dead)
+{
+	mIsDead = dead;
+}
+
 
 /////////////////////Gets/////////////////////
 
@@ -92,6 +97,12 @@ bool IEntity::IsOutOfBounds()
 				mModel->GetZ() < AREA_BOUNDS_BOTTOM;
 	else
 		return false;
+}
+
+//Returns whether the entity is dead
+bool IEntity::IsDead()
+{
+	return mIsDead;
 }
 
 

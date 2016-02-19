@@ -18,7 +18,10 @@ void CPlayState::Init()
 
 	mPlayer1.Init();
 
+	playerList.push_back(&mPlayer1);
+
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
+	mEnemyManager->SetLists(&playerList, &mPBullets, &mEBullets);
 	
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
@@ -73,44 +76,12 @@ void CPlayState::Update(CGameStateHandler * game)
 	{
 		(*bullet)->Update(mDelta);
 
-		auto enemy = mEnemyManager->GetEnemies().begin();
-		auto enemyEnd = mEnemyManager->GetEnemies().end();
-
-		bool hit = false;
-
-		//Some collision detection - This will be changed tomorrow
-		while (enemy != enemyEnd && !hit)
-		{
-			if ((*enemy)->CollidesSphere(bullet->get()))
-			{
-				(*enemy)->TakeDamage((*bullet)->GetDamage());
-				if ((*enemy)->GetHealth() <= 0) //If killed by the bullet
-				{
-					Vector3 loc = (*enemy)->GetCenterPoint();
-					mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
-					mEnemyManager->GetEnemies().erase(enemy);
-				}
-				hit = true;
-				//No need to iterate if bullet hit since it breaks out of the loop
-			}
-			else
-			{
-				enemy++;
-			}
-		}
-		
-		if (hit)
-		{
-			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
-			bullet = mPBullets.erase(bullet);
-		}
-		else if ((*bullet)->IsOutOfBounds())
+		if ((*bullet)->IsOutOfBounds())
 		{
 			bullet = mPBullets.erase(bullet);
 		}
 		else
 		{
-			//Incremenet if current bullet was not removed
 			bullet++;
 		}
 	}
@@ -120,8 +91,11 @@ void CPlayState::Update(CGameStateHandler * game)
 	{
 		(*bullet)->Update(mDelta);
 
-		//Check collision with Player
-		if (mPlayer1.CollidesSphere(bullet->get()))
+		if ((*bullet)->IsOutOfBounds())
+		{
+			bullet = mEBullets.erase(bullet);
+		}
+		else if (mPlayer1.CollidesSphere(bullet->get())) //Check collision with Player
 		{
 			mPlayer1.TakeDamage((*bullet)->GetDamage());
 			bullet = mEBullets.erase(bullet);
@@ -129,33 +103,6 @@ void CPlayState::Update(CGameStateHandler * game)
 		else
 		{
 			bullet++;
-		}
-	}
-
-	//Collision between the enemies themselves and the player
-	for (auto enemy = mEnemyManager->GetEnemies().begin(); enemy != mEnemyManager->GetEnemies().end(); /*NO*/ )
-	{
-		if (mPlayer1.CollidesSphere((*enemy).get()))
-		{
-			//Do a lot of damage on collision
-			mPlayer1.TakeDamage(50); 
-			(*enemy)->TakeDamage(50);
-		}
-		/*if (mPlayer2.CollidesSphere((*enemy).get()))
-		{
-			mPlayer2.TakeDamage(50);
-			(*enemy)->TakeDamage(50);
-		}*/
-
-		if ((*enemy)->GetHealth() <= 0) //If killed by the collision
-		{
-			Vector3 loc = (*enemy)->GetCenterPoint();
-			mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
-			enemy = mEnemyManager->GetEnemies().erase(enemy);
-		}
-		else
-		{
-			enemy++;
 		}
 	}
 }

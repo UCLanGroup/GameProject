@@ -12,7 +12,7 @@ public:
 	CProjectile();
 	CProjectile(tle::IMesh* mesh, float* matrix, int damage, float speed);
 
-	void Update(float delta);
+	virtual void Update(float delta);
 	virtual void CheckCollision();
 
 	//Gets

@@ -1,8 +1,8 @@
 #define _USE_MATH_DEFINES
 #include "CEnemyBoss.h"
 #include "CMeshCache.h"
-#include "CPlayState.h"
-#include <iostream>
+#include "CPlayer.h"
+#include "CMissile.h"
 
 
 CEnemyBoss::CEnemyBoss()
@@ -37,14 +37,23 @@ void CEnemyBoss::Move(float delta)
 
 		mModel->SetZ(AREA_BOUNDS_TOP - (2.0f * GetRadius()) + bobAmount);
 
-		//Avoid player 1, don't give a crap about the weakling player 2
+		//Avoid the closest player
 
-		CPlayer* player = CPlayState::Instance()->GetPlayer1();
-		Vector3 locDif = player->GetCenterPoint() - GetCenterPoint();
+		float xDif = GetRadius() * 2.0f;
 
-		if (abs(locDif.GetX()) < GetRadius()) //Check if player is below
+		for (auto player = mpPlayers->begin(); player != mpPlayers->end(); player++)
 		{
-			if (locDif.GetX() > 0.0f) //Dodge left
+			Vector3 locDif = (*player)->GetCenterPoint() - GetCenterPoint();
+			if (abs(locDif.GetX()) < abs(xDif))
+			{
+				xDif = locDif.GetX();
+			}
+		}
+
+
+		if (abs(xDif) < GetRadius()) //Check if player is below
+		{
+			if (xDif > 0.0f) //Dodge left
 			{
 				if (AREA_BOUNDS_LEFT < mModel->GetX() - GetRadius())
 				{
@@ -76,13 +85,46 @@ void CEnemyBoss::Update(float delta)
 	Move(delta);
 	(mModel->GetNode(6))->RotateY(delta * 720.0f); //Rotate spinny thing
 
+	if (mState == State::Enter) return; //Don't do anything when entering
+
+	mStateTimer += delta;
+	mAttackTimer += delta;
+
 	if (mState == State::Attack1)
 	{
 		//Basic attack pattern, switches to attack2 after set amount of time
+		while (mAttackTimer > 0.5f)
+		{
+			float matrix[16];
+			mModel->GetMatrix(matrix);
+
+			res_ptr<CMissile> newMissile = move(CPool<CMissile>::GetInstance()->GetRes());
+			newMissile->SetMatrix(matrix);
+			newMissile->SetDamage(10);
+			newMissile->SetSpeed(20.0f);
+			newMissile->SetTarget((*mpPlayers)[0]);
+
+			res_ptr<CProjectile> newBullet(newMissile.release());
+
+			mpEnemyBullets->push_back(move(newBullet));
+
+			mAttackTimer -= 0.5f;
+		}
+
+		if (mStateTimer > 5.0f)
+		{
+			mStateTimer = 0.0f;
+			mState = State::Attack2;
+		}
 	}
 	else if (mState == State::Attack2)
 	{
 		//Basic attack pattern, switches to attack1 after set amount of time
+		if (mStateTimer > 5.0f)
+		{
+			mStateTimer = 0.0f;
+			mState = State::Attack1;
+		}
 	}
 	else if (mState == State::Overdrive)
 	{
@@ -112,5 +154,7 @@ void CEnemyBoss::Reset()
 	SetRadius(20.0f);
 	SetSpeed(20.0f);
 	mBobbing = 0.0f;
+	mStateTimer = 0.0f;
+	mAttackTimer = 0.0f;
 	mState = State::Enter;
 }

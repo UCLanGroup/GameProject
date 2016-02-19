@@ -50,9 +50,9 @@ const float AREA_BOUNDS_RIGHT	= 120.0f;
 const float AREA_BOUNDS_LEFT	= -120.0f;
 const float AREA_BOUNDS_BOTTOM	= -100.0f;
 
-const float OFF_SCREEN_X		= 0.0f;
+const float OFF_SCREEN_X		= 1000.0f;
 const float OFF_SCREEN_Y		= 1000.0f;
-const float OFF_SCREEN_Z		= 0.0f;
+const float OFF_SCREEN_Z		= 1000.0f;
 
 // Key codes
 const EKeyCode KEY_EXIT = tle::Key_Escape;

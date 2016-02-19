@@ -8,6 +8,8 @@ private:
 protected:
 	State mState;
 	float mBobbing;
+	float mStateTimer;
+	float mAttackTimer;
 public:
 	CEnemyBoss();
 

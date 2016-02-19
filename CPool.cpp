@@ -1,9 +1,11 @@
 #include "CPool.h"
 #include "CEnemy.h"
 #include "CProjectile.h"
+#include "CMissile.h"
 
 template class CPool<CEnemy>;
 template class CPool<CProjectile>;
+template class CPool<CMissile>;
 
 template <class T>
 std::mutex CPool<T>::mPoolMutex;
