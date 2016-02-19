@@ -1,39 +1,30 @@
 #pragma once
 #include <TL-Engine.h>
-#include "ICollidable.h"
-#include "IResource.h"
+#include "IEntity.h"
 
-class CProjectile : public ICollidable, public IResource
+class CProjectile : public IEntity
 {
 private:
 	int mDamage;
 	float mSpeed;
-	tle::IMesh* mMesh;
-	tle::IModel* mModel;
 
 public:
 	CProjectile();
 	CProjectile(tle::IMesh* mesh, float* matrix, int damage, float speed);
 
 	void Update(float delta);
+	virtual bool CheckCollision();
 
 	//Gets
 	int GetDamage();
 	float GetSpeed();
-	tle::IModel* GetModel();
-	bool IsOutOfBounds();
 
 	//Sets
 	void SetDamage(int damage);
 	void SetSpeed(float speed);
 	void SetMatrix(float* matrix);
 
-	//Inherited from ICollidable
-	virtual Vector3 GetCenterPoint();
-	virtual bool GetMeshAndMatrix(tle::IMesh* mesh, float* matrix);
-
-	//Inherited from IResource
-	virtual void Hide();
+	//Inherited from IEntity : IResource
 	virtual void Reset();
 
 	~CProjectile();

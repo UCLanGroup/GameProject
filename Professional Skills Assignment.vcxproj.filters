@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CAnimation.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -20,9 +17,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="ICollidable.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="CWeapon.cpp">
@@ -43,20 +37,26 @@
     <ClCompile Include="IDebug.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="CPool.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="CEnemyBoss.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="IEntity.cpp">
+      <Filter>EngineExtension\source</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollider.cpp">
+      <Filter>EngineExtension\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>EngineExtension\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPool.cpp">
+      <Filter>EngineExtension\source</Filter>
+    </ClCompile>
     <ClCompile Include="CMeshCache.cpp">
-      <Filter>source</Filter>
+      <Filter>EngineExtension\source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAnimation.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>headers</Filter>
     </ClInclude>
@@ -78,9 +78,6 @@
     <ClInclude Include="CPlayer.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="ICollidable.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="CWeapon.h">
       <Filter>headers</Filter>
     </ClInclude>
@@ -99,17 +96,29 @@
     <ClInclude Include="IDebug.h">
       <Filter>headers</Filter>
     </ClInclude>
-    <ClInclude Include="CPool.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IResource.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CMeshCache.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="CEnemyBoss.h">
       <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollider.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IEntity.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollidable.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IResource.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPool.h">
+      <Filter>EngineExtension\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeshCache.h">
+      <Filter>EngineExtension\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +130,15 @@
     </Filter>
     <Filter Include="headers">
       <UniqueIdentifier>{9f3191a4-70b2-49ff-a380-8ff7f84c61eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineExtension">
+      <UniqueIdentifier>{d9128046-eb7c-4ffd-a3fc-35b46f22ff0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineExtension\headers">
+      <UniqueIdentifier>{2cace449-50a2-46fe-9b74-c867d640f65c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineExtension\source">
+      <UniqueIdentifier>{58942f5e-dd82-4104-8f34-30aa92502b9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

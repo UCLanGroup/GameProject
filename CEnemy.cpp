@@ -1,6 +1,5 @@
 #define _USE_MATH_DEFINES
 #include "CEnemy.h"
-#include "CMeshCache.h"
 #include <algorithm>
 
 const int kHealth = 1;
@@ -11,8 +10,7 @@ const float kRadius = 5.0f;
 CEnemy::CEnemy()
 {
 	//Model
-	mMesh = CMeshCache::GetInstance()->LoadMesh(DEFAULT_ENEMY_MESH);
-	mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
+	SetMesh(DEFAULT_ENEMY_MESH);
 	mRadius = kRadius;
 
 	//All other stats are reset
@@ -108,25 +106,12 @@ void CEnemy::TakeDamage(int damage)
 	}
 }
 
+bool CEnemy::CheckCollision()
+{
+	return false; //No collision check atm
+}
+
 //Sets
-
-void CEnemy::SetMesh(string meshFile)
-{
-	SetMesh( CMeshCache::GetInstance()->LoadMesh(meshFile) );
-}
-
-void CEnemy::SetMesh(IMesh* mesh)
-{
-	if (mMesh != mesh && mesh != 0)
-	{
-		if (mModel != 0)
-		{
-			mMesh->RemoveModel(mModel);
-		}
-		mMesh = mesh;
-		mModel = mMesh->CreateModel();
-	}
-}
 
 void CEnemy::SetHealth(int health)
 {
@@ -181,28 +166,6 @@ bool CEnemy::IsFinished()
 	return mFinished;
 }
 
-//Inherited from ICollidable
-
-Vector3 CEnemy::GetCenterPoint()
-{
-	if (mModel == 0)
-	{
-		return Vector3();
-	}
-	return Vector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());
-}
-
-bool CEnemy::GetMeshAndMatrix(tle::IMesh* mesh, float* matrix)
-{
-	if (mMesh != 0 && mModel != 0)
-	{
-		mesh = mMesh;
-		mModel->GetMatrix(matrix);
-		return true;
-	}
-	return false;
-}
-
 //Inherited from IResource
 
 void CEnemy::Reset()
@@ -216,11 +179,6 @@ void CEnemy::Reset()
 	mHealth = kHealth;
 	mSpeed = kSpeed;
 	mValue = kValue;
-}
-
-void CEnemy::Hide()
-{
-	mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 }
 
 CEnemy::~CEnemy()

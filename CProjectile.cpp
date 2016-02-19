@@ -31,6 +31,11 @@ void CProjectile::Update(float delta)
 	mModel->MoveLocalZ(delta * mSpeed);
 }
 
+bool CProjectile::CheckCollision()
+{
+	return false; //No collision check atm
+}
+
 //Gets
 
 int CProjectile::GetDamage()
@@ -41,19 +46,6 @@ int CProjectile::GetDamage()
 float CProjectile::GetSpeed()
 {
 	return mSpeed;
-}
-
-tle::IModel* CProjectile::GetModel()
-{
-	return mModel;
-}
-
-bool CProjectile::IsOutOfBounds()
-{
-	return  mModel->GetX() < AREA_BOUNDS_LEFT  ||
-			mModel->GetX() > AREA_BOUNDS_RIGHT ||
-			mModel->GetZ() > AREA_BOUNDS_TOP   ||
-			mModel->GetZ() < AREA_BOUNDS_BOTTOM;
 }
 
 //Sets
@@ -73,37 +65,11 @@ void CProjectile::SetMatrix(float* matrix)
 	mModel->SetMatrix(matrix);
 }
 
-//Inherited from ICollidable
-
-Vector3 CProjectile::GetCenterPoint()
-{
-	return Vector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());
-}
-
-bool CProjectile::GetMeshAndMatrix(tle::IMesh* mesh, float* matrix)
-{
-	//Check if mesh and model exists
-	if (mMesh == 0 || mModel == 0)
-	{
-		return false;
-	}
-
-	mesh = mMesh;
-	mModel->GetMatrix(matrix); //Fills in the matrix
-
-	return true;
-}
-
-//Inherited from IResource
+//Inherited from IEntity : IResource
 
 void CProjectile::Reset()
 {
 	//Empty
-}
-
-void CProjectile::Hide()
-{
-	mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 }
 
 CProjectile::~CProjectile()

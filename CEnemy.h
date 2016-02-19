@@ -2,12 +2,11 @@
 #include "Globals.h"
 #include "Vector3.h"
 #include "CWeapon.h"
-#include "ICollidable.h"
-#include "IResource.h"
+#include "IEntity.h"
 
 using Path = std::vector<Vector3>;
 
-class CEnemy : public ICollidable, public IResource
+class CEnemy : public IEntity
 {
 protected:
 	//Stats
@@ -15,9 +14,6 @@ protected:
 	float mSpeed;
 	std::vector<CWeapon> mWeapons;
 	int mValue;
-
-	IMesh* mMesh = 0;
-	IModel* mModel = 0;
 
 	//Pathing
 	Path* mpPath;
@@ -34,10 +30,9 @@ public:
 	virtual void Move(float delta);
 	virtual void Update(float delta);
 	virtual void TakeDamage(int damage);
+	virtual bool CheckCollision();
 
 	//Sets
-	void SetMesh(string meshFile);
-	void SetMesh(IMesh* mesh);
 	void SetHealth(int health);
 	void SetSpeed(float speed);
 	void AddWeapon(CWeapon w);
@@ -51,12 +46,7 @@ public:
 	int GetValue();
 	bool IsFinished();
 
-	//Inherited from ICollidable
-	virtual Vector3 GetCenterPoint();
-	virtual bool GetMeshAndMatrix(tle::IMesh* mesh, float* matrix);
-
-	//Inherited from IResource
-	virtual void Hide();
+	//Inherited from IEntity : IResource
 	virtual void Reset();
 
 	~CEnemy();

@@ -2,7 +2,6 @@
 #include <vector>
 #include <list>
 #include <mutex>
-#include "Globals.h"
 
 template <class T>
 class CPool

@@ -2,16 +2,15 @@
 
 #include <TL-Engine.h>
 #include "globals.h"
-#include "ICollidable.h"
+#include "IEntity.h"
 #include "CWeapon.h"
 
 using namespace tle;
 
-class CPlayer : public ICollidable
+class CPlayer : public IEntity
 {
 private:
 	IMesh* mShieldMesh;
-	IMesh* mMesh;
 	IModel* mShieldModel;
 
 	int mHealth;
@@ -25,11 +24,10 @@ private:
 	unique_ptr<CWeapon> mWeapon;
 
 public:
-	IModel* model;
-
 	void Init();
 
 	void Move(float);
+	virtual bool CheckCollision();
 
 	void TakeDamage(int damage);
 
@@ -48,9 +46,8 @@ public:
 
 	CWeapon* GetWeapon();
 
-	//Inherited from ICollidable
-	virtual Vector3 GetCenterPoint();
-	virtual bool GetMeshAndMatrix(IMesh* mesh, float* matrix);
+	//Inherited from IEntity
+	virtual void Reset();
 
 	~CPlayer();
 

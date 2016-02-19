@@ -17,14 +17,11 @@ void CPlayState::Init()
 	mCam->RotateLocalX(90.0f);
 
 	mPlayer1.Init();
-	mPlayer1.model->Scale(1.0f);
 
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
-
-	float x = mPlayer1.model->GetX();
 }
 
 void CPlayState::Cleanup()
@@ -90,7 +87,7 @@ void CPlayState::Update(CGameStateHandler * game)
 				if ((*enemy)->GetHealth() <= 0) //If killed by the bullet
 				{
 					Vector3 loc = (*enemy)->GetCenterPoint();
-					mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
+					mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
 					mEnemyManager->GetEnemies().erase(enemy);
 				}
 				hit = true;
@@ -104,7 +101,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		
 		if (hit)
 		{
-			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetBoundingRadius());
+			mExplosions->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
 			bullet = mPBullets.erase(bullet);
 		}
 		else if ((*bullet)->IsOutOfBounds())
@@ -153,7 +150,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		if ((*enemy)->GetHealth() <= 0) //If killed by the collision
 		{
 			Vector3 loc = (*enemy)->GetCenterPoint();
-			mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
+			mExplosions->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
 			enemy = mEnemyManager->GetEnemies().erase(enemy);
 		}
 		else

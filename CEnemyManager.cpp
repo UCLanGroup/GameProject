@@ -33,7 +33,7 @@ void CEnemyManager::Update(float delta)
 			{
 				mNumOfKills++;
 				Vector3 loc = (*enemy)->GetCenterPoint();
-				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetBoundingRadius());
+				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*enemy)->GetRadius());
 			}
 			enemy = mEnemies.erase(enemy);
 		}

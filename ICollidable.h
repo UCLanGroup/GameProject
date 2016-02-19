@@ -1,21 +1,18 @@
 #pragma once
 #include "Vector3.h"
-#include <Mesh.h>
+#include <TL-Engine.h>
 
 class ICollidable
 {
 protected:
 	float mRadius;
 public:
-	float GetBoundingRadius();
+	virtual float GetRadius() { return mRadius; }
+	virtual void SetRadius(float radius) { mRadius = radius; }
 	
 	virtual Vector3 GetCenterPoint() = 0;
 
-	virtual bool GetMeshAndMatrix(tle::IMesh* mesh, float* matrix) = 0;
-	
-	//Checks if the collidables bounding spheres collide
-	bool CollidesSphere(ICollidable* collidable);
+	virtual tle::IMesh* GetMesh() = 0;
 
-	//Mesh to Mesh collision
-	bool CollidesMesh(ICollidable* collidable);
+	virtual bool GetMatrix(float* matrix) = 0;
 };

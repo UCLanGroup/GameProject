@@ -5,18 +5,17 @@
 void CPlayer::Init()
 {
 	//Model
-	mMesh = gEngine->LoadMesh(PLAYERMESH);
-	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
-
+	SetMesh(PLAYERMESH);
+	
 	//Shield
 	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
 	mShieldModel = mShieldMesh->CreateModel(0.0f, 0.0f, 0.0f);
 	mShieldModel->Scale(12.0f);
-	mShieldModel->AttachToParent(model);
+	mShieldModel->AttachToParent(mModel);
 
 	//Weapon
 	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(model, bulletMesh, 1, 100.0f, 0.1f));
+	mWeapon.reset(new CWeapon(mModel, bulletMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -33,34 +32,34 @@ void CPlayer::Move(float dt)
 {
 	if (gEngine->KeyHeld(KEY_UP))
 	{
-		model->MoveZ(mSpeed * dt);
-		if (model->GetZ() > AREA_BOUNDS_TOP)
+		mModel->MoveZ(mSpeed * dt);
+		if (mModel->GetZ() > AREA_BOUNDS_TOP)
 		{
-			model->SetZ(AREA_BOUNDS_TOP);
+			mModel->SetZ(AREA_BOUNDS_TOP);
 		}
 	}
 	if (gEngine->KeyHeld(KEY_DOWN))
 	{
-		model->MoveZ(-mSpeed * dt);
-		if (model->GetZ() < AREA_BOUNDS_BOTTOM)
+		mModel->MoveZ(-mSpeed * dt);
+		if (mModel->GetZ() < AREA_BOUNDS_BOTTOM)
 		{
-			model->SetZ(AREA_BOUNDS_BOTTOM);
+			mModel->SetZ(AREA_BOUNDS_BOTTOM);
 		}
 	}
 	if (gEngine->KeyHeld(KEY_LEFT))
 	{
-		model->MoveX(-mSpeed * dt);
-		if (model->GetX() < AREA_BOUNDS_LEFT)
+		mModel->MoveX(-mSpeed * dt);
+		if (mModel->GetX() < AREA_BOUNDS_LEFT)
 		{
-			model->SetX(AREA_BOUNDS_LEFT);
+			mModel->SetX(AREA_BOUNDS_LEFT);
 		}
 	}
 	if (gEngine->KeyHeld(KEY_RIGHT))
 	{
-		model->MoveX(mSpeed * dt);
-		if (model->GetX() > AREA_BOUNDS_RIGHT)
+		mModel->MoveX(mSpeed * dt);
+		if (mModel->GetX() > AREA_BOUNDS_RIGHT)
 		{
-			model->SetX(AREA_BOUNDS_RIGHT);
+			mModel->SetX(AREA_BOUNDS_RIGHT);
 		}
 	}
 
@@ -75,13 +74,18 @@ void CPlayer::Move(float dt)
 			if (mShield == 0) //Reattach shield if hidden
 			{
 				mShieldModel->SetPosition(0.0f, 0.0f, 0.0f);
-				mShieldModel->AttachToParent(model);
+				mShieldModel->AttachToParent(mModel);
 			}
 			mShield++;
 
 			mRegenTimer -= mShieldRegenRate;
 		}
 	}
+}
+
+bool CPlayer::CheckCollision()
+{
+	return false; //No collision check atm
 }
 
 void CPlayer::TakeDamage(int damage)
@@ -175,24 +179,14 @@ CWeapon* CPlayer::GetWeapon()
 	return mWeapon.get();
 }
 
-//Inherited from ICollidable
-Vector3 CPlayer::GetCenterPoint()
+//Inherited from IEntity
+void CPlayer::Reset()
 {
-	return Vector3(model->GetX(), model->GetY(), model->GetZ());
-}
-
-bool CPlayer::GetMeshAndMatrix(IMesh* mesh, float* matrix)
-{
-	//Check if mesh and model exists
-	if (mMesh == 0 || model == 0)
-	{
-		return false;
-	}
-
-	mesh = mMesh;
-	model->GetMatrix(matrix); //Fills in the matrix
-
-	return true;
+	mHealth = 100;
+	mMaxHealth = 100;
+	mShield = 50;
+	mMaxShield = 50;
+	mRegenTimer = 0.0f;
 }
 
 CPlayer::~CPlayer()

@@ -41,6 +41,7 @@ void CPool<T>::Clear()
 template <class T>
 typename CPool<T>::resource_ptr CPool<T>::GetRes()
 {
+	Lock lock(mPoolMutex);
 	if (mResources.empty())
 	{
 		AddRes(new T);

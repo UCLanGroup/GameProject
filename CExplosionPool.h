@@ -1,7 +1,6 @@
 #pragma once
 #include <TL-Engine.h>
 #include <vector>
-#include "CAnimation.h"
 #include "Globals.h"
 
 class CExplosionPool
