@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <TL-Engine.h>
+#include "Vector3.h"
 
 using namespace tle;
 
@@ -20,20 +21,20 @@ extern tle::I3DEngine* gEngine;
 const string MEDIA_FOLDER	= ".\\Media";
 
 		// Window
-const string WINDOWCAPTION	= "Shooty Game WT";
+const string WINDOW_CAPTION	= "Shooty Game WT";
 
 		// Intro screen
-const string INTROBG		= "menu.png";				// Temporary background image
-const string INTROSTART		= "menustart.png";			// Temporary start text
+const string INTRO_BG			= "menu.png";				// Temporary background image
+const string INTRO_START		= "menustart.png";			// Temporary start text
 
 		// Gameplay
-const string UI				= "ui.png";					// Tempororay user interface
-const string GROUNDSKIN		= "ground.png";
+const string UI					= "ui.png";					// Tempororay user interface
+const string GROUND_SKIN		= "ground.png";
 
-const string GROUNDMESH		= "ground.x";
-const string PLAYERMESH		= "mig29.x";
-const string BULLET_MESH	= "Bullet.x";
-const string SHIELD_MESH	= "Shield.x";
+const string GROUND_MESH		= "ground.x";
+const string PLAYER_MESH		= "mig29.x";
+const string BULLET_MESH		= "Bullet.x";
+const string SHIELD_MESH		= "Shield.x";
 
 const string DEFAULT_ENEMY_MESH = "f16.x";
 const string HAVOC_BOSS_MESH = "Mi28Havoc.x";

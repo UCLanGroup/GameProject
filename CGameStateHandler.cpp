@@ -13,7 +13,7 @@ void CGameStateHandler::Init()
 	// Create the window
 	gEngine->StartWindowed(1280, 1024);
 
-	gEngine->SetWindowCaption(WINDOWCAPTION);
+	gEngine->SetWindowCaption(WINDOW_CAPTION);
 
 	// Add default folder for meshes and other media
 	gEngine->AddMediaFolder( MEDIA_FOLDER );

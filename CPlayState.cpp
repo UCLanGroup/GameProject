@@ -8,7 +8,7 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
-	mFloorMesh = gEngine->LoadMesh(GROUNDMESH);
+	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -10.0f, -5.5f);
 
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);

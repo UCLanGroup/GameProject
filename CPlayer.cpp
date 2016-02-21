@@ -5,7 +5,7 @@
 void CPlayer::Init()
 {
 	//Model
-	mMesh = gEngine->LoadMesh(PLAYERMESH);
+	mMesh = gEngine->LoadMesh(PLAYER_MESH);
 	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
 
 	//Shield
