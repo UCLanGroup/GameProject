@@ -1,29 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="CWeapon.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="CProjectile.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CExplosionPool.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="CEnemy.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="CEnemyManager.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="CEnemyBoss.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
     </ClCompile>
     <ClCompile Include="IEntity.cpp">
       <Filter>Core\source</Filter>
@@ -56,33 +50,33 @@
       <Filter>States\source</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
-      <Filter>source</Filter>
+      <Filter>Entities\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CExplosionPool.cpp">
+      <Filter>Core\source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core\source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Globals.h">
-      <Filter>headers</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="CWeapon.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="CProjectile.h">
-      <Filter>headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CExplosionPool.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="CEnemy.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyManager.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="CEnemyBoss.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollider.h">
       <Filter>Core\headers</Filter>
@@ -124,19 +118,19 @@
       <Filter>States\headers</Filter>
     </ClInclude>
     <ClInclude Include="CMissile.h">
-      <Filter>headers</Filter>
+      <Filter>Entities\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CExplosionPool.h">
+      <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Core\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="source">
-      <UniqueIdentifier>{48ed576a-28ed-44cd-a7c4-8d06e0388817}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="headers">
-      <UniqueIdentifier>{9f3191a4-70b2-49ff-a380-8ff7f84c61eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{d9128046-eb7c-4ffd-a3fc-35b46f22ff0d}</UniqueIdentifier>
     </Filter>
@@ -154,6 +148,15 @@
     </Filter>
     <Filter Include="States\source">
       <UniqueIdentifier>{8a6ce3c7-f628-4279-be09-4e93f3ea9cc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{0bc13ed2-b093-4315-80ac-a5605738028a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\headers">
+      <UniqueIdentifier>{9f3191a4-70b2-49ff-a380-8ff7f84c61eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\source">
+      <UniqueIdentifier>{48ed576a-28ed-44cd-a7c4-8d06e0388817}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
