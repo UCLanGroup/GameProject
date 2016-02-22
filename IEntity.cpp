@@ -38,20 +38,30 @@ void IEntity::SetMesh(string meshFile)
 //Sets the entity's mesh and model
 void IEntity::SetMesh(IMesh* mesh)
 {
-	if (mMesh != mesh && mesh != 0)
+	if (mesh != 0) //Check if valid mesh
 	{
-		if (mModel)
+		if (mMesh != mesh) //Check if mesh has been changed
 		{
-			Vector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
-			mMesh->RemoveModel(mModel);
-			mMesh = mesh;
-			mModel = mMesh->CreateModel();
-			mModel->SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
+			if (mModel) //If an existing model exists then remove it but preserve the location
+			{
+				Vector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
+				mMesh->RemoveModel(mModel);
+				mMesh = mesh; //Set the new mesh
+				mModel = mMesh->CreateModel();
+				mModel->SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
+			}
+			else //If no existing model exists then create one
+			{
+				mMesh = mesh; //Set the new mesh
+				mModel = mMesh->CreateModel();
+			}
 		}
-		else
+		else //No change of mesh
 		{
-			mMesh = mesh;
-			mModel = mMesh->CreateModel();
+			if (!mModel) //Check if no model exists, create one if not
+			{
+				mModel = mMesh->CreateModel();
+			}
 		}
 	}
 }

@@ -31,7 +31,9 @@ void CPlayer::Init()
 void CPlayer::Cleanup()
 {
 	GetMesh()->RemoveModel(mModel);
+	mModel = 0;
 	mShieldMesh->RemoveModel(mShieldModel);
+	mShieldModel = 0;
 }
 
 void CPlayer::Move(float dt)
@@ -187,7 +189,7 @@ CWeapon* CPlayer::GetWeapon()
 
 //Inherited from IEntity
 void CPlayer::Reset()
-	{
+{
 	mHealth = 100;
 	mMaxHealth = 100;
 	mShield = 50;
