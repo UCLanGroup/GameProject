@@ -11,6 +11,7 @@ class CPlayer : public ICollidable
 {
 private:
 	IMesh* mShieldMesh;
+	IMesh* mProjectileMesh;
 	IMesh* mMesh;
 	IModel* mShieldModel;
 
@@ -28,6 +29,7 @@ public:
 	IModel* model;
 
 	void Init();
+	void Cleanup();
 
 	void Move(float);
 

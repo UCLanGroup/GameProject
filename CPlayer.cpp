@@ -15,8 +15,8 @@ void CPlayer::Init()
 	mShieldModel->AttachToParent(model);
 
 	//Weapon
-	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(model, bulletMesh, 1, 100.0f, 0.1f));
+	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
+	mWeapon.reset(new CWeapon(model, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -27,6 +27,16 @@ void CPlayer::Init()
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
 	mRadius = 5.0f;
+}
+
+void CPlayer::Cleanup()
+{
+	mMesh->RemoveModel(model);
+	mShieldMesh->RemoveModel(mShieldModel);
+
+	gEngine->RemoveMesh(mMesh);
+	gEngine->RemoveMesh(mShieldMesh);
+	gEngine->RemoveMesh(mProjectileMesh);
 }
 
 void CPlayer::Move(float dt)
@@ -197,6 +207,4 @@ bool CPlayer::GetMeshAndMatrix(IMesh* mesh, float* matrix)
 
 CPlayer::~CPlayer()
 {
-	//mesh->RemoveModel(model);
-	//gEngine->RemoveMesh(mesh);
 }
