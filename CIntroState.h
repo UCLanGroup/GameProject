@@ -1,5 +1,5 @@
 #pragma once
-// Last updated: 04.02.16
+// Last updated: 21.02.16
 
 #include <TL-Engine.h>
 
@@ -11,6 +11,12 @@ class CIntroState : public CGameState
 {
 private:
 	static CIntroState mIntroState;
+
+	ICamera* mCam;
+	IMesh* mFloorMesh;
+	IModel* mFloor;
+	IMesh* mPlaneMesh;
+	IModel* mPlane;
 
 	ISprite* mBackground;
 	ISprite* mText;

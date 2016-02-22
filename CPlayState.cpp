@@ -1,4 +1,4 @@
-// Last updated: 04.02.16
+// Last updated: 22.02.16
 
 #include "Globals.h"
 #include "CGameStateHandler.h"
@@ -8,7 +8,7 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
-	mFloorMesh = gEngine->LoadMesh(GROUNDMESH);
+	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -10.0f, -5.5f);
 
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);
@@ -37,6 +37,11 @@ void CPlayState::Cleanup()
 	mEBullets.clear();
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
+
+	// Must be after bullet cleanup. Bullet mesh
+	// needs to exist to remove bullet models. 
+	// Bullet mesh is owned by player.
+	mPlayer1.Cleanup();
 }
 
 void CPlayState::Pause() {}

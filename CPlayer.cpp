@@ -5,8 +5,9 @@
 void CPlayer::Init()
 {
 	//Model
-	SetMesh(PLAYERMESH);
-	
+	mMesh = gEngine->LoadMesh(PLAYER_MESH);
+	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
+
 	//Shield
 	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
 	mShieldModel = mShieldMesh->CreateModel(0.0f, 0.0f, 0.0f);
@@ -14,8 +15,8 @@ void CPlayer::Init()
 	mShieldModel->AttachToParent(mModel);
 
 	//Weapon
-	IMesh* bulletMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(mModel, bulletMesh, 1, 100.0f, 0.1f));
+	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
+	mWeapon.reset(new CWeapon(model, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -26,6 +27,16 @@ void CPlayer::Init()
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
 	SetRadius(5.0f);
+}
+
+void CPlayer::Cleanup()
+{
+	mMesh->RemoveModel(model);
+	mShieldMesh->RemoveModel(mShieldModel);
+
+	gEngine->RemoveMesh(mMesh);
+	gEngine->RemoveMesh(mShieldMesh);
+	gEngine->RemoveMesh(mProjectileMesh);
 }
 
 void CPlayer::Move(float dt)
@@ -181,7 +192,7 @@ CWeapon* CPlayer::GetWeapon()
 
 //Inherited from IEntity
 void CPlayer::Reset()
-{
+	{
 	mHealth = 100;
 	mMaxHealth = 100;
 	mShield = 50;
@@ -191,6 +202,4 @@ void CPlayer::Reset()
 
 CPlayer::~CPlayer()
 {
-	//mesh->RemoveModel(model);
-	//gEngine->RemoveMesh(mesh);
 }

@@ -11,6 +11,8 @@ class CPlayer : public IEntity
 {
 private:
 	IMesh* mShieldMesh;
+	IMesh* mProjectileMesh;
+	IMesh* mMesh;
 	IModel* mShieldModel;
 
 	int mHealth;
@@ -25,6 +27,7 @@ private:
 
 public:
 	void Init();
+	void Cleanup();
 
 	void Move(float);
 	virtual void CheckCollision();
