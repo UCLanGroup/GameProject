@@ -3,31 +3,49 @@
 #include "Globals.h"
 #include "CExplosionPool.h"
 
+const float kTurnInterval = 0.5f; //Changes turn direction every 0.5f seconds
+const float kTurnSpeed = 90.0f;
+const float kMoveSpeed = 50.0f;	//Default move speed
+
 CMissile::CMissile()
 {
-	SetMesh(BULLET_MESH);
+	SetMesh(MISSILE_MESH);
 
 	SetDamage(10);
-	SetSpeed(20.0f);
+	SetSpeed(kMoveSpeed);
 	SetRadius(2.0f);
 }
 
 void CMissile::Update(float delta)
 {
+	mModel->MoveLocalZ(GetSpeed() * delta);
 	if (mTarget != 0)
 	{
 		Vector3 targetPos = mTarget->GetCenterPoint();
-		Vector3 currnetPos = GetCenterPoint();
-		//Calculate bearing from north
-		float xDif = targetPos.GetX() - mModel->GetX();
-		float zDif = targetPos.GetZ() - mModel->GetZ();
-		float angle = 90.0f - atan2f(zDif, xDif) * (180.0f / static_cast<float>(M_PI));
+		Vector3 currentPos = GetCenterPoint();
 
-		//Reset orientation then apply new angle
-		mModel->ResetOrientation();
-		mModel->RotateY(angle);
+		Vector3 direction = targetPos - currentPos;
+
+		mTimer += delta;
+		if (mTimer > kTurnInterval)
+		{
+			float matrix[16];
+			mModel->GetMatrix(&(matrix[0]));
+			Vector3 forward(matrix[0], matrix[1], matrix[2]);
+
+			mClockwise = (forward * direction > 0.0f);
+
+			mTimer -= kTurnInterval;
+		}
+		if (mClockwise)
+		{
+			mModel->RotateY(kTurnSpeed * delta);
+		}
+		else
+		{
+			mModel->RotateY(-kTurnSpeed * delta);
+		}
 	}
-	mModel->MoveLocalZ(GetSpeed() * delta);
 }
 
 void CMissile::CheckCollision()
@@ -58,9 +76,30 @@ void CMissile::SetTarget(IEntity* target)
 	mTarget = target;
 }
 
+void CMissile::SetRotation(float rotation)
+{
+	mRotation = rotation;
+}
+
 void CMissile::SetLists(std::list<res_ptr<CProjectile>>* playerBullets)
 {
 	mpPlayerBullets = playerBullets;
+}
+
+
+IEntity* CMissile::GetTarget()
+{
+	return mTarget;
+}
+
+float CMissile::GetRotation()
+{
+	return mRotation;
+}
+
+bool CMissile::IsClockwise()
+{
+	return mClockwise;
 }
 
 void CMissile::Reset()

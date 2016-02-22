@@ -6,10 +6,10 @@ class CEnemyBoss : public CEnemy
 private:
 	enum State { Enter, Attack1, Attack2, Overdrive };
 protected:
-	State mState;
-	float mBobbing;
-	float mStateTimer;
-	float mAttackTimer;
+	State mState = State::Enter;
+	float mBobbing = 0.0f;
+	float mStateTimer = 0.0f;
+	float mAttackTimer = 0.0f;
 public:
 	CEnemyBoss();
 

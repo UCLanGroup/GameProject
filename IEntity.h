@@ -27,11 +27,13 @@ public:
 	void SetMesh(string meshFile);
 	void SetMesh(IMesh* mesh);
 	void SetPosition(Vector3& pos);
+	void SetRotation(float degrees);
 	void SetDead(bool dead);
 
 	//Gets
 	string& GetName();
 	IModel* GetModel();
+	float GetRotation();
 	bool IsOutOfBounds();
 	bool IsDead();
 

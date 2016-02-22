@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "IEntity.h"
 #include "Globals.h"
 #include "CMeshCache.h"
@@ -64,6 +65,16 @@ void IEntity::SetPosition(Vector3& pos)
 	}
 }
 
+//Sets the Y rotation of the entity's model in degrees
+void IEntity::SetRotation(float rotation)
+{
+	if (mModel)
+	{
+		mModel->ResetOrientation();
+		mModel->RotateY(rotation);
+	}
+}
+
 void IEntity::SetDead(bool dead)
 {
 	mIsDead = dead;
@@ -84,6 +95,15 @@ string& IEntity::GetName()
 IModel* IEntity::GetModel()
 {
 	return mModel;
+}
+
+//Gets the entity's rotation
+float IEntity::GetRotation()
+{
+	float matrix[16];
+	mModel->GetMatrix(&(matrix[0]));
+
+	return (atan2f(matrix[2], matrix[0]) * (180.0f / static_cast<float>(M_PI)));
 }
 
 //Checks if the entity's model is out of bounds

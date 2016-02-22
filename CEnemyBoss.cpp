@@ -5,6 +5,10 @@
 #include "CMissile.h"
 
 const float kRotateSpeed = 720.0f; //Rotation Speed
+const float kAttackRate = 0.5f;
+const float kStateDuration = 5.0f; //Each state lasts for 5 seconds
+const float kHoverHeight = AREA_BOUNDS_TOP - 20.0f; //Position that the boss hovers at
+//const float kHover
 
 CEnemyBoss::CEnemyBoss()
 {
@@ -94,42 +98,73 @@ void CEnemyBoss::Update(float delta)
 	if (mState == State::Attack1)
 	{
 		//Basic attack pattern, switches to attack2 after set amount of time
-		while (mAttackTimer > 0.5f)
+		while (mAttackTimer > kAttackRate)
 		{
-			float matrix[16];
-			mModel->GetMatrix(matrix);
-
 			res_ptr<CMissile> newMissile = move(CPool<CMissile>::GetInstance()->GetRes());
-			newMissile->SetMatrix(matrix);
+			newMissile->SetPosition(GetCenterPoint());
+			newMissile->SetRotation(GetRotation());
 			newMissile->SetDamage(10);
-			newMissile->SetSpeed(20.0f);
 			newMissile->SetTarget((*mpPlayers)[0]);
 
 			res_ptr<CProjectile> newBullet(newMissile.release());
 
 			mpEnemyBullets->push_back(move(newBullet));
 
-			mAttackTimer -= 0.5f;
+			mAttackTimer -= kAttackRate;
 		}
 
-		if (mStateTimer > 5.0f)
+		if (mState == State::Attack1 && mStateTimer > kStateDuration)
 		{
-			mStateTimer = 0.0f;
+			mStateTimer -= kStateDuration;
 			mState = State::Attack2;
 		}
 	}
 	else if (mState == State::Attack2)
 	{
 		//Basic attack pattern, switches to attack1 after set amount of time
-		if (mStateTimer > 5.0f)
+		while (mAttackTimer > kAttackRate)
 		{
-			mStateTimer = 0.0f;
+			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
+			newBullet->SetPosition(GetCenterPoint());
+			newBullet->SetRotation(GetRotation());
+			newBullet->SetDamage(10);
+
+			mpEnemyBullets->push_back(move(newBullet));
+
+			mAttackTimer -= kAttackRate;
+		}
+
+		if (mState == State::Attack2 && mStateTimer > kStateDuration)
+		{
+			mStateTimer -= kStateDuration;
 			mState = State::Attack1;
 		}
 	}
 	else if (mState == State::Overdrive)
 	{
 		//Death, enters overdrive when low on health
+		while (mAttackTimer > kAttackRate)
+		{
+			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
+			newBullet->SetPosition(GetCenterPoint());
+			newBullet->SetRotation(GetRotation());
+			newBullet->SetDamage(10);
+
+			mpEnemyBullets->push_back(move(newBullet));
+
+			res_ptr<CMissile> newMissile = move(CPool<CMissile>::GetInstance()->GetRes());
+			newMissile->SetPosition(GetCenterPoint());
+			newMissile->SetRotation(GetRotation());
+			newMissile->SetDamage(10);
+			newMissile->SetTarget((*mpPlayers)[0]);
+			newMissile->SetMesh(MISSILE_MESH);
+
+			newBullet.reset(newMissile.release());
+
+			mpEnemyBullets->push_back(move(newBullet));
+
+			mAttackTimer -= kAttackRate;
+		}
 	}
 }
 
@@ -144,6 +179,7 @@ void CEnemyBoss::TakeDamage(int damage)
 	}
 	if (GetHealth() <= 0)
 	{
+		SetDead(true);
 		mFinished = true;
 	}
 }
