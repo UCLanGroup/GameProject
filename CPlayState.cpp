@@ -37,6 +37,11 @@ void CPlayState::Cleanup()
 	mEBullets.clear();
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
+
+	// Must be after bullet cleanup. Bullet mesh
+	// needs to exist to remove bullet models. 
+	// Bullet mesh is owned by player.
+	mPlayer1.Cleanup();
 }
 
 void CPlayState::Pause() {}
