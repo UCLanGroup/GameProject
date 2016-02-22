@@ -4,6 +4,7 @@
 #include "CPlayer.h"
 #include "CMissile.h"
 
+const float kRotateSpeed = 720.0f; //Rotation Speed
 
 CEnemyBoss::CEnemyBoss()
 {
@@ -83,7 +84,7 @@ void CEnemyBoss::Update(float delta)
 {
 	if (mState == State::Overdrive) delta *= 2.0f;
 	Move(delta);
-	(mModel->GetNode(6))->RotateY(delta * 720.0f); //Rotate spinny thing
+	(mModel->GetNode(6))->RotateY(delta * kRotateSpeed); //Rotate spinny thing
 
 	if (mState == State::Enter) return; //Don't do anything when entering
 

@@ -12,7 +12,6 @@ class CPlayer : public IEntity
 private:
 	IMesh* mShieldMesh;
 	IMesh* mProjectileMesh;
-	IMesh* mMesh;
 	IModel* mShieldModel;
 
 	int mHealth;

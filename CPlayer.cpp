@@ -5,18 +5,17 @@
 void CPlayer::Init()
 {
 	//Model
-	mMesh = gEngine->LoadMesh(PLAYER_MESH);
-	model = mMesh->CreateModel(0.0f, 0.0f, 0.0f);
+	SetMesh(PLAYER_MESH);
 
 	//Shield
-	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
+	mShieldMesh = CMeshCache::GetInstance()->LoadMesh(SHIELD_MESH);
 	mShieldModel = mShieldMesh->CreateModel(0.0f, 0.0f, 0.0f);
 	mShieldModel->Scale(12.0f);
 	mShieldModel->AttachToParent(mModel);
 
 	//Weapon
-	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(model, mProjectileMesh, 1, 100.0f, 0.1f));
+	mProjectileMesh = CMeshCache::GetInstance()->LoadMesh(BULLET_MESH);
+	mWeapon.reset(new CWeapon(mModel, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -31,12 +30,8 @@ void CPlayer::Init()
 
 void CPlayer::Cleanup()
 {
-	mMesh->RemoveModel(model);
+	GetMesh()->RemoveModel(mModel);
 	mShieldMesh->RemoveModel(mShieldModel);
-
-	gEngine->RemoveMesh(mMesh);
-	gEngine->RemoveMesh(mShieldMesh);
-	gEngine->RemoveMesh(mProjectileMesh);
 }
 
 void CPlayer::Move(float dt)
