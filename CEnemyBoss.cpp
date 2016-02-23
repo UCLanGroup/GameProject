@@ -7,8 +7,6 @@
 const float kRotateSpeed = 720.0f; //Rotation Speed
 const float kAttackRate = 0.5f;
 const float kStateDuration = 5.0f; //Each state lasts for 5 seconds
-const float kHoverHeight = AREA_BOUNDS_TOP - 20.0f; //Position that the boss hovers at
-//const float kHover
 
 CEnemyBoss::CEnemyBoss()
 {

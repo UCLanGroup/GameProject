@@ -18,38 +18,49 @@ CMissile::CMissile()
 
 void CMissile::Update(float delta)
 {
+	//Move forward
 	mModel->MoveLocalZ(GetSpeed() * delta);
+
+	//If provided with a target then head towards it
 	if (mTarget != 0)
 	{
-		Vector3 targetPos = mTarget->GetCenterPoint();
-		Vector3 currentPos = GetCenterPoint();
-
-		Vector3 direction = targetPos - currentPos;
-
+		//Increment timer
 		mTimer += delta;
 		if (mTimer > kTurnInterval)
 		{
+			//Calculate the direction towards the target
+			Vector3 targetPos = mTarget->GetCenterPoint();
+			Vector3 currentPos = GetCenterPoint();
+
+			Vector3 direction = targetPos - currentPos;
+
+			//Get the direction the missile is currently heading in
 			float matrix[16];
 			mModel->GetMatrix(&(matrix[0]));
 			Vector3 forward(matrix[0], matrix[1], matrix[2]);
 
+			//Use dot product to determin direction
 			mClockwise = (forward * direction > 0.0f);
 
+			//Reset timer
 			mTimer -= kTurnInterval;
 		}
+
+		//Turn in the desired direction
 		if (mClockwise)
 		{
-			mModel->RotateY(kTurnSpeed * delta);
+			mModel->RotateLocalY(kTurnSpeed * delta);
 		}
 		else
 		{
-			mModel->RotateY(-kTurnSpeed * delta);
+			mModel->RotateLocalY(kTurnSpeed * -delta);
 		}
 	}
 }
 
 void CMissile::CheckCollision()
 {
+	//Check if given anything to collide against
 	if (mpPlayerBullets == 0) return;
 
 	auto bullet = mpPlayerBullets->begin();
@@ -58,15 +69,22 @@ void CMissile::CheckCollision()
 	{
 		if (CollidesMesh(bullet->get()))
 		{
-			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
-			bullet = mpPlayerBullets->erase(bullet);
+			//Upon collision with player's bullet destroy self and the bullet
+			//Explosions!
+			Vector3 loc = (*bullet)->GetCenterPoint();
+			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*bullet)->GetRadius());
+			mpPlayerBullets->erase(bullet);
 
-			Vector3 loc = GetCenterPoint();
+			loc = GetCenterPoint();
 			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
 
 			SetDead(true);
 			//Don't collide with any of the remaining bullets when dead
 			return;
+		}
+		else
+		{
+			bullet++;
 		}
 	}
 }
@@ -74,11 +92,6 @@ void CMissile::CheckCollision()
 void CMissile::SetTarget(IEntity* target)
 {
 	mTarget = target;
-}
-
-void CMissile::SetRotation(float rotation)
-{
-	mRotation = rotation;
 }
 
 void CMissile::SetLists(std::list<res_ptr<CProjectile>>* playerBullets)
@@ -90,11 +103,6 @@ void CMissile::SetLists(std::list<res_ptr<CProjectile>>* playerBullets)
 IEntity* CMissile::GetTarget()
 {
 	return mTarget;
-}
-
-float CMissile::GetRotation()
-{
-	return mRotation;
 }
 
 bool CMissile::IsClockwise()

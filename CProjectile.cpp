@@ -7,8 +7,8 @@ CProjectile::CProjectile()
 	SetMesh(BULLET_MESH);
 	//mModel->SetMatrix(matrix);
 
-	mDamage = 0;
-	mSpeed = 0.0;
+	mDamage = 1;
+	mSpeed = 50.0;
 	SetRadius(2.0f);
 }
 
