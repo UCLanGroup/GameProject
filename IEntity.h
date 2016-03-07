@@ -11,7 +11,7 @@ class IEntity : public ICollidable, public ICollider, public IResource
 private:
 	string name = "Null";
 	IMesh* mMesh = 0;
-	bool mIsDead;
+	bool mIsDead = false;
 
 protected:
 	IModel* mModel = 0;

@@ -6,20 +6,24 @@
 const float kTurnInterval = 0.5f; //Changes turn direction every 0.5f seconds
 const float kTurnSpeed = 90.0f;
 const float kMoveSpeed = 50.0f;	//Default move speed
+const float kScale = 0.5f;
 
 CMissile::CMissile()
 {
 	SetMesh(MISSILE_MESH);
+	mModel->Scale(kScale);
+	//mModel->RotateLocalY(180);
 
 	SetDamage(10);
 	SetSpeed(kMoveSpeed);
 	SetRadius(2.0f);
+	SetDead(false);
 }
 
 void CMissile::Update(float delta)
 {
 	//Move forward
-	mModel->MoveLocalZ(GetSpeed() * delta);
+	mModel->MoveLocalZ(GetSpeed() * -delta / kScale);
 
 	//If provided with a target then head towards it
 	if (mTarget != 0)
@@ -47,7 +51,7 @@ void CMissile::Update(float delta)
 		}
 
 		//Turn in the desired direction
-		if (mClockwise)
+		if (!mClockwise)
 		{
 			mModel->RotateLocalY(kTurnSpeed * delta);
 		}
@@ -67,7 +71,7 @@ void CMissile::CheckCollision()
 
 	while (bullet != mpPlayerBullets->end())
 	{
-		if (CollidesMesh(bullet->get()))
+		if (CollidesSphere(bullet->get()))
 		{
 			//Upon collision with player's bullet destroy self and the bullet
 			//Explosions!
@@ -112,5 +116,5 @@ bool CMissile::IsClockwise()
 
 void CMissile::Reset()
 {
-
+	SetDead(false);
 }

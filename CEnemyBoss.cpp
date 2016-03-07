@@ -103,6 +103,7 @@ void CEnemyBoss::Update(float delta)
 			newMissile->SetRotation(GetRotation());
 			newMissile->SetDamage(10);
 			newMissile->SetTarget((*mpPlayers)[0]);
+			newMissile->SetLists(mpPlayerBullets);
 
 			res_ptr<CProjectile> newBullet(newMissile.release());
 
@@ -125,6 +126,7 @@ void CEnemyBoss::Update(float delta)
 			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
 			newBullet->SetPosition(GetCenterPoint());
 			newBullet->SetRotation(GetRotation());
+			newBullet->SetSpeed(100.0f);
 			newBullet->SetDamage(10);
 
 			mpEnemyBullets->push_back(move(newBullet));
@@ -146,6 +148,7 @@ void CEnemyBoss::Update(float delta)
 			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
 			newBullet->SetPosition(GetCenterPoint());
 			newBullet->SetRotation(GetRotation());
+			newBullet->SetSpeed(100.0f);
 			newBullet->SetDamage(10);
 
 			mpEnemyBullets->push_back(move(newBullet));
@@ -155,7 +158,7 @@ void CEnemyBoss::Update(float delta)
 			newMissile->SetRotation(GetRotation());
 			newMissile->SetDamage(10);
 			newMissile->SetTarget((*mpPlayers)[0]);
-			newMissile->SetMesh(MISSILE_MESH);
+			newMissile->SetLists(mpPlayerBullets);
 
 			newBullet.reset(newMissile.release());
 

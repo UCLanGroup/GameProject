@@ -19,9 +19,6 @@
     <ClCompile Include="CEnemyBoss.cpp">
       <Filter>Entities\source</Filter>
     </ClCompile>
-    <ClCompile Include="IEntity.cpp">
-      <Filter>Core\source</Filter>
-    </ClCompile>
     <ClCompile Include="ICollider.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
+    <ClCompile Include="IEntity.cpp">
+      <Filter>Entities\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -79,9 +79,6 @@
       <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollider.h">
-      <Filter>Core\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="IEntity.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollidable.h">
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="IEntity.h">
+      <Filter>Entities\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

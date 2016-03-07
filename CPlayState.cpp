@@ -95,8 +95,9 @@ void CPlayState::Update(CGameStateHandler * game)
 	for (auto bullet = mEBullets.begin(); bullet != mEBullets.end(); )
 	{
 		(*bullet)->Update(mDelta);
+		(*bullet)->CheckCollision();
 
-		if ((*bullet)->IsOutOfBounds())
+		if ((*bullet)->IsOutOfBounds() || (*bullet)->IsDead())
 		{
 			bullet = mEBullets.erase(bullet);
 		}

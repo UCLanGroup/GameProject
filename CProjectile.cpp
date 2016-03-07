@@ -10,6 +10,7 @@ CProjectile::CProjectile()
 	mDamage = 1;
 	mSpeed = 50.0;
 	SetRadius(2.0f);
+	SetDead(false);
 }
 
 //The matrix should be the matrix gained from the parent model (the plane/spaceship)
@@ -22,6 +23,7 @@ CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float spee
 	mDamage = damage;
 	mSpeed = speed;
 	SetRadius(2.0f);
+	SetDead(false);
 }
 
 void CProjectile::Update(float delta)
@@ -68,6 +70,7 @@ void CProjectile::SetMatrix(float* matrix)
 void CProjectile::Reset()
 {
 	//Empty
+	SetDead(false);
 }
 
 CProjectile::~CProjectile()
