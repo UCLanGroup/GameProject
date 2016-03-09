@@ -44,7 +44,7 @@ const string GRASS_TEX			= "grass.jpg";
 const string DUMMY_MESH			= "dummy.x";
 const string PLAYER_MESH		= "mig29.x";
 const string BULLET_MESH		= "Bullet.x";
-const string MISSILE_MESH		= "Missile.x";
+const string MISSILE_MESH		= "missile1.x";
 const string SHIELD_MESH		= "Shield.x";
 
 const string DEFAULT_ENEMY_MESH = "f16.x";
