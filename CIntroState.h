@@ -12,18 +12,25 @@ class CIntroState : public CGameState
 private:
 	static CIntroState mIntroState;
 
-	ICamera* mCam;
-	IMesh* mFloorMesh;
-	IModel* mFloor;
-	IMesh* mPlaneMesh;
-	IModel* mPlane;
+	ICamera* mCam = nullptr;
+	IMesh* mFloorMesh = nullptr;
+	IModel* mFloor = nullptr;
+	IMesh* mSkyBoxMesh = nullptr;
+	IModel* mSkyBox = nullptr;
+	IMesh* mPlaneMesh = nullptr;
+	IModel* mPlane = nullptr;
+	IMesh* mDummyMesh = nullptr;
+	IModel* mDummy = nullptr;
 
 	ISprite* mBackground;
 	ISprite* mText;
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
-	float mMove = 0.0f;			// For text animation
+	float mTextMove = 0.0f;			// For text animation
 	bool mMoveUp = true;
+
+	float mPlaneMoveSpeed = 15.0f;
+	float mCameraMoveSpeed = 2.0f;
 
 public:
 	// Setup and destroy state
