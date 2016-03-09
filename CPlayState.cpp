@@ -3,28 +3,42 @@
 #include "Globals.h"
 #include "CGameStateHandler.h"
 #include "CPlayState.h"
+#include <iostream>
 
 CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
+	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
-	mFloor = mFloorMesh->CreateModel(-6.0f, -10.0f, -5.5f);
+	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
+	mFloor->SetSkin(GRASS_TEX);
 
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);
 
 	mCam = gEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mCam->RotateLocalX(90.0f);
 
+	// SYSTEM
 	mPlayer1.Init();
-
 	playerList.push_back(&mPlayer1);
 
+	// AI
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	mEnemyManager->SetLists(&playerList, &mPBullets, &mEBullets);
 	
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
+
+	// SOUND
+	if (!mBufferShoot.loadFromFile(SOUND_SHOOT))
+	{
+		cout << "CPlayState.cpp: Error loading sound file" << endl;
+	}
+
+	mSound.setBuffer(mBufferShoot);
+	mSound.setVolume(30.0f);
+	
 }
 
 void CPlayState::Cleanup()
@@ -69,6 +83,10 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	if (gEngine->KeyHeld(KEY_FIRE))
 	{
+		if (mSound.getStatus() == sf::SoundSource::Stopped)
+		{
+			mSound.play();
+		}
 		mPlayer1.GetWeapon()->Update(mDelta, mPBullets);
 	}
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <TL-Engine.h>
+#include <SFML/Audio.hpp>
 #include "Vector3.h"
 
 using namespace tle;
@@ -14,18 +15,23 @@ using vector_ptr = std::vector<std::unique_ptr<T>>; // Combines vector and uniqu
 
 // Globals
 extern tle::I3DEngine* gEngine;
-
+extern sf::Music gMusic;
 
 // Constants
 		//File paths
-const string MEDIA_FOLDER	= ".\\Media";
+const string MEDIA_FOLDER		= ".\\Media";
 
 		// Window
-const string WINDOW_CAPTION	= "Shooty Game WT";
+const string WINDOW_CAPTION		= "Shooty Game WT";
 
 		// Intro screen
 const string INTRO_BG			= "menu.png";				// Temporary background image
 const string INTRO_START		= "menustart.png";			// Temporary start text
+
+		// Sound
+const string MUSIC				= MEDIA_FOLDER + "\\music.flac";
+const string SOUND_SHOOT		= MEDIA_FOLDER + "\\shoot.flac";
+const string SOUND_START		= MEDIA_FOLDER + "\\start.flac";
 
 		// Gameplay
 const string UI					= "ui.png";					// Tempororay user interface
