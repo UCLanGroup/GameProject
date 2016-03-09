@@ -32,17 +32,21 @@ const string UI					= "ui.png";					// Tempororay user interface
 const string GROUND_SKIN		= "ground.png";
 
 const string GROUND_MESH		= "ground.x";
+const string SKYBOX_MESH		= "skybox.x";
+const string GRASS_TEX			= "grass.jpg";
+
+const string DUMMY_MESH			= "dummy.x";
 const string PLAYER_MESH		= "mig29.x";
 const string BULLET_MESH		= "Bullet.x";
 const string MISSILE_MESH		= "missile1.x";
 const string SHIELD_MESH		= "Shield.x";
 
 const string DEFAULT_ENEMY_MESH = "f16.x";
-const string HAVOC_BOSS_MESH = "Mi28Havoc.x";
+const string HAVOC_BOSS_MESH	= "Mi28Havoc.x";
 
 		//Explosions
-const string EXPLOSION_MESH = "Explosion.x";
-const string EXPLOSION_SPRITE = "Explosion";
+const string EXPLOSION_MESH		= "Explosion.x";
+const string EXPLOSION_SPRITE	= "Explosion";
 const int EXPLOSION_SPRITE_COUNT = 34;
 const float EXPLODE_RATE = 0.03f;
 

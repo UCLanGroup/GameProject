@@ -10,28 +10,40 @@ CIntroState CIntroState::mIntroState;
 void CIntroState::Init()
 {
 	// Menu screen goes here
-	mBackground = gEngine->CreateSprite(INTRO_BG, 0.0f, 0.0f, 1.0f);
+	mBackground = gEngine->CreateSprite(INTRO_BG, 0.0f, 0.0f, 0.8f);
 	mText = gEngine->CreateSprite(INTRO_START, 0.0f, 300.0f, 0.9f);
 
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -10.0f, -5.5f);
+	mFloor->SetSkin(GRASS_TEX);
+
+	mSkyBoxMesh = gEngine->LoadMesh(SKYBOX_MESH);
+	mSkyBox = mSkyBoxMesh->CreateModel(0.0f, -960.0f, 0.0f);
 
 	mPlaneMesh = gEngine->LoadMesh(PLAYER_MESH);
 	mPlane = mPlaneMesh->CreateModel(0.0f, 10.0f, 150.0f);
 	mPlane->Scale(6.0f);
 	mPlane->RotateY(180.0f);
 
-	mCam = gEngine->CreateCamera(kManual, 0.0f, 40.0f, 0.0f);
+	mDummyMesh = gEngine->LoadMesh(DUMMY_MESH);
+	mDummy = mDummyMesh->CreateModel(0.0f, 10.0f, 150.0f);
+
+	mCam = gEngine->CreateCamera(kManual, 0.0f, 30.0f, -150.0f);
+	mCam->AttachToParent(mDummy);
 	mCam->RotateLocalX(10.0f);
 }
 
 void CIntroState::Cleanup() 
 {
-	//gEngine->RemoveSprite(mBackground);
+	gEngine->RemoveSprite(mBackground);
 	gEngine->RemoveSprite(mText);
 	gEngine->RemoveCamera(mCam);
 	mFloorMesh->RemoveModel(mFloor);
 	gEngine->RemoveMesh(mFloorMesh);
+	mSkyBoxMesh->RemoveModel(mSkyBox);
+	gEngine->RemoveMesh(mSkyBoxMesh);
+	mDummyMesh->RemoveModel(mDummy);
+	gEngine->RemoveMesh(mDummyMesh);
 	mPlaneMesh->RemoveModel(mPlane);
 	gEngine->RemoveMesh(mPlaneMesh);
 }
@@ -61,12 +73,13 @@ void CIntroState::Update(CGameStateHandler* game)
 	mDelta = gEngine->Timer();
 
 	// Animations go here
-	mMove += mDelta;
+	mTextMove += mDelta;
 
 	// Start text
-	if (mMove > 0.0001f)
+	if (mTextMove > 0.0001f)
 	{
-		mPlane->RotateY(15.0f * mDelta);
+		mPlane->RotateY(mPlaneMoveSpeed * mDelta);
+		mDummy->RotateY(-mCameraMoveSpeed * mDelta);
 
 		if (mMoveUp)
 		{
@@ -84,7 +97,7 @@ void CIntroState::Update(CGameStateHandler* game)
 				mMoveUp = !mMoveUp;
 			}
 		}
-		mMove = 0.0f;
+		mTextMove = 0.0f;
 	}
 
 }
