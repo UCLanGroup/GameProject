@@ -40,6 +40,7 @@ const string GROUND_SKIN		= "ground.png";
 const string GROUND_MESH		= "ground.x";
 const string SKYBOX_MESH		= "skybox.x";
 const string GRASS_TEX			= "grass.jpg";
+const string METAL_TEX			= "stone.jpg";
 
 const string DUMMY_MESH			= "dummy.x";
 const string PLAYER_MESH		= "mig29.x";

@@ -12,7 +12,7 @@ void CPlayState::Init()
 	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
-	mFloor->SetSkin(GRASS_TEX);
+	mFloor->SetSkin(METAL_TEX);
 
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.0f);
 
