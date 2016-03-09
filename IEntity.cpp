@@ -1,7 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "IEntity.h"
 #include "Globals.h"
-#include "CMeshCache.h"
 
 
 ////////////////////Update////////////////////
@@ -32,7 +31,7 @@ void IEntity::SetName(string& name)
 //Sets the entity's mesh and model
 void IEntity::SetMesh(string meshFile)
 {
-	SetMesh( CMeshCache::GetInstance()->LoadMesh(meshFile) );
+	SetMesh( gEngine->LoadMesh(meshFile) );
 }
 
 //Sets the entity's mesh and model
@@ -44,11 +43,11 @@ void IEntity::SetMesh(IMesh* mesh)
 		{
 			if (mModel) //If an existing model exists then remove it but preserve the location
 			{
-				Vector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
+				CVector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
 				mMesh->RemoveModel(mModel);
 				mMesh = mesh; //Set the new mesh
 				mModel = mMesh->CreateModel();
-				mModel->SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
+				mModel->SetPosition(pos.x, pos.y, pos.z);
 			}
 			else //If no existing model exists then create one
 			{
@@ -67,11 +66,11 @@ void IEntity::SetMesh(IMesh* mesh)
 }
 
 //Sets the entity's position
-void IEntity::SetPosition(Vector3& pos)
+void IEntity::SetPosition(CVector3& pos)
 {
 	if (mModel)
 	{
-		mModel->SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
+		mModel->SetPosition(pos.x, pos.y, pos.z);
 	}
 }
 
@@ -140,12 +139,12 @@ bool IEntity::IsDead()
 
 
 //Get the center point of the entity's model
-Vector3 IEntity::GetCenterPoint()
+CVector3 IEntity::GetCenterPoint()
 {
 	if (mModel)
-		return Vector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());
+		return CVector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());
 	else
-		return Vector3();
+		return CVector3(0.0f, 0.0f, 0.0f);
 }
 
 //Get the entity's mesh

@@ -1,6 +1,5 @@
 #include "CProjectile.h"
 #include "Globals.h"
-#include "CMeshCache.h"
 
 CProjectile::CProjectile()
 {

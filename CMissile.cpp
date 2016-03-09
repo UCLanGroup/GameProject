@@ -32,18 +32,18 @@ void CMissile::Update(float delta)
 		if (mTimer > kTurnInterval)
 		{
 			//Calculate the direction towards the target
-			Vector3 targetPos = mTarget->GetCenterPoint();
-			Vector3 currentPos = GetCenterPoint();
+			CVector3 targetPos = mTarget->GetCenterPoint();
+			CVector3 currentPos = GetCenterPoint();
 
-			Vector3 direction = targetPos - currentPos;
+			CVector3 direction = targetPos - currentPos;
 
 			//Get the direction the missile is currently heading in
 			float matrix[16];
 			mModel->GetMatrix(&(matrix[0]));
-			Vector3 forward(matrix[0], matrix[1], matrix[2]);
+			CVector3 forward(matrix[0], matrix[1], matrix[2]);
 
 			//Use dot product to determin direction
-			mClockwise = (forward * direction > 0.0f);
+			mClockwise = (Dot(forward, direction) > 0.0f);
 
 			//Reset timer
 			mTimer -= kTurnInterval;
@@ -74,12 +74,12 @@ void CMissile::CheckCollision()
 		{
 			//Upon collision with player's bullet destroy self and the bullet
 			//Explosions!
-			Vector3 loc = (*bullet)->GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*bullet)->GetRadius());
+			CVector3 loc = (*bullet)->GetCenterPoint();
+			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, (*bullet)->GetRadius());
 			mpPlayerBullets->erase(bullet);
 
 			loc = GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
+			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
 
 			SetDead(true);
 			//Don't collide with any of the remaining bullets when dead

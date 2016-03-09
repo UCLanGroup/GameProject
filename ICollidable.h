@@ -1,6 +1,6 @@
 #pragma once
-#include "Vector3.h"
-#include <TL-Engine.h>
+#include "CVector3.h"
+#include <Mesh.h>
 
 class ICollidable
 {
@@ -10,7 +10,7 @@ public:
 	virtual float GetRadius() { return mRadius; }
 	virtual void SetRadius(float radius) { mRadius = radius; }
 	
-	virtual Vector3 GetCenterPoint() = 0;
+	virtual tlx::CVector3 GetCenterPoint() = 0;
 
 	virtual tle::IMesh* GetMesh() = 0;
 

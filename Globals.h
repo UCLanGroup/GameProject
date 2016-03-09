@@ -3,8 +3,7 @@
 
 #include <vector>
 #include <memory>
-#include <TL-Engine.h>
-#include "Vector3.h"
+#include <ExtendedEngine.h>
 
 using namespace tle;
 
@@ -13,7 +12,7 @@ template <typename T>
 using vector_ptr = std::vector<std::unique_ptr<T>>; // Combines vector and unique_ptr
 
 // Globals
-extern tle::I3DEngine* gEngine;
+extern tle::IEngine* gEngine;
 
 
 // Constants

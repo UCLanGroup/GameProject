@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector3.h"
+#include "CVector3.h"
 #include "ICollidable.h"
 #include "ICollider.h"
 #include "IResource.h"
@@ -26,7 +26,7 @@ public:
 	void SetName(string& name);
 	void SetMesh(string meshFile);
 	void SetMesh(IMesh* mesh);
-	void SetPosition(Vector3& pos);
+	void SetPosition(CVector3& pos);
 	void SetRotation(float degrees);
 	void SetDead(bool dead);
 
@@ -38,7 +38,7 @@ public:
 	bool IsDead();
 
 	//Inherited from ICollidable
-	virtual Vector3 GetCenterPoint();
+	virtual CVector3 GetCenterPoint();
 	virtual IMesh* GetMesh();
 	virtual bool GetMatrix(float* matrix);
 

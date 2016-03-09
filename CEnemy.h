@@ -1,6 +1,5 @@
 #pragma once
 #include "Globals.h"
-#include "Vector3.h"
 #include "CWeapon.h"
 #include "IEntity.h"
 #include "CPool.h"
@@ -10,14 +9,14 @@
 class CPlayer;
 class CProjectile;
 
-using Path = std::vector<Vector3>;
+using Path = std::vector<CVector3>;
 
 class CEnemy : public IEntity
 {
 private:
 	//Pathing
 	Path* mpPath;
-	Vector3 mOffset;
+	CVector3 mOffset;
 	int mPathPos;
 	float mMoveTimer;
 
@@ -36,7 +35,7 @@ protected:
 
 public:
 	CEnemy();
-	CEnemy(Path* path, Vector3& offset);
+	CEnemy(Path* path, CVector3& offset);
 
 	//Updates
 	virtual void Move(float delta);
@@ -49,7 +48,7 @@ public:
 	void SetSpeed(float speed);
 	void AddWeapon(CWeapon w);
 	void SetValue(int value);
-	void SetPath(Path* path, Vector3& offset);
+	void SetPath(Path* path, CVector3& offset);
 
 	void SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
 

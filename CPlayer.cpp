@@ -1,5 +1,4 @@
 #include "CPlayer.h"
-#include "CMeshCache.h"
 #include <algorithm> //for min & max functions
 
 void CPlayer::Init()
@@ -8,13 +7,13 @@ void CPlayer::Init()
 	SetMesh(PLAYER_MESH);
 
 	//Shield
-	mShieldMesh = CMeshCache::GetInstance()->LoadMesh(SHIELD_MESH);
+	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
 	mShieldModel = mShieldMesh->CreateModel(0.0f, 0.0f, 0.0f);
 	mShieldModel->Scale(12.0f);
 	mShieldModel->AttachToParent(mModel);
 
 	//Weapon
-	mProjectileMesh = CMeshCache::GetInstance()->LoadMesh(BULLET_MESH);
+	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
 	mWeapon.reset(new CWeapon(mModel, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
