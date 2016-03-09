@@ -7,10 +7,6 @@
 
 using namespace tle;
 
-//Types
-template <typename T>
-using vector_ptr = std::vector<std::unique_ptr<T>>; // Combines vector and unique_ptr
-
 // Globals
 extern tle::IEngine* gEngine;
 

@@ -2,6 +2,7 @@
 #include "CMissile.h"
 #include "Globals.h"
 #include "CExplosionPool.h"
+#include <iostream>
 
 const float kTurnInterval = 0.5f; //Changes turn direction every 0.5f seconds
 const float kTurnSpeed = 90.0f;
@@ -17,6 +18,13 @@ CMissile::CMissile()
 	SetDead(false);
 
 	mTimer = kTurnInterval;
+	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, "Smoke1.png", 0.025f);
+	mEmitter->SetParticleLife(1.0f);
+	//mEmitter->RotateY();
+	mEmitter->Start();
+	mEmitter->AttachToParent(mModel);
+	mEmitter->ResetScale();
+	mEmitter->SetParticleScale(2.0f);
 }
 
 void CMissile::Update(float delta)
@@ -116,4 +124,11 @@ bool CMissile::IsClockwise()
 void CMissile::Reset()
 {
 	SetDead(false);
+}
+
+CMissile::~CMissile()
+{
+	mEmitter->DetachFromParent();
+	mEmitter->Stop();
+	gEngine->RemoveEmitter(mEmitter);
 }

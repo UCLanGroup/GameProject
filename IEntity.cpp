@@ -66,7 +66,7 @@ void IEntity::SetMesh(IMesh* mesh)
 }
 
 //Sets the entity's position
-void IEntity::SetPosition(CVector3& pos)
+void IEntity::SetPosition(tlx::CVector3& pos)
 {
 	if (mModel)
 	{
@@ -139,7 +139,7 @@ bool IEntity::IsDead()
 
 
 //Get the center point of the entity's model
-CVector3 IEntity::GetCenterPoint()
+tlx::CVector3 IEntity::GetCenterPoint()
 {
 	if (mModel)
 		return CVector3(mModel->GetX(), mModel->GetY(), mModel->GetZ());

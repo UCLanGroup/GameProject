@@ -118,7 +118,7 @@ void CEnemy::CheckCollision()
 		if (CollidesSphere(bullet->get()))
 		{
 			TakeDamage((*bullet)->GetDamage());
-			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
+			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().x, 0.0f, (*bullet)->GetCenterPoint().z, (*bullet)->GetRadius());
 			bullet = mpPlayerBullets->erase(bullet);
 			
 			if (IsDead())	//If killed by the bullet

@@ -8,7 +8,7 @@ namespace tle
 {
 	class IEngine : public I3DEngine
 	{
-
+	public:
 		/***************************************************
 							New functions
 		****************************************************/

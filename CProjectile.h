@@ -1,5 +1,5 @@
 #pragma once
-#include <TL-Engine.h>
+#include <IEngine.h>
 #include "IEntity.h"
 
 class CProjectile : public IEntity
@@ -27,5 +27,5 @@ public:
 	//Inherited from IEntity : IResource
 	virtual void Reset();
 
-	~CProjectile();
+	virtual ~CProjectile();
 };

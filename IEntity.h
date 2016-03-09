@@ -26,7 +26,7 @@ public:
 	void SetName(string& name);
 	void SetMesh(string meshFile);
 	void SetMesh(IMesh* mesh);
-	void SetPosition(CVector3& pos);
+	void SetPosition(tlx::CVector3& pos);
 	void SetRotation(float degrees);
 	void SetDead(bool dead);
 
@@ -38,7 +38,7 @@ public:
 	bool IsDead();
 
 	//Inherited from ICollidable
-	virtual CVector3 GetCenterPoint();
+	virtual tlx::CVector3 GetCenterPoint();
 	virtual IMesh* GetMesh();
 	virtual bool GetMatrix(float* matrix);
 
