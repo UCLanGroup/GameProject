@@ -6,15 +6,18 @@
 float3 CameraPosition : CAMERAPOSITION;
 
 // Ambient light colour
-float4 AmbientColour;
+float4 AmbientColour = {1.0f, 0.0f, 1.0f, 1.0f};
 
 // Position lights defined by position, colour and attenuation
 float3 LightPositions[2];
 float4 LightColours[2];
-float LightAttenuations[2];
+float LightAttenuations[2] = {100.0f, 100.0f};
+
+LightPositions[0] = { 0.0f, 50.0f, 0.0f };
+LightColours[0] = {1.0f, 0.0f, 0.0f, 1.0f};
 
 // The specular power of the material
-float SpecularPower;
+float SpecularPower = 256.0f;
 
 // Access to textures 0 & 1
 sampler2D Tex0;
@@ -67,10 +70,10 @@ void main( in PS_Input i, out PS_Output o )
 
 	// Initial diffuse and specular colour
 	float4 DiffuseColour = AmbientColour;
-	float4 SpecularColour = 0;
+	float4 SpecularColour = {1.0f, 1.0f, 1.0f, 1.0f};
 	
 	// For each light...
-	for (int light = 0; light < 2; ++light)
+	for (int light = 0; light < 1; ++light)
 	{
 		// Calculate vector to light and intensity (from attenuation factor)
 		float3 LightVector = LightPositions[light] - i.WorldPosition;
