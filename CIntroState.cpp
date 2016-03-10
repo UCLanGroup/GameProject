@@ -4,6 +4,7 @@
 #include "CGameStateHandler.h"
 #include "CIntroState.h"
 #include "CPlayState.h"
+#include <iostream>
 
 CIntroState CIntroState::mIntroState;
 
@@ -25,12 +26,32 @@ void CIntroState::Init()
 	mPlane->Scale(6.0f);
 	mPlane->RotateY(180.0f);
 
+
+	// CAMERA
 	mDummyMesh = gEngine->LoadMesh(DUMMY_MESH);
 	mDummy = mDummyMesh->CreateModel(0.0f, 10.0f, 150.0f);
 
 	mCam = gEngine->CreateCamera(kManual, 0.0f, 30.0f, -150.0f);
 	mCam->AttachToParent(mDummy);
 	mCam->RotateLocalX(10.0f);
+
+
+	// MUSIC
+	if (!gMusic.openFromFile(MUSIC))
+	{
+		cout << "CPlayState.cpp: Error loading music file" << endl;
+	}
+	gMusic.setVolume(15.0f);
+	gMusic.play();
+
+
+	// SOUND
+	if (!mBufferStart.loadFromFile(SOUND_START))
+	{
+		cout << "CIntroState.cpp: Error loading START sound file" << endl;
+	}
+
+	mSound.setBuffer(mBufferStart);
 }
 
 void CIntroState::Cleanup() 
@@ -64,6 +85,7 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 
 	if (gEngine->KeyHit(KEY_START))
 	{
+		mSound.play();
 		game->ChangeState(CPlayState::Instance());
 	}
 }

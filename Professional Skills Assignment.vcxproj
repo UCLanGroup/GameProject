@@ -53,16 +53,16 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)Debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;$(SFMLPath)\include</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;$(SFMLPath)\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(TLPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;.\SFML-2.3.2\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <PrecompiledHeader>
@@ -76,7 +76,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(TLPath)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TLPath)\lib;.\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Professional Skills Assignment.pdb</ProgramDatabaseFile>
       <DataExecutionPrevention>
@@ -84,7 +84,7 @@
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>TL-Engine2015Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TL-Engine2015Debug.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
@@ -95,7 +95,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(TLPath)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;..\SFML-2.3.2\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -107,14 +107,14 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(TLPath)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TLPath)\lib;..\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>TL-Engine2015.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>TL-Engine2015.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>

@@ -11,6 +11,7 @@ using namespace tle;
 
 // declared as extern in 'Globals.h'
 I3DEngine* gEngine = 0;
+sf::Music gMusic;
 
 void main()
 {

@@ -32,6 +32,10 @@ private:
 	float mPlaneMoveSpeed = 15.0f;
 	float mCameraMoveSpeed = 2.0f;
 
+	// SOUND
+	sf::SoundBuffer mBufferStart;
+	sf::Sound mSound;
+
 public:
 	// Setup and destroy state
 	void Init();
