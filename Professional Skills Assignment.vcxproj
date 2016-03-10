@@ -57,12 +57,12 @@
     <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;$(SFMLPath)\include</IncludePath>
-    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;$(SFMLPath)\lib</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)\include;</IncludePath>
+    <LibraryPath>$(LibraryPath);$(DXSDK_DIR)\lib\x86;</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(TLPath)\include;.\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;.\ExtendedEngine\Interface;$(TLPath)\3rd Party\TL-Xtreme\include;.\SFML-2.3.2\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <PrecompiledHeader>
@@ -76,7 +76,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(TLPath)\lib;.\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\ExtendedEngine\lib;.\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Professional Skills Assignment.pdb</ProgramDatabaseFile>
       <DataExecutionPrevention>
@@ -84,7 +84,7 @@
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>TL-Engine2015Debug.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ExtendedEngineDebug.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
@@ -124,14 +124,12 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyBoss.cpp" />
     <ClCompile Include="CEnemyManager.cpp" />
     <ClCompile Include="CExplosionPool.cpp" />
     <ClCompile Include="CGameStateHandler.cpp" />
     <ClCompile Include="CIntroState.cpp" />
-    <ClCompile Include="CMeshCache.cpp" />
     <ClCompile Include="CMissile.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayState.cpp" />
@@ -142,13 +140,11 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="IDebug.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyBoss.h" />
     <ClInclude Include="CEnemyManager.h" />
@@ -156,7 +152,6 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CGameState.h" />
     <ClInclude Include="CGameStateHandler.h" />
     <ClInclude Include="CIntroState.h" />
-    <ClInclude Include="CMeshCache.h" />
     <ClInclude Include="CMissile.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayState.h" />
@@ -169,7 +164,6 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="IDebug.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IResource.h" />
-    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

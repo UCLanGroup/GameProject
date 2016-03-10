@@ -2,6 +2,7 @@
 #include "CMissile.h"
 #include "Globals.h"
 #include "CExplosionPool.h"
+#include <iostream>
 
 const float kTurnInterval = 0.5f; //Changes turn direction every 0.5f seconds
 const float kTurnSpeed = 90.0f;
@@ -17,6 +18,11 @@ CMissile::CMissile()
 	SetDead(false);
 
 	mTimer = kTurnInterval;
+	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, "Smoke1.png", 0.025f);
+	mEmitter->SetParticleLife(0.5f);
+	mEmitter->SetParticleScale(2.0f);
+	mEmitter->AttachToParent(mModel);
+	mEmitter->Start();
 }
 
 void CMissile::Update(float delta)
@@ -32,18 +38,18 @@ void CMissile::Update(float delta)
 		if (mTimer > kTurnInterval)
 		{
 			//Calculate the direction towards the target
-			Vector3 targetPos = mTarget->GetCenterPoint();
-			Vector3 currentPos = GetCenterPoint();
+			CVector3 targetPos = mTarget->GetCenterPoint();
+			CVector3 currentPos = GetCenterPoint();
 
-			Vector3 direction = targetPos - currentPos;
+			CVector3 direction = targetPos - currentPos;
 
 			//Get the direction the missile is currently heading in
 			float matrix[16];
 			mModel->GetMatrix(&(matrix[0]));
-			Vector3 forward(matrix[0], matrix[1], matrix[2]);
+			CVector3 forward(matrix[0], matrix[1], matrix[2]);
 
 			//Use dot product to determin direction
-			mClockwise = (forward * direction > 0.0f);
+			mClockwise = (Dot(forward, direction) > 0.0f);
 
 			//Reset timer
 			mTimer -= kTurnInterval;
@@ -74,12 +80,12 @@ void CMissile::CheckCollision()
 		{
 			//Upon collision with player's bullet destroy self and the bullet
 			//Explosions!
-			Vector3 loc = (*bullet)->GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), (*bullet)->GetRadius());
+			CVector3 loc = (*bullet)->GetCenterPoint();
+			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, (*bullet)->GetRadius());
 			mpPlayerBullets->erase(bullet);
 
 			loc = GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
+			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
 
 			SetDead(true);
 			//Don't collide with any of the remaining bullets when dead
@@ -116,4 +122,11 @@ bool CMissile::IsClockwise()
 void CMissile::Reset()
 {
 	SetDead(false);
+}
+
+CMissile::~CMissile()
+{
+	mEmitter->DetachFromParent();
+	mEmitter->Stop();
+	gEngine->RemoveEmitter(mEmitter);
 }

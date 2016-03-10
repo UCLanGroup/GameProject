@@ -1,17 +1,12 @@
 #include "ICollider.h"
 #include "ICollidable.h"
 
-bool ICollider::CollideSphere(Vector3& p1, Vector3& p2, float r1, float r2)
+bool ICollider::CollideSphere(tlx::CVector3& p1, tlx::CVector3& p2, float r1, float r2)
 {
-	Vector3 distVec = p1 - p2;
+	tlx::CVector3 distVec = p1 - p2;
 
-	float sqrdDist = (distVec.GetX() * distVec.GetX()) + (distVec.GetZ() * distVec.GetZ());
+	float sqrdDist = (distVec.x * distVec.x) + (distVec.z * distVec.z);
 	float collDist = (r1 * r1) + (r2 * r2);
-	
-	if (distVec.GetZ() > 100.0f)
-	{
-		Vector3 p3 = p1 + p2;
-	}
 
 	return sqrdDist < collDist;
 }

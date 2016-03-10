@@ -1,6 +1,6 @@
 #pragma once
-#include <TL-Engine.h>
-#include "Vector3.h"
+#include <Mesh.h>
+#include "CVector3.h"
 
 class ICollidable;
 
@@ -15,6 +15,6 @@ public:
 
 protected:
 	//Collision methods
-	bool CollideSphere(Vector3& p1, Vector3& p2, float r1, float r2);
+	bool CollideSphere(tlx::CVector3& p1, tlx::CVector3& p2, float r1, float r2);
 	bool CollideMesh(tle::IMesh* me1, tle::IMesh* me2, float* ma1, float* ma2);
 };

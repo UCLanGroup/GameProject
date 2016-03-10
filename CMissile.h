@@ -15,6 +15,7 @@ class CMissile : public CProjectile
 {
 private:
 	IEntity* mTarget = 0;
+	IParticleEmitter* mEmitter = 0;
 	bool mClockwise = false;
 	float mTimer = 0.0f;
 
@@ -33,4 +34,6 @@ public:
 	bool IsClockwise();
 
 	virtual void Reset();
+
+	virtual ~CMissile();
 };

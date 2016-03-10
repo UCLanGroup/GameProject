@@ -18,7 +18,7 @@ private:
 		float mSpawnRate;
 		float mTimer;
 		Path* mpPath;
-		Vector3 mOffset;
+		CVector3 mOffset;
 	};
 
 	vector_ptr<Path> mPaths;
@@ -34,7 +34,7 @@ private:
 
 	void ReadInPaths(string& file);
 	void ReadInLevel(string& file);
-	res_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, Vector3& offset);
+	res_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, CVector3& offset);
 
 	//Stuff the enemies need access to
 	std::vector<CPlayer*>* mpPlayers = 0;

@@ -111,7 +111,7 @@ void CEnemyManager::ReadInPaths(string& file)
 				float x, y, z;
 				inFile >> x >> y >> z;
 
-				path->push_back(Vector3(x, y, z));
+				path->push_back(CVector3(x, y, z));
 			}
 
 			//Add the path to the list of paths
@@ -153,7 +153,7 @@ void CEnemyManager::ReadInLevel(string& file)
 			
 			spawner->mType = static_cast<EnemyType>(type);
 			spawner->mpPath = mPaths[pathID].get();
-			spawner->mOffset = Vector3(x, y, z);
+			spawner->mOffset = CVector3(x, y, z);
 
 			mNumOfEnemies += spawner->mEnemyAmount;
 
@@ -166,7 +166,7 @@ void CEnemyManager::ReadInLevel(string& file)
 }
 
 //Create an enemy of a given type that follows the specified path with the given positional offset
-res_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, Vector3& offset)
+res_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVector3& offset)
 {
 	res_ptr<CEnemy> enemy;
 	switch (type)

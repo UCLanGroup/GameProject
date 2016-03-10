@@ -18,7 +18,7 @@ CEnemy::CEnemy()
 	Reset();
 }
 
-CEnemy::CEnemy(Path* path, Vector3& offset) : CEnemy()
+CEnemy::CEnemy(Path* path, tlx::CVector3& offset) : CEnemy()
 {
 	//Pathing
 	mpPath = path;
@@ -39,17 +39,17 @@ void CEnemy::Move(float delta)
 	{
 		//spline
 		int highestPoint = mpPath->size() - 1;
-		Vector3 p1 = (*mpPath)[min(highestPoint, mPathPos)];
-		Vector3 p2 = (*mpPath)[min(highestPoint, mPathPos + 1)];
-		Vector3 p3 = (*mpPath)[min(highestPoint, mPathPos + 2)];
-		Vector3 p4 = (*mpPath)[min(highestPoint, mPathPos + 3)];
+		CVector3 p1 = (*mpPath)[min(highestPoint, mPathPos)];
+		CVector3 p2 = (*mpPath)[min(highestPoint, mPathPos + 1)];
+		CVector3 p3 = (*mpPath)[min(highestPoint, mPathPos + 2)];
+		CVector3 p4 = (*mpPath)[min(highestPoint, mPathPos + 3)];
 
-		Vector3 A = p4 - p1 + (p2 * 3.0f) - (p3 * 3.0f);
-		Vector3 B = (p1 * 2.0f) - (p2 * 5.0f) + (p3 * 4) - p4;
-		Vector3 C = p3 - p1;
-		Vector3 D = p2 * 2;
+		CVector3 A = p4 - p1 + (p2 * 3.0f) - (p3 * 3.0f);
+		CVector3 B = (p1 * 2.0f) - (p2 * 5.0f) + (p3 * 4) - p4;
+		CVector3 C = p3 - p1;
+		CVector3 D = p2 * 2;
 
-		Vector3 newPos = ((A * (mMoveTimer * mMoveTimer * mMoveTimer)) + (B * (mMoveTimer * mMoveTimer)) + (C * mMoveTimer) + D) * 0.5f;
+		CVector3 newPos = ((A * (mMoveTimer * mMoveTimer * mMoveTimer)) + (B * (mMoveTimer * mMoveTimer)) + (C * mMoveTimer) + D) * 0.5f;
 		newPos = newPos + mOffset;
 
 		/*
@@ -77,15 +77,15 @@ void CEnemy::Move(float delta)
 		}*/
 
 		//Calculate bearing from north
-		float xDif = newPos.GetX() - mModel->GetX();
-		float zDif = newPos.GetZ() - mModel->GetZ();
+		float xDif = newPos.x - mModel->GetX();
+		float zDif = newPos.z - mModel->GetZ();
 		float angle = 90.0f - atan2f(zDif, xDif) * (180.0f / static_cast<float>(M_PI));
 		
 		//Reset orientation then apply new angle
 		mModel->ResetOrientation();
 		mModel->RotateY(angle);
 
-		mModel->SetPosition(newPos.GetX(), newPos.GetY(), newPos.GetZ());
+		mModel->SetPosition(newPos.x, newPos.y, newPos.z);
 	}
 	else
 	{
@@ -118,13 +118,13 @@ void CEnemy::CheckCollision()
 		if (CollidesSphere(bullet->get()))
 		{
 			TakeDamage((*bullet)->GetDamage());
-			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().GetX(), 0.0f, (*bullet)->GetCenterPoint().GetZ(), (*bullet)->GetRadius());
+			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().x, 0.0f, (*bullet)->GetCenterPoint().z, (*bullet)->GetRadius());
 			bullet = mpPlayerBullets->erase(bullet);
 			
 			if (IsDead())	//If killed by the bullet
 			{
-				Vector3 loc = GetCenterPoint();
-				CExplosionPool::Instance()->Spawn(loc.GetX(), loc.GetY(), loc.GetZ(), GetRadius());
+				CVector3 loc = GetCenterPoint();
+				CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
 
 				//Don't collide with any of the remaining bullets when dead
 				return;
@@ -159,7 +159,7 @@ void CEnemy::SetValue(int value)
 	mValue = value;
 }
 
-void CEnemy::SetPath(Path* path, Vector3& offset)
+void CEnemy::SetPath(Path* path, CVector3& offset)
 {
 	mpPath = path;
 	mOffset = offset;

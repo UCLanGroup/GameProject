@@ -3,19 +3,14 @@
 
 #include <vector>
 #include <memory>
-#include <TL-Engine.h>
+#include <ExtendedEngine.h>
 #include <SFML/Audio.hpp>
-#include "Vector3.h"
 
 using namespace tle;
 
-//Types
-template <typename T>
-using vector_ptr = std::vector<std::unique_ptr<T>>; // Combines vector and unique_ptr
-
 // Globals
-extern tle::I3DEngine* gEngine;
 extern sf::Music gMusic;
+extern tle::IEngine* gEngine;
 
 // Constants
 		//File paths

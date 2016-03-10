@@ -1,6 +1,5 @@
 #define _USE_MATH_DEFINES
 #include "CEnemyBoss.h"
-#include "CMeshCache.h"
 #include "CPlayer.h"
 #include "CMissile.h"
 
@@ -46,10 +45,10 @@ void CEnemyBoss::Move(float delta)
 
 		for (auto player = mpPlayers->begin(); player != mpPlayers->end(); player++)
 		{
-			Vector3 locDif = (*player)->GetCenterPoint() - GetCenterPoint();
-			if (abs(locDif.GetX()) < abs(xDif))
+			CVector3 locDif = (*player)->GetCenterPoint() - GetCenterPoint();
+			if (abs(locDif.x) < abs(xDif))
 			{
-				xDif = locDif.GetX();
+				xDif = locDif.x;
 			}
 		}
 

@@ -22,19 +22,10 @@
     <ClCompile Include="ICollider.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
-    <ClCompile Include="CAnimation.cpp">
-      <Filter>Core\source</Filter>
-    </ClCompile>
     <ClCompile Include="CPool.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
-    <ClCompile Include="CMeshCache.cpp">
-      <Filter>Core\source</Filter>
-    </ClCompile>
     <ClCompile Include="IDebug.cpp">
-      <Filter>Core\source</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="CIntroState.cpp">
@@ -87,19 +78,10 @@
     <ClInclude Include="IResource.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimation.h">
-      <Filter>Core\headers</Filter>
-    </ClInclude>
     <ClInclude Include="CPool.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CMeshCache.h">
-      <Filter>Core\headers</Filter>
-    </ClInclude>
     <ClInclude Include="IDebug.h">
-      <Filter>Core\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="CGameStateHandler.h">
