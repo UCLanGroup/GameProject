@@ -2,8 +2,6 @@
 // Last updated: 04.02.16
 
 #include <TL-Engine.h>
-#include <SFML/audio.hpp>
-
 
 #include "CGameState.h"
 #include "CPlayer.h"
@@ -23,7 +21,6 @@ private:
 	IMesh* mFloorMesh;
 	IModel* mFloor;
 
-
 	CPlayer mPlayer1;
 	//CPlayer mPlayer2;
 	vector<CPlayer*> playerList; //Used to pass a list of both players to enemies to keep track of
@@ -36,12 +33,6 @@ private:
 	BulletList mEBullets; //Enemy Projectiles
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
-
-
-			// SOUND
-	sf::SoundBuffer mBufferShoot;
-	sf::Sound mSound;
-	bool mFiring = false;
 
 public:
 	// Setup and destroy state
