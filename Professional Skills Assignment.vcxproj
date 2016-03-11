@@ -95,7 +95,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(TLPath)\include;..\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TLPath)\include;.\ExtendedEngine\Interface;.\SFML-2.3.2\include;$(TLPath)\3rd Party\TL-Xtreme\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -107,14 +107,15 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(TLPath)\lib;..\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>.\ExtendedEngine\lib;.\SFML-2.3.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <OutputFile>$(SolutionDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>TL-Engine2015.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ExtendedEngineRelease.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Message>Copying DLLs &amp; shaders...</Message>
