@@ -11,6 +11,8 @@ private:
 		IModel* mModel;
 		int mStage;
 		float mTimer;
+		float mRadius;
+		CVector3 mPos;
 	};
 
 	IMesh* mMesh;
@@ -20,6 +22,9 @@ private:
 	static CExplosionPool mPool;
 
 	CExplosionPool() {}
+
+	//Returns the file name for the nth explosion texture
+	string ExplosionTexture(int n);
 
 public:
 	//Setup and destroy

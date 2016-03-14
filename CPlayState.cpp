@@ -39,6 +39,8 @@ void CPlayState::Init()
 	mSound.setBuffer(mBufferShoot);
 	mSound.setVolume(30.0f);
 	
+	//Reset timer after finished loading assets
+	gEngine->Timer();
 }
 
 void CPlayState::Cleanup()
@@ -56,6 +58,9 @@ void CPlayState::Cleanup()
 	// needs to exist to remove bullet models. 
 	// Bullet mesh is owned by player.
 	mPlayer1.Cleanup();
+
+	//Clear the cache of particles and other preloaded models
+	gEngine->ClearModelCache();
 }
 
 void CPlayState::Pause() {}

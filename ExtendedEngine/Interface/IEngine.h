@@ -13,6 +13,25 @@ namespace tle
 							New functions
 		****************************************************/
 
+		///////////////
+		//Model Cache//
+
+		//Loads the mesh file into the engine
+		//If an amount is specified it will create a number of models and store them for later use
+		//The models will be created and the texture set the what has been provided
+		//A texture of "" will use the default model's texture
+		virtual void Preload(const string& sMesh, const int amount = 0, const string& texture = "") = 0;
+
+		//Returns an instance of the mesh from the cache that already has the provided texture
+		//if one already exists, otherwise it creates a model with the texture
+		//A texture of "" will use the model's default texture 
+		virtual IModel* GetModel(IMesh* pMesh, const string& texture = "") = 0;
+
+		//Stores the model in the model cache for later use
+		//Use the texture param to specify if the mesh has been given a different texture
+		//A texture of "" will assume the model has the default texture
+		virtual void CacheModel(IModel* pModel, const string& texture = "") = 0;
+
 		/////////////
 		//Animation//
 
@@ -66,5 +85,11 @@ namespace tle
 
 		//Unpauses any auto updated entities eg animations and particles
 		virtual void UnpauseAutoUpdates() = 0;
+
+		//Destroys all models and only models in the cache
+		virtual void ClearModelCache() = 0;
+
+		//Destroys all meshes and therefore all models and particle emitters
+		virtual void ClearMeshCache() = 0;
 	};
 }
