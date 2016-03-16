@@ -43,6 +43,9 @@ void CPlayer::Init()
 		mLifeSprites.push_back(temp);
 }
 
+	mpHealthBar = gEngine->CreateSprite("healthbar.png", mStartBarPosX, mStartBarPosY, 0.15f);
+	mpShieldBar = gEngine->CreateSprite("shieldbar.png", mStartBarPosX, mStartBarPosY + 37.0f, 0.15f);
+
 	//Text
 	mFont = gEngine->LoadFont("Rockwell", 60U);
 }
@@ -56,8 +59,10 @@ void CPlayer::Cleanup()
 	gEngine->RemoveFont(mFont);
 	for (int i = mLives; i > 0; i--)
 	{
-		delete mLifeSprites[i - 1];
+		gEngine->RemoveSprite(mLifeSprites[i - 1]);
 	}
+	gEngine->RemoveSprite(mpHealthBar);
+	gEngine->RemoveSprite(mpShieldBar);
 }
 
 void CPlayer::Move(float dt)
@@ -91,12 +96,12 @@ void CPlayer::Move(float dt)
 	{
 		float rotAmount = rotateSpeed * dt;
 
-		if (mRotation > 0.4f)
+		if (mRotation > 0.5f)
 		{
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
 		}
-		else if (mRotation < 0.4f)
+		else if (mRotation < -0.5f)
 		{
 			mModel->RotateZ(-rotAmount);
 			mRotation += rotAmount;
@@ -126,7 +131,7 @@ void CPlayer::Move(float dt)
 			mModel->SetX(AREA_BOUNDS_RIGHT);
 		}
 
-		if (mRotation <= 70.0f)
+		if (mRotation <= 50.0f)
 		{
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(-rotAmount);
@@ -166,6 +171,10 @@ void CPlayer::Move(float dt)
 	}
 
 	DrawText();
+
+	//Health Bars
+	AnimateShield(dt);
+	AnimateHealth(dt);
 }
 
 void CPlayer::CheckCollision()
@@ -203,10 +212,12 @@ void CPlayer::TakeDamage(int damage)
 			mShieldModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 		}
 		mShield -= min(damage, mShield);
+		mShieldMove += damage * 4.0f; // for shield bar animation
 	}
 	else
 	{
 		mHealth -= damage;
+		mHealthMove += damage * 2.0f; // for health bar animation
 	}
 }
 
@@ -216,6 +227,24 @@ void CPlayer::DrawText()
 	//textOut.precision(2);
 	textOut << mScore;
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
+}
+
+void CPlayer::AnimateHealth(float delta)
+{
+	if (mHealthMove > 0)
+	{
+		mpHealthBar->MoveX(-100.0f * delta);
+		mHealthMove -= 100.0f * delta;
+	}
+}
+
+void CPlayer::AnimateShield(float delta)
+{
+	if (mShieldMove > 0)
+	{
+		mpShieldBar->MoveX(-100.0f * delta);
+		mShieldMove -= 100.0f * delta;
+	}
 }
 
 void CPlayer::IncreaseScore(int value)
@@ -318,6 +347,9 @@ void CPlayer::Reset()
 	mShield = 50;
 	mMaxShield = 50;
 	mRegenTimer = 0.0f;
+
+	mpHealthBar->SetPosition(mStartBarPosX, mStartBarPosY);
+	mpShieldBar->SetPosition(mStartBarPosX, mStartBarPosY + 37.0f);
 }
 
 CPlayer::~CPlayer()

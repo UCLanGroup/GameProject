@@ -27,9 +27,16 @@ private:
 
 	float mRotation = 0.0f;
 
+	const int mStartBarPosX = 90;
+	const int mStartBarPosY = 936;
+	float mShieldMove = 0;
+	float mHealthMove = 0;
+
 	unique_ptr<CWeapon> mWeapon;
 
 	vector<ISprite*> mLifeSprites;
+	ISprite* mpHealthBar;
+	ISprite* mpShieldBar;
 
 	IFont* mFont;
 
@@ -47,6 +54,8 @@ public:
 	void IncreaseScore(int value);
 
 	void DrawText();
+	void AnimateHealth(float delta);
+	void AnimateShield(float delta);
 
 	//Sets
 	void SetScore(int score);

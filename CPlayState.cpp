@@ -15,7 +15,8 @@ void CPlayState::Init()
 	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
 	mFloor->SetSkin(METAL_TEX);
 
-	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.1f);
+	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.2f);
+	mUI2 = gEngine->CreateSprite(UI2, 0.0f, 0.0f, 0.1f);
 
 	mCam = gEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mCam->RotateLocalX(90.0f);

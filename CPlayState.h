@@ -20,6 +20,7 @@ private:
 
 	ICamera* mCam;
 	ISprite* mUI;
+	ISprite* mUI2;
 	IMesh* mFloorMesh;
 	IModel* mFloor;
 
