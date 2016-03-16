@@ -89,12 +89,12 @@ void CPlayer::Move(float dt)
 	{
 		float rotAmount = rotateSpeed * dt;
 
-		if (mRotation > 0.4f)
+		if (mRotation > 0.5f)
 		{
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
 		}
-		else if (mRotation < 0.4f)
+		else if (mRotation < -0.5f)
 		{
 			mModel->RotateZ(-rotAmount);
 			mRotation += rotAmount;
@@ -124,7 +124,7 @@ void CPlayer::Move(float dt)
 			mModel->SetX(AREA_BOUNDS_RIGHT);
 		}
 
-		if (mRotation <= 70.0f)
+		if (mRotation <= 50.0f)
 		{
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(-rotAmount);
