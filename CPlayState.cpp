@@ -10,16 +10,17 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
-	// SYSTEM
-	mPlayer1.Init();
-	mPlayer1.SetLists(&mPBullets, &mEBullets);
-	mPlayerList.push_back(&mPlayer1);
-
 	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
 	mFloor->SetSkin(METAL_TEX);
 
+	// Player
+	mPlayer1.Init();
+	mPlayer1.SetLists(&mPBullets, &mEBullets);
+	mPlayerList.push_back(&mPlayer1);
+
+	// GRAPHICS
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.2f);
 	mUI2 = gEngine->CreateSprite(UI2, 0.0f, 0.0f, 0.1f);
 
@@ -32,10 +33,10 @@ void CPlayState::Init()
 	// Draw life sprites
 	for (int i = 0; i < mPlayer1.GetLives(); i++)
 	{
-		int startPosX = 505;
-		int startPosY = 932;
-		int startPosInc = 35;
-		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * i, startPosY, 0.01f);
+		float startPosX = 505;
+		float startPosY = 932;
+		float startPosInc = 35;
+		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.01f);
 		mLifeSprites.push_back(temp);
 	}
 
@@ -86,7 +87,7 @@ void CPlayState::Cleanup()
 	mExplosions->CleanUp();
 
 	gEngine->RemoveFont(mFont);
-	for (int i = 0; i < mLifeSprites.size(); i++)
+	for (int i = 0; i < static_cast<int>(mLifeSprites.size()); i++)
 	{
 		gEngine->RemoveSprite(mLifeSprites[i]);
 	}

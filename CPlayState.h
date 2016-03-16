@@ -13,8 +13,8 @@
 
 using namespace tle;
 
-const int mStartBarPosX = 90;
-const int mStartBarPosY = 936;
+const float mStartBarPosX = 90;
+const float mStartBarPosY = 936;
 const float mBarSpeed = 100.0f;
 const float mBarSize = 200.0f;
 
