@@ -30,6 +30,8 @@ private:
 	unique_ptr<CWeapon> mWeapon;
 
 	vector<ISprite*> mLifeSprites;
+	ISprite* mpHealthBar;
+	ISprite* mpShieldBar;
 
 	IFont* mFont;
 

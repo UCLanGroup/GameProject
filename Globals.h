@@ -30,6 +30,9 @@ const string SOUND_START		= MEDIA_FOLDER + "\\start.flac";
 
 		// Gameplay
 const string UI					= "ui.png";					// Tempororay user interface
+const string UI2				= "ui2.png";
+const string HEALTHBAR			= "healthbar.png";
+
 const string GROUND_SKIN		= "ground.png";
 
 const string GROUND_MESH		= "ground.x";

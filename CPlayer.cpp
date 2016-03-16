@@ -41,6 +41,11 @@ void CPlayer::Init()
 		mLifeSprites.push_back(temp);
 }
 
+	int startPosX = 90;
+	int startPosY = 936;
+	mpHealthBar = gEngine->CreateSprite("healthbar.png", startPosX, startPosY, 0.15f);
+	mpShieldBar = gEngine->CreateSprite("shieldbar.png", startPosX, startPosY + 37.0f, 0.15f);
+
 	//Text
 	mFont = gEngine->LoadFont("Rockwell", 60U);
 }
@@ -54,8 +59,10 @@ void CPlayer::Cleanup()
 	gEngine->RemoveFont(mFont);
 	for (int i = mLives; i > 0; i--)
 	{
-		delete mLifeSprites[i - 1];
+		gEngine->RemoveSprite(mLifeSprites[i - 1]);
 	}
+	gEngine->RemoveSprite(mpHealthBar);
+	gEngine->RemoveSprite(mpShieldBar);
 }
 
 void CPlayer::Move(float dt)
