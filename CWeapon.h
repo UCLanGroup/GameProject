@@ -1,7 +1,7 @@
 #pragma once
 #include "Globals.h"
 #include <list>
-#include <TL-Engine.h>
+#include <IEngine.h>
 #include "CProjectile.h"
 #include "CPool.h"
 
@@ -14,11 +14,11 @@ private:
 	float mProjSpeed;
 	float mFireRate;
 	float mTimer;
-	tle::IModel* mParent;
+	IEntity* mParent;
 	tle::IMesh* mProjMesh;
 
 public:
-	CWeapon(tle::IModel* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate);
+	CWeapon(IEntity* parent, tle::IMesh* projectileMesh, int damage, float projSpeed, float fireRate);
 
 	void Update(float delta, BulletList& projectiles);
 	
@@ -28,7 +28,7 @@ public:
 	float GetProjSpeed();
 	float GetFireRate();
 	float GetTimer();
-	IModel* GetParent();
+	IEntity* GetParent();
 	IMesh* GetProjMesh();
 
 	//Sets
@@ -37,6 +37,6 @@ public:
 	void SetProjSpeed(float projSpeed);
 	void SetFireRate(float fireRate);
 	void SetTimer(float time);
-	void SetParent(IModel* parent);
+	void SetParent(IEntity* parent);
 	void SetProjMesh(IMesh* projMesh);
 };

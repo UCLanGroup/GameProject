@@ -1,7 +1,6 @@
 #include "CPlayer.h"
 #include <algorithm> //for min & max functions
 #include <iostream>
-#include <sstream>
 
 void CPlayer::Init()
 {
@@ -16,7 +15,7 @@ void CPlayer::Init()
 
 	//Weapon
 	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(mModel, mProjectileMesh, 1, 100.0f, 0.1f));
+	mWeapon.reset(new CWeapon(this, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -28,6 +27,7 @@ void CPlayer::Init()
 	mShieldRegenRate = 0.25f;
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
+	mScore = 0;
 	SetRadius(5.0f);
 
 	// Draw life sprites
@@ -38,7 +38,7 @@ void CPlayer::Init()
 		int startPosInc = 35;
 		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * i, startPosY, 0.01f);
 		mLifeSprites.push_back(temp);
-	}
+}
 
 	//Text
 	mFont = gEngine->LoadFont("Rockwell", 60U);
@@ -189,7 +189,18 @@ void CPlayer::DrawText()
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
 }
 
+void CPlayer::IncreaseScore(int value)
+{
+	mScore += value;
+	cout << "Player's Score:  " << mScore << endl;
+}
+
 //Sets
+
+void CPlayer::SetScore(int score)
+{
+	mScore = score;
+}
 
 void CPlayer::SetHealth(int health)
 {
@@ -231,6 +242,11 @@ void CPlayer::SetShieldRegen(float regen)
 }
 
 //Gets
+
+int CPlayer::GetScore()
+{
+	return mScore;
+}
 
 int CPlayer::GetHealth()
 {

@@ -8,6 +8,7 @@ CProjectile::CProjectile()
 
 	mDamage = 1;
 	mSpeed = 50.0f;
+	mParent = 0;
 	SetRadius(2.0f);
 	SetDead(false);
 }
@@ -47,6 +48,11 @@ float CProjectile::GetSpeed()
 	return mSpeed;
 }
 
+IEntity* CProjectile::GetParent()
+{
+	return mParent;
+}
+
 //Sets
 
 void CProjectile::SetDamage(int damage)
@@ -65,6 +71,11 @@ void CProjectile::SetMatrix(float* matrix)
 	mModel->Scale(mScale);
 }
 
+void CProjectile::SetParent(IEntity* parent)
+{
+	mParent = parent;
+}
+
 //Inherited from IEntity : IResource
 
 void CProjectile::Reset()
@@ -75,5 +86,5 @@ void CProjectile::Reset()
 
 CProjectile::~CProjectile()
 {
-
+	//Model destruction is handled by IEntity destructor
 }

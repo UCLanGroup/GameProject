@@ -25,7 +25,7 @@ private:
 
 	CPlayer mPlayer1;
 	//CPlayer mPlayer2;
-	vector<CPlayer*> playerList; //Used to pass a list of both players to enemies to keep track of
+	vector<CPlayer*> mPlayerList; //Used to pass a list of both players to enemies to keep track of
 
 	unique_ptr<CEnemyManager> mEnemyManager;
 

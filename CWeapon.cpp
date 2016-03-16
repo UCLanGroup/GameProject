@@ -1,6 +1,6 @@
 #include "CWeapon.h"
 
-CWeapon::CWeapon(tle::IModel* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate)
+CWeapon::CWeapon(IEntity* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate)
 {
 	mParent = parent;
 	mProjMesh = mesh;
@@ -22,6 +22,7 @@ void CWeapon::Update(float delta, BulletList& projectiles)
 		newBullet->SetMatrix(matrix);
 		newBullet->SetDamage(mDamage);
 		newBullet->SetSpeed(mProjSpeed);
+		newBullet->SetParent(mParent);
 
 		projectiles.push_back(move(newBullet));
 
@@ -51,7 +52,7 @@ float CWeapon::GetTimer()
 	return mTimer;
 }
 
-IModel* CWeapon::GetParent()
+IEntity* CWeapon::GetParent()
 {
 	return mParent;
 }
@@ -83,7 +84,7 @@ void CWeapon::SetTimer(float time)
 	mTimer = time;
 }
 
-void CWeapon::SetParent(IModel* parent)
+void CWeapon::SetParent(IEntity* parent)
 {
 	mParent = parent;
 }

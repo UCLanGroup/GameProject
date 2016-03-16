@@ -22,14 +22,26 @@ void CPlayState::Init()
 
 	// SYSTEM
 	mPlayer1.Init();
-	playerList.push_back(&mPlayer1);
+	mPlayerList.push_back(&mPlayer1);
 
 	// AI
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
-	mEnemyManager->SetLists(&playerList, &mPBullets, &mEBullets);
+	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
 	
+	// Particles
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
+
+	//Preload any assets at the start before they are needed
+
+	gEngine->Preload(HAVOC_BOSS_MESH);
+	gEngine->Preload(MISSILE_MESH);
+
+	for (int i = 1; i <= 10; ++i)
+	{
+		//Preload 200 of each of the smoke particles
+		gEngine->Preload(PARTICLE_MODEL, 200, "Smoke" + to_string(i) + ".png");
+	}
 
 	// SOUND
 	if (!mBufferShoot.loadFromFile(SOUND_SHOOT))
@@ -60,8 +72,12 @@ void CPlayState::Cleanup()
 	// Bullet mesh is owned by player.
 	mPlayer1.Cleanup();
 
-	//Clear the cache of particles and other preloaded models
+	//Clear player list
+	mPlayerList.clear();
+
+	//Clear the cache of particles and other preloaded models/meshes
 	gEngine->ClearModelCache();
+	gEngine->ClearMeshCache();
 }
 
 void CPlayState::Pause() {}

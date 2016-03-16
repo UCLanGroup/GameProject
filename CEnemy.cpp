@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "CEnemy.h"
+#include "CPlayer.h"
 #include "CExplosionPool.h"
 #include <algorithm>
 
@@ -113,22 +114,29 @@ void CEnemy::CheckCollision()
 	if (mpPlayerBullets == 0) return;
 
 	auto bullet = mpPlayerBullets->begin();
-	while (bullet != mpPlayerBullets->end())
+	while (bullet != mpPlayerBullets->end() && !IsDead())
 	{
 		if (CollidesSphere(bullet->get()))
 		{
 			TakeDamage((*bullet)->GetDamage());
-			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().x, 0.0f, (*bullet)->GetCenterPoint().z, (*bullet)->GetRadius());
-			bullet = mpPlayerBullets->erase(bullet);
 			
 			if (IsDead())	//If killed by the bullet
 			{
 				CVector3 loc = GetCenterPoint();
 				CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
 
-				//Don't collide with any of the remaining bullets when dead
-				return;
+				//Check if the bullet was fired by a player, if so then add to their score
+				for (auto player = mpPlayers->begin(); player != mpPlayers->end(); ++player)
+				{
+					if (dynamic_cast<IEntity*>(*player) == (*bullet)->GetParent())
+					{
+						(*player)->IncreaseScore(mValue);
+					}
+				}
 			}
+
+			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().x, 0.0f, (*bullet)->GetCenterPoint().z, (*bullet)->GetRadius());
+			bullet = mpPlayerBullets->erase(bullet);
 		}
 		else
 		{
