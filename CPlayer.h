@@ -33,6 +33,9 @@ private:
 
 	IFont* mFont;
 
+	BulletList* mpPlayerBullets = 0;
+	BulletList* mpEnemyBullets = 0;
+
 public:
 	void Init();
 	void Cleanup();
@@ -52,6 +55,8 @@ public:
 	void SetShield(int shield);
 	void SetMaxShield(int shield);
 	void SetShieldRegen(float regen);
+
+	void SetLists(BulletList* playerBullets, BulletList* enemyBullets);
 
 	//Gets
 	int GetScore();

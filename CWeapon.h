@@ -14,13 +14,15 @@ private:
 	float mProjSpeed;
 	float mFireRate;
 	float mTimer;
-	IEntity* mParent;
-	tle::IMesh* mProjMesh;
+	bool mIsfiring;
+	IEntity* mpParent;
+	tle::IMesh* mpProjMesh;
+	BulletList* mpProjectiles;
 
 public:
 	CWeapon(IEntity* parent, tle::IMesh* projectileMesh, int damage, float projSpeed, float fireRate);
 
-	void Update(float delta, BulletList& projectiles);
+	void Update(float delta);
 	
 	//Gets
 
@@ -28,8 +30,10 @@ public:
 	float GetProjSpeed();
 	float GetFireRate();
 	float GetTimer();
+	bool IsFiring();
 	IEntity* GetParent();
 	IMesh* GetProjMesh();
+	BulletList* GetBulletList();
 
 	//Sets
 
@@ -37,6 +41,8 @@ public:
 	void SetProjSpeed(float projSpeed);
 	void SetFireRate(float fireRate);
 	void SetTimer(float time);
-	void SetParent(IEntity* parent);
-	void SetProjMesh(IMesh* projMesh);
+	void SetFiring(bool isFiring);
+	void SetParent(IEntity* pParent);
+	void SetProjMesh(IMesh* pProjMesh);
+	void SetBulletList(BulletList* pBulletList);
 };

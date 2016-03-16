@@ -5,6 +5,7 @@ CProjectile::CProjectile()
 {
 	SetMesh(BULLET_MESH);
 	//mModel->SetMatrix(matrix);
+	mModel->Scale(mScale);
 
 	mDamage = 1;
 	mSpeed = 50.0f;
@@ -19,6 +20,7 @@ CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float spee
 {
 	SetMesh(mesh);
 	SetMatrix(matrix);
+	mModel->Scale(mScale);
 
 	mDamage = damage;
 	mSpeed = speed;

@@ -1,30 +1,41 @@
 #include "CWeapon.h"
+#include <algorithm>
 
 CWeapon::CWeapon(IEntity* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate)
 {
-	mParent = parent;
-	mProjMesh = mesh;
+	mpParent = parent;
+	mpProjMesh = mesh;
 	mDamage = damage;
 	mProjSpeed = projSpeed;
 	mFireRate = fireRate;
 	mTimer = 0.0f;
+	mpProjectiles = 0;
+	mIsfiring = false;
 }
 
-void CWeapon::Update(float delta, BulletList& projectiles)
+void CWeapon::Update(float delta)
 {
 	mTimer += delta;
+
+	if (!mIsfiring)
+	{
+		//Cap timer at reloaded position
+		mTimer = min(mTimer, mFireRate);
+		return; //Avoid firing
+	}
+
 	while (mTimer > mFireRate)
 	{
 		float matrix[16];
-		mParent->GetMatrix(matrix);
+		mpParent->GetMatrix(matrix);
 
 		res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
 		newBullet->SetMatrix(matrix);
 		newBullet->SetDamage(mDamage);
 		newBullet->SetSpeed(mProjSpeed);
-		newBullet->SetParent(mParent);
+		newBullet->SetParent(mpParent);
 
-		projectiles.push_back(move(newBullet));
+		mpProjectiles->push_back(move(newBullet));
 
 		mTimer -= mFireRate;
 	}
@@ -52,14 +63,24 @@ float CWeapon::GetTimer()
 	return mTimer;
 }
 
+bool CWeapon::IsFiring()
+{
+	return mIsfiring;
+}
+
 IEntity* CWeapon::GetParent()
 {
-	return mParent;
+	return mpParent;
 }
 
 IMesh* CWeapon::GetProjMesh()
 {
-	return mProjMesh;
+	return mpProjMesh;
+}
+
+BulletList* CWeapon::GetBulletList()
+{
+	return mpProjectiles;
 }
 
 //Sets
@@ -84,12 +105,22 @@ void CWeapon::SetTimer(float time)
 	mTimer = time;
 }
 
-void CWeapon::SetParent(IEntity* parent)
+void CWeapon::SetFiring(bool isFiring)
 {
-	mParent = parent;
+	mIsfiring = isFiring;
 }
 
-void CWeapon::SetProjMesh(IMesh* projMesh)
+void CWeapon::SetParent(IEntity* pParent)
 {
-	mProjMesh = projMesh;
+	mpParent = pParent;
+}
+
+void CWeapon::SetProjMesh(IMesh* pProjMesh)
+{
+	mpProjMesh = pProjMesh;
+}
+
+void CWeapon::SetBulletList(BulletList* pBulletList)
+{
+	mpProjectiles = pBulletList;
 }

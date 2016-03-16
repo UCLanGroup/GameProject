@@ -22,6 +22,7 @@ void CPlayState::Init()
 
 	// SYSTEM
 	mPlayer1.Init();
+	mPlayer1.SetLists(&mPBullets, &mEBullets);
 	mPlayerList.push_back(&mPlayer1);
 
 	// AI
@@ -102,6 +103,7 @@ void CPlayState::Update(CGameStateHandler * game)
 	// Animations go here
 
 	mPlayer1.Move(mDelta);
+	mPlayer1.CheckCollision();
 
 	if (gEngine->KeyHeld(KEY_FIRE))
 	{
@@ -109,7 +111,6 @@ void CPlayState::Update(CGameStateHandler * game)
 		{
 			mSound.play();
 		}
-		mPlayer1.GetWeapon()->Update(mDelta, mPBullets);
 	}
 
 	mEnemyManager->Update(mDelta);
@@ -139,11 +140,6 @@ void CPlayState::Update(CGameStateHandler * game)
 
 		if ((*bullet)->IsOutOfBounds() || (*bullet)->IsDead())
 		{
-			bullet = mEBullets.erase(bullet);
-		}
-		else if (mPlayer1.CollidesSphere(bullet->get())) //Check collision with Player
-		{
-			mPlayer1.TakeDamage((*bullet)->GetDamage());
 			bullet = mEBullets.erase(bullet);
 		}
 		else

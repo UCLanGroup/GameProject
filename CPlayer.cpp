@@ -1,4 +1,5 @@
 #include "CPlayer.h"
+#include "CExplosionPool.h"
 #include <algorithm> //for min & max functions
 #include <iostream>
 #include <sstream>
@@ -17,6 +18,7 @@ void CPlayer::Init()
 	//Weapon
 	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
 	mWeapon.reset(new CWeapon(this, mProjectileMesh, 1, 100.0f, 0.1f));
+	mWeapon->SetBulletList(mpPlayerBullets);
 
 	//Stats
 	mHealth = 100;
@@ -132,6 +134,18 @@ void CPlayer::Move(float dt)
 		}
 	}
 
+	//Weapon
+
+	if (gEngine->KeyHeld(KEY_FIRE))
+	{
+		mWeapon->SetFiring(true);
+	}
+	else
+	{
+		mWeapon->SetFiring(false);
+	}
+	mWeapon->Update(dt);
+
 	//Shield Regen
 
 	if (mShield < mMaxShield)
@@ -157,6 +171,20 @@ void CPlayer::Move(float dt)
 void CPlayer::CheckCollision()
 {
 	//No collision check atm
+	for (auto bullet = mpEnemyBullets->begin(); bullet != mpEnemyBullets->end(); /**/)
+	{
+		if (CollidesSphere(bullet->get()))
+		{
+			TakeDamage((*bullet)->GetDamage());
+			CVector3 pos = (*bullet)->GetCenterPoint();
+			CExplosionPool::Instance()->Spawn(pos.x, pos.y, pos.z, (*bullet)->GetRadius());
+			bullet = mpEnemyBullets->erase(bullet);
+		}
+		else
+		{
+			bullet++;
+		}
+	}
 }
 
 void CPlayer::TakeDamage(int damage)
@@ -193,7 +221,7 @@ void CPlayer::DrawText()
 void CPlayer::IncreaseScore(int value)
 {
 	mScore += value;
-	cout << "Player's Score:  " << mScore << endl;
+	//cout << "Player's Score:  " << mScore << endl;
 }
 
 //Sets
@@ -240,6 +268,14 @@ void CPlayer::SetMaxShield(int shield)
 void CPlayer::SetShieldRegen(float regen)
 {
 	mShieldRegenRate = regen;
+}
+
+void CPlayer::SetLists(BulletList* playerBullets, BulletList* enemyBullets)
+{
+	mpPlayerBullets = playerBullets;
+	mpEnemyBullets = enemyBullets;
+
+	if (mWeapon.get()) mWeapon->SetBulletList(playerBullets);
 }
 
 //Gets
