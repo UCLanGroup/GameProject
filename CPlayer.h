@@ -14,6 +14,8 @@ private:
 	IMesh* mProjectileMesh;
 	IModel* mShieldModel;
 
+	int mScore;
+
 	int mHealth;
 	int mMaxHealth;
 	int mShield;
@@ -34,8 +36,10 @@ public:
 	virtual void CheckCollision();
 
 	void TakeDamage(int damage);
+	void IncreaseScore(int value);
 
 	//Sets
+	void SetScore(int score);
 	void SetHealth(int health);
 	void SetMaxHealth(int health);
 	void SetShield(int shield);
@@ -43,6 +47,7 @@ public:
 	void SetShieldRegen(float regen);
 
 	//Gets
+	int GetScore();
 	int GetHealth();
 	int GetMaxHealth();
 	int GetShield();

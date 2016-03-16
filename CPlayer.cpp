@@ -15,7 +15,7 @@ void CPlayer::Init()
 
 	//Weapon
 	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(mModel, mProjectileMesh, 1, 100.0f, 0.1f));
+	mWeapon.reset(new CWeapon(this, mProjectileMesh, 1, 100.0f, 0.1f));
 
 	//Stats
 	mHealth = 100;
@@ -25,6 +25,7 @@ void CPlayer::Init()
 	mShieldRegenRate = 0.25f;
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
+	mScore = 0;
 	SetRadius(5.0f);
 }
 
@@ -92,7 +93,7 @@ void CPlayer::Move(float dt)
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
-			cout << mRotation << endl;
+			//cout << mRotation << endl;
 		}
 	}
 	if (gEngine->KeyHeld(KEY_RIGHT))
@@ -108,7 +109,7 @@ void CPlayer::Move(float dt)
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(-rotAmount);
 			mRotation += rotAmount;
-			cout << mRotation << endl;
+			//cout << mRotation << endl;
 		}
 	}
 
@@ -160,7 +161,18 @@ void CPlayer::TakeDamage(int damage)
 	}
 }
 
+void CPlayer::IncreaseScore(int value)
+{
+	mScore += value;
+	cout << "Player's Score:  " << mScore << endl;
+}
+
 //Sets
+
+void CPlayer::SetScore(int score)
+{
+	mScore = score;
+}
 
 void CPlayer::SetHealth(int health)
 {
@@ -202,6 +214,11 @@ void CPlayer::SetShieldRegen(float regen)
 }
 
 //Gets
+
+int CPlayer::GetScore()
+{
+	return mScore;
+}
 
 int CPlayer::GetHealth()
 {
