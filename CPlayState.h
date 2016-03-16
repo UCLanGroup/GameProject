@@ -23,7 +23,6 @@ private:
 	IMesh* mFloorMesh;
 	IModel* mFloor;
 
-
 	CPlayer mPlayer1;
 	//CPlayer mPlayer2;
 	vector<CPlayer*> playerList; //Used to pass a list of both players to enemies to keep track of

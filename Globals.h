@@ -56,7 +56,7 @@ const float EXPLODE_RATE = 0.03f;
 const float AREA_BOUNDS_TOP		= 100.0f;
 const float AREA_BOUNDS_RIGHT	= 120.0f;
 const float AREA_BOUNDS_LEFT	= -120.0f;
-const float AREA_BOUNDS_BOTTOM	= -100.0f;
+const float AREA_BOUNDS_BOTTOM	= -70.0f;
 
 const float OFF_SCREEN_X		= 1000.0f;
 const float OFF_SCREEN_Y		= 1000.0f;

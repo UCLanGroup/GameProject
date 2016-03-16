@@ -15,6 +15,8 @@ private:
 	IModel* mShieldModel;
 
 	int mHealth;
+	int mScore;
+	int mLives;
 	int mMaxHealth;
 	int mShield;
 	int mMaxShield;
@@ -26,6 +28,10 @@ private:
 
 	unique_ptr<CWeapon> mWeapon;
 
+	vector<ISprite*> mLifeSprites;
+
+	IFont* mFont;
+
 public:
 	void Init();
 	void Cleanup();
@@ -34,6 +40,8 @@ public:
 	virtual void CheckCollision();
 
 	void TakeDamage(int damage);
+
+	void DrawText();
 
 	//Sets
 	void SetHealth(int health);

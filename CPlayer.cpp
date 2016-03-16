@@ -1,6 +1,7 @@
 #include "CPlayer.h"
 #include <algorithm> //for min & max functions
 #include <iostream>
+#include <sstream>
 
 void CPlayer::Init()
 {
@@ -19,6 +20,8 @@ void CPlayer::Init()
 
 	//Stats
 	mHealth = 100;
+	mScore = 0;
+	mLives = 3;
 	mMaxHealth = 100;
 	mShield = 50;
 	mMaxShield = 50;
@@ -26,6 +29,19 @@ void CPlayer::Init()
 	mRegenTimer = 0.0f;
 	mSpeed = 50.0f;
 	SetRadius(5.0f);
+
+	// Draw life sprites
+	for (int i = 0; i < mLives; i++)
+	{
+		int startPosX = 505;
+		int startPosY = 932;
+		int startPosInc = 35;
+		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * i, startPosY, 0.01f);
+		mLifeSprites.push_back(temp);
+	}
+
+	//Text
+	mFont = gEngine->LoadFont("Rockwell", 60U);
 }
 
 void CPlayer::Cleanup()
@@ -34,6 +50,11 @@ void CPlayer::Cleanup()
 	mModel = 0;
 	mShieldMesh->RemoveModel(mShieldModel);
 	mShieldModel = 0;
+	gEngine->RemoveFont(mFont);
+	for (int i = mLives; i > 0; i--)
+	{
+		delete mLifeSprites[i - 1];
+	}
 }
 
 void CPlayer::Move(float dt)
@@ -92,7 +113,6 @@ void CPlayer::Move(float dt)
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
-			cout << mRotation << endl;
 		}
 	}
 	if (gEngine->KeyHeld(KEY_RIGHT))
@@ -108,7 +128,6 @@ void CPlayer::Move(float dt)
 			float rotAmount = rotateSpeed * dt;
 			mModel->RotateZ(-rotAmount);
 			mRotation += rotAmount;
-			cout << mRotation << endl;
 		}
 	}
 
@@ -130,6 +149,8 @@ void CPlayer::Move(float dt)
 			mRegenTimer -= mShieldRegenRate;
 		}
 	}
+
+	DrawText();
 }
 
 void CPlayer::CheckCollision()
@@ -158,6 +179,14 @@ void CPlayer::TakeDamage(int damage)
 	{
 		mHealth -= damage;
 	}
+}
+
+void CPlayer::DrawText()
+{
+	stringstream textOut;
+	//textOut.precision(2);
+	textOut << mScore;
+	mFont->Draw(textOut.str(), 1005, 940, kYellow);
 }
 
 //Sets
