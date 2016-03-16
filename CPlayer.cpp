@@ -1,13 +1,11 @@
 #include "CPlayer.h"
 #include "CExplosionPool.h"
-#include <algorithm> //for min & max functions
-#include <iostream>
-#include <sstream>
 
 void CPlayer::Init()
 {
 	//Model
 	SetMesh(PLAYER_MESH);
+	mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_BOTTOM + 10.0f);
 
 	//Shield
 	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
@@ -32,22 +30,7 @@ void CPlayer::Init()
 	mSpeed = 50.0f;
 	mScore = 0;
 	SetRadius(5.0f);
-
-	// Draw life sprites
-	for (int i = 0; i < mLives; i++)
-	{
-		int startPosX = 505;
-		int startPosY = 932;
-		int startPosInc = 35;
-		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * i, startPosY, 0.01f);
-		mLifeSprites.push_back(temp);
-}
-
-	mpHealthBar = gEngine->CreateSprite("healthbar.png", mStartBarPosX, mStartBarPosY, 0.15f);
-	mpShieldBar = gEngine->CreateSprite("shieldbar.png", mStartBarPosX, mStartBarPosY + 37.0f, 0.15f);
-
-	//Text
-	mFont = gEngine->LoadFont("Rockwell", 60U);
+	SetDead(false);
 }
 
 void CPlayer::Cleanup()
@@ -56,13 +39,6 @@ void CPlayer::Cleanup()
 	mModel = 0;
 	mShieldMesh->RemoveModel(mShieldModel);
 	mShieldModel = 0;
-	gEngine->RemoveFont(mFont);
-	for (int i = mLives; i > 0; i--)
-	{
-		gEngine->RemoveSprite(mLifeSprites[i - 1]);
-	}
-	gEngine->RemoveSprite(mpHealthBar);
-	gEngine->RemoveSprite(mpShieldBar);
 }
 
 void CPlayer::Move(float dt)
@@ -169,12 +145,6 @@ void CPlayer::Move(float dt)
 			mRegenTimer -= mShieldRegenRate;
 		}
 	}
-
-	DrawText();
-
-	//Health Bars
-	AnimateShield(dt);
-	AnimateHealth(dt);
 }
 
 void CPlayer::CheckCollision()
@@ -205,52 +175,55 @@ void CPlayer::TakeDamage(int damage)
 		if (damage >= mShield) //Shield is destroyed
 		{
 			//Apply left over damage to health
-			mHealth -= mShield - damage;
+			mHealth -= damage - mShield;
 
 			//Remove shield model
 			mShieldModel->DetachFromParent();
 			mShieldModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 		}
 		mShield -= min(damage, mShield);
-		mShieldMove += damage * 4.0f; // for shield bar animation
 	}
 	else
 	{
 		mHealth -= damage;
-		mHealthMove += damage * 2.0f; // for health bar animation
 	}
-}
 
-void CPlayer::DrawText()
-{
-	stringstream textOut;
-	//textOut.precision(2);
-	textOut << mScore;
-	mFont->Draw(textOut.str(), 1005, 940, kYellow);
-}
-
-void CPlayer::AnimateHealth(float delta)
-{
-	if (mHealthMove > 0)
+	if (mHealth <= 0)
 	{
-		mpHealthBar->MoveX(-100.0f * delta);
-		mHealthMove -= 100.0f * delta;
+		SetDead(true);
 	}
 }
 
-void CPlayer::AnimateShield(float delta)
+void CPlayer::LoseLife()
 {
-	if (mShieldMove > 0)
+	CExplosionPool::Instance()->Spawn(mModel->GetX(), mModel->GetY(), mModel->GetZ(), GetRadius() * 2.0f);
+
+	if (mLives)
 	{
-		mpShieldBar->MoveX(-100.0f * delta);
-		mShieldMove -= 100.0f * delta;
+		mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_BOTTOM + 10.0f);
+		mHealth = mMaxHealth;
+		mShield = mMaxShield;
+
+		mShieldModel->SetPosition(0.0f, 0.0f, 0.0f);
+		mShieldModel->AttachToParent(mModel);
+
+		SetDead(false);
+		mLives--;
 	}
+	else
+	{
+		mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
+	}
+}
+
+void CPlayer::GainLife()
+{
+	mLives++;
 }
 
 void CPlayer::IncreaseScore(int value)
 {
 	mScore += value;
-	//cout << "Player's Score:  " << mScore << endl;
 }
 
 //Sets
@@ -258,6 +231,11 @@ void CPlayer::IncreaseScore(int value)
 void CPlayer::SetScore(int score)
 {
 	mScore = score;
+}
+
+void CPlayer::SetLives(int lives)
+{
+	mLives = lives;
 }
 
 void CPlayer::SetHealth(int health)
@@ -314,6 +292,11 @@ int CPlayer::GetScore()
 	return mScore;
 }
 
+int CPlayer::GetLives()
+{
+	return mLives;
+}
+
 int CPlayer::GetHealth()
 {
 	return mHealth;
@@ -347,9 +330,6 @@ void CPlayer::Reset()
 	mShield = 50;
 	mMaxShield = 50;
 	mRegenTimer = 0.0f;
-
-	mpHealthBar->SetPosition(mStartBarPosX, mStartBarPosY);
-	mpShieldBar->SetPosition(mStartBarPosX, mStartBarPosY + 37.0f);
 }
 
 CPlayer::~CPlayer()

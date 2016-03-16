@@ -10,6 +10,11 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
+	// SYSTEM
+	mPlayer1.Init();
+	mPlayer1.SetLists(&mPBullets, &mEBullets);
+	mPlayerList.push_back(&mPlayer1);
+
 	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
@@ -21,10 +26,21 @@ void CPlayState::Init()
 	mCam = gEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mCam->RotateLocalX(90.0f);
 
-	// SYSTEM
-	mPlayer1.Init();
-	mPlayer1.SetLists(&mPBullets, &mEBullets);
-	mPlayerList.push_back(&mPlayer1);
+	mpHealthBar = gEngine->CreateSprite("healthbar.png", mStartBarPosX, mStartBarPosY, 0.15f);
+	mpShieldBar = gEngine->CreateSprite("shieldbar.png", mStartBarPosX, mStartBarPosY + 37.0f, 0.15f);
+
+	// Draw life sprites
+	for (int i = 0; i < mPlayer1.GetLives(); i++)
+	{
+		int startPosX = 505;
+		int startPosY = 932;
+		int startPosInc = 35;
+		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * i, startPosY, 0.01f);
+		mLifeSprites.push_back(temp);
+	}
+
+	//Text
+	mFont = gEngine->LoadFont("Rockwell", 60U);
 
 	// AI
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
@@ -68,6 +84,15 @@ void CPlayState::Cleanup()
 	mEBullets.clear();
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
+
+	gEngine->RemoveFont(mFont);
+	for (int i = 0; i < mLifeSprites.size(); i++)
+	{
+		gEngine->RemoveSprite(mLifeSprites[i]);
+	}
+	mLifeSprites.clear();
+	gEngine->RemoveSprite(mpHealthBar);
+	gEngine->RemoveSprite(mpShieldBar);
 
 	// Must be after bullet cleanup. Bullet mesh
 	// needs to exist to remove bullet models. 
@@ -147,6 +172,84 @@ void CPlayState::Update(CGameStateHandler * game)
 		{
 			bullet++;
 		}
+	}
+
+	if(mPlayer1.IsDead())
+	{
+		mPlayer1.LoseLife();
+
+		//If the player has another life then start the new life
+
+		if (mLifeSprites.size() > 0)
+		{
+			gEngine->RemoveSprite(mLifeSprites.back());
+			mLifeSprites.pop_back();
+
+			mpHealthBar->SetX(mStartBarPosX);
+			mpShieldBar->SetX(mStartBarPosX);
+		}
+		else
+		{
+			//No more lives, so end the game
+			//End the game
+		}
+	}
+
+	DrawText();
+
+	//Health Bars
+	AnimateShield(mDelta);
+	AnimateHealth(mDelta);
+}
+
+
+void CPlayState::DrawText()
+{
+	stringstream textOut;
+	//textOut.precision(2);
+	textOut << mPlayer1.GetScore();
+	mFont->Draw(textOut.str(), 1005, 940, kYellow);
+}
+
+void CPlayState::AnimateHealth(float delta)
+{
+	//Find the proportion of the bar that should be filled
+	float ratio = static_cast<float>(mPlayer1.GetHealth()) / static_cast<float>(mPlayer1.GetMaxHealth());
+
+	//Find the x position the bar needs to be
+	float target = static_cast<float>(mStartBarPosX) - mBarSize + ratio * mBarSize;
+
+	//Move the bar towards the required position
+	if (target > mpHealthBar->GetX())
+	{
+		float newLoc = min(target, mpHealthBar->GetX() + (delta * mBarSpeed));
+		mpHealthBar->SetX(newLoc);
+	}
+	else
+	{
+		float newLoc = max(target, mpHealthBar->GetX() - (delta * mBarSpeed));
+		mpHealthBar->SetX(newLoc);
+	}
+}
+
+void CPlayState::AnimateShield(float delta)
+{
+	//Find the proportion of the bar that should be filled
+	float ratio = static_cast<float>(mPlayer1.GetShield()) / static_cast<float>(mPlayer1.GetMaxShield());
+
+	//Find the x position the bar needs to be
+	float target = static_cast<float>(mStartBarPosX) - mBarSize + ratio * mBarSize;
+
+	//Move the bar towards the required position
+	if (target > mpShieldBar->GetX())
+	{
+		float newLoc = min(target, mpShieldBar->GetX() + (delta * mBarSpeed));
+		mpShieldBar->SetX(newLoc);
+	}
+	else
+	{
+		float newLoc = max(target, mpShieldBar->GetX() - (delta * mBarSpeed));
+		mpShieldBar->SetX(newLoc);
 	}
 }
 

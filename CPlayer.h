@@ -1,7 +1,5 @@
 #pragma once
-
-#include <TL-Engine.h>
-#include "globals.h"
+#include "Globals.h"
 #include "IEntity.h"
 #include "CWeapon.h"
 
@@ -27,18 +25,7 @@ private:
 
 	float mRotation = 0.0f;
 
-	const int mStartBarPosX = 90;
-	const int mStartBarPosY = 936;
-	float mShieldMove = 0;
-	float mHealthMove = 0;
-
 	unique_ptr<CWeapon> mWeapon;
-
-	vector<ISprite*> mLifeSprites;
-	ISprite* mpHealthBar;
-	ISprite* mpShieldBar;
-
-	IFont* mFont;
 
 	BulletList* mpPlayerBullets = 0;
 	BulletList* mpEnemyBullets = 0;
@@ -52,13 +39,12 @@ public:
 
 	void TakeDamage(int damage);
 	void IncreaseScore(int value);
-
-	void DrawText();
-	void AnimateHealth(float delta);
-	void AnimateShield(float delta);
+	void LoseLife();
+	void GainLife();
 
 	//Sets
 	void SetScore(int score);
+	void SetLives(int lives);
 	void SetHealth(int health);
 	void SetMaxHealth(int health);
 	void SetShield(int shield);
@@ -69,6 +55,7 @@ public:
 
 	//Gets
 	int GetScore();
+	int GetLives();
 	int GetHealth();
 	int GetMaxHealth();
 	int GetShield();

@@ -1,7 +1,7 @@
 #pragma once
 // Last updated: 04.02.16
 
-#include <TL-Engine.h>
+#include <IEngine.h>
 #include <SFML/audio.hpp>
 
 
@@ -13,6 +13,11 @@
 
 using namespace tle;
 
+const int mStartBarPosX = 90;
+const int mStartBarPosY = 936;
+const float mBarSpeed = 100.0f;
+const float mBarSize = 200.0f;
+
 class CPlayState : public CGameState
 {
 private:
@@ -23,6 +28,12 @@ private:
 	ISprite* mUI2;
 	IMesh* mFloorMesh;
 	IModel* mFloor;
+
+	vector<ISprite*> mLifeSprites;
+	ISprite* mpHealthBar;
+	ISprite* mpShieldBar;
+
+	IFont* mFont;
 
 	CPlayer mPlayer1;
 	//CPlayer mPlayer2;
@@ -56,6 +67,10 @@ public:
 	void HandleEvents(CGameStateHandler* game);
 	void Update(CGameStateHandler* game);
 	void Draw(CGameStateHandler* game);
+
+	void DrawText();
+	void AnimateHealth(float delta);
+	void AnimateShield(float delta);
 
 	inline CPlayer* GetPlayer1() { return &mPlayer1; } //Don't call this in enemies, use the playerList passed to them
 	//inline CPlayer* GetPlayer2() { return &mPlayer2; }

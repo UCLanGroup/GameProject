@@ -12,6 +12,7 @@ CEnemyBoss::CEnemyBoss()
 	SetMesh(HAVOC_BOSS_MESH);
 	mModel->Scale(2.0f);
 	mModel->RotateLocalY(180.0f);
+	SetValue(500);
 
 	Reset();
 }
