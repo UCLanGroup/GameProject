@@ -17,7 +17,6 @@ private:
 	int mScore;
 
 	int mHealth;
-	int mScore;
 	int mLives;
 	int mMaxHealth;
 	int mShield;

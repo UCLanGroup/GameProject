@@ -1,6 +1,7 @@
 #include "CPlayer.h"
 #include <algorithm> //for min & max functions
 #include <iostream>
+#include <sstream>
 
 void CPlayer::Init()
 {
