@@ -22,6 +22,8 @@ private:
 	float mRegenTimer;
 	float mSpeed; // speed to move plane
 
+	float mRotation = 0.0f;
+
 	unique_ptr<CWeapon> mWeapon;
 
 public:

@@ -7,6 +7,7 @@ class CProjectile : public IEntity
 private:
 	int mDamage;
 	float mSpeed;
+	float mScale = 0.3f;
 
 public:
 	CProjectile();

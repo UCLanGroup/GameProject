@@ -1,5 +1,6 @@
 #include "CPlayer.h"
 #include <algorithm> //for min & max functions
+#include <iostream>
 
 void CPlayer::Init()
 {
@@ -53,12 +54,45 @@ void CPlayer::Move(float dt)
 			mModel->SetZ(AREA_BOUNDS_BOTTOM);
 		}
 	}
+
+	bool rotatePlane = true;
+	float rotateSpeed = 400.0f;
+	if (!gEngine->KeyHeld(KEY_LEFT) && !gEngine->KeyHeld(KEY_RIGHT))
+	{
+		rotatePlane = false;
+	}
+
+	// LEVEL PLANE WHEN NOT TURNING
+	if (rotatePlane == false)
+	{
+		float rotAmount = rotateSpeed * dt;
+
+		if (mRotation > 0.4f)
+		{
+			mModel->RotateZ(rotAmount);
+			mRotation -= rotAmount;
+		}
+		else if (mRotation < 0.4f)
+		{
+			mModel->RotateZ(-rotAmount);
+			mRotation += rotAmount;
+		}
+	}
+
 	if (gEngine->KeyHeld(KEY_LEFT))
 	{
 		mModel->MoveX(-mSpeed * dt);
 		if (mModel->GetX() < AREA_BOUNDS_LEFT)
 		{
 			mModel->SetX(AREA_BOUNDS_LEFT);
+		}
+
+		if (mRotation >= -50.0f)
+		{
+			float rotAmount = rotateSpeed * dt;
+			mModel->RotateZ(rotAmount);
+			mRotation -= rotAmount;
+			cout << mRotation << endl;
 		}
 	}
 	if (gEngine->KeyHeld(KEY_RIGHT))
@@ -67,6 +101,14 @@ void CPlayer::Move(float dt)
 		if (mModel->GetX() > AREA_BOUNDS_RIGHT)
 		{
 			mModel->SetX(AREA_BOUNDS_RIGHT);
+		}
+
+		if (mRotation <= 70.0f)
+		{
+			float rotAmount = rotateSpeed * dt;
+			mModel->RotateZ(-rotAmount);
+			mRotation += rotAmount;
+			cout << mRotation << endl;
 		}
 	}
 

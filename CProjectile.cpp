@@ -7,7 +7,7 @@ CProjectile::CProjectile()
 	//mModel->SetMatrix(matrix);
 
 	mDamage = 1;
-	mSpeed = 50.0;
+	mSpeed = 50.0f;
 	SetRadius(2.0f);
 	SetDead(false);
 }
@@ -27,7 +27,7 @@ CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float spee
 
 void CProjectile::Update(float delta)
 {
-	mModel->MoveLocalZ(delta * mSpeed);
+	mModel->MoveLocalZ(delta * (mSpeed * 4.0f));
 }
 
 void CProjectile::CheckCollision()
@@ -62,6 +62,7 @@ void CProjectile::SetSpeed(float speed)
 void CProjectile::SetMatrix(float* matrix)
 {
 	mModel->SetMatrix(matrix);
+	mModel->Scale(mScale);
 }
 
 //Inherited from IEntity : IResource
