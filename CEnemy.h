@@ -2,7 +2,6 @@
 #include "Globals.h"
 #include "CWeapon.h"
 #include "IEntity.h"
-#include "CPool.h"
 #include <list>
 
 //Forward declare
@@ -23,7 +22,6 @@ private:
 	//Stats
 	int mHealth;
 	float mSpeed;
-	std::vector<CWeapon> mWeapons;
 	int mValue;
 
 protected:
@@ -34,8 +32,7 @@ protected:
 	bool mFinished;
 
 public:
-	CEnemy();
-	CEnemy(Path* path, CVector3& offset);
+	CEnemy(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
 
 	//Updates
 	virtual void Move(float delta);
@@ -46,16 +43,12 @@ public:
 	//Sets
 	void SetHealth(int health);
 	void SetSpeed(float speed);
-	void AddWeapon(CWeapon w);
 	void SetValue(int value);
 	void SetPath(Path* path, CVector3& offset);
-
-	void SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
 
 	//Gets
 	int GetHealth();
 	float GetSpeed();
-	std::vector<CWeapon>* GetWeapons();
 	int GetValue();
 	bool IsFinished();
 

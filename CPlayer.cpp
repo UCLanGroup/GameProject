@@ -1,5 +1,6 @@
 #include "CPlayer.h"
 #include "CExplosionPool.h"
+#include "CBlaster.h"
 
 void CPlayer::Init()
 {
@@ -15,7 +16,7 @@ void CPlayer::Init()
 
 	//Weapon
 	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CWeapon(this, mProjectileMesh, 1, 100.0f, 0.1f));
+	mWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
 	mWeapon->SetBulletList(mpPlayerBullets);
 
 	//Stats
@@ -61,7 +62,6 @@ void CPlayer::Move(float dt)
 	}
 
 	bool rotatePlane = true;
-	float rotateSpeed = 400.0f;
 	if (!gEngine->KeyHeld(KEY_LEFT) && !gEngine->KeyHeld(KEY_RIGHT))
 	{
 		rotatePlane = false;
@@ -70,17 +70,17 @@ void CPlayer::Move(float dt)
 	// LEVEL PLANE WHEN NOT TURNING
 	if (rotatePlane == false)
 	{
-		float rotAmount = rotateSpeed * dt;
-
 		if (mRotation > 0.5f)
 		{
+			float rotAmount = min(kRotateSpeed * dt, mRotation);
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
 		}
 		else if (mRotation < -0.5f)
 		{
-			mModel->RotateZ(-rotAmount);
-			mRotation += rotAmount;
+			float rotAmount = max(kRotateSpeed * -dt, mRotation);
+			mModel->RotateZ(rotAmount);
+			mRotation -= rotAmount;
 		}
 	}
 
@@ -92,9 +92,9 @@ void CPlayer::Move(float dt)
 			mModel->SetX(AREA_BOUNDS_LEFT);
 		}
 
-		if (mRotation >= -50.0f)
+		if (mRotation >= -kMaxLean)
 		{
-			float rotAmount = rotateSpeed * dt;
+			float rotAmount = kRotateSpeed * dt;
 			mModel->RotateZ(rotAmount);
 			mRotation -= rotAmount;
 		}
@@ -107,9 +107,9 @@ void CPlayer::Move(float dt)
 			mModel->SetX(AREA_BOUNDS_RIGHT);
 		}
 
-		if (mRotation <= 50.0f)
+		if (mRotation <= kMaxLean)
 		{
-			float rotAmount = rotateSpeed * dt;
+			float rotAmount = kRotateSpeed * dt;
 			mModel->RotateZ(-rotAmount);
 			mRotation += rotAmount;
 		}

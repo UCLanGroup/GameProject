@@ -7,12 +7,24 @@ const float kRotateSpeed = 720.0f; //Rotation Speed
 const float kAttackRate = 0.5f;
 const float kStateDuration = 5.0f; //Each state lasts for 5 seconds
 
-CEnemyBoss::CEnemyBoss()
+CEnemyBoss::CEnemyBoss(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets) : CEnemy(players, playerBullets, enemyBullets)
 {
 	SetMesh(HAVOC_BOSS_MESH);
 	mModel->Scale(2.0f);
 	mModel->RotateLocalY(180.0f);
 	SetValue(500);
+
+	mBlaster.reset(new CBlaster(this, 10, 100.0f, 0.5f));
+	mBlaster->SetBulletList(enemyBullets);
+
+	mMissileLauncher.reset( new CMissileLauncher(this, 10, 50.0f, 0.5f) );
+	mMissileLauncher->SetBulletList(enemyBullets);
+	mMissileLauncher->SetEnemyBulletList(playerBullets);
+	if (static_cast<int>(players->size()) > 0)
+	{
+		mMissileLauncher->SetTarget((*players)[0]);
+	}
+	mMissileLauncher->SetFiring(true);
 
 	Reset();
 }
@@ -87,85 +99,26 @@ void CEnemyBoss::Update(float delta)
 	if (mState == State::Overdrive) delta *= 2.0f;
 	Move(delta);
 	(mModel->GetNode(6))->RotateY(delta * kRotateSpeed); //Rotate spinny thing
-
 	if (mState == State::Enter) return; //Don't do anything when entering
 
+	mBlaster->Update(delta);
+	mMissileLauncher->Update(delta);
+
 	mStateTimer += delta;
-	mAttackTimer += delta;
 
-	if (mState == State::Attack1)
+	if (mState == State::Attack1 && mStateTimer > kStateDuration)
 	{
-		//Basic attack pattern, switches to attack2 after set amount of time
-		while (mAttackTimer > kAttackRate)
-		{
-			res_ptr<CMissile> newMissile = move(CPool<CMissile>::GetInstance()->GetRes());
-			newMissile->SetPosition(GetCenterPoint());
-			newMissile->SetRotation(GetRotation());
-			newMissile->SetDamage(10);
-			newMissile->SetTarget((*mpPlayers)[0]);
-			newMissile->SetLists(mpPlayerBullets);
-
-			res_ptr<CProjectile> newBullet(newMissile.release());
-
-			mpEnemyBullets->push_back(move(newBullet));
-
-			mAttackTimer -= kAttackRate;
-		}
-
-		if (mState == State::Attack1 && mStateTimer > kStateDuration)
-		{
-			mStateTimer -= kStateDuration;
-			mState = State::Attack2;
-		}
+		mStateTimer -= kStateDuration;
+		mBlaster->SetFiring(true);
+		mMissileLauncher->SetFiring(false);
+		mState = State::Attack2;
 	}
-	else if (mState == State::Attack2)
+	else if (mState == State::Attack2 && mStateTimer > kStateDuration)
 	{
-		//Basic attack pattern, switches to attack1 after set amount of time
-		while (mAttackTimer > kAttackRate)
-		{
-			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
-			newBullet->SetPosition(GetCenterPoint());
-			newBullet->SetRotation(GetRotation());
-			newBullet->SetSpeed(100.0f);
-			newBullet->SetDamage(10);
-
-			mpEnemyBullets->push_back(move(newBullet));
-
-			mAttackTimer -= kAttackRate;
-		}
-
-		if (mState == State::Attack2 && mStateTimer > kStateDuration)
-		{
-			mStateTimer -= kStateDuration;
-			mState = State::Attack1;
-		}
-	}
-	else if (mState == State::Overdrive)
-	{
-		//Death, enters overdrive when low on health
-		while (mAttackTimer > kAttackRate)
-		{
-			res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
-			newBullet->SetPosition(GetCenterPoint());
-			newBullet->SetRotation(GetRotation());
-			newBullet->SetSpeed(100.0f);
-			newBullet->SetDamage(10);
-
-			mpEnemyBullets->push_back(move(newBullet));
-
-			res_ptr<CMissile> newMissile = move(CPool<CMissile>::GetInstance()->GetRes());
-			newMissile->SetPosition(GetCenterPoint());
-			newMissile->SetRotation(GetRotation());
-			newMissile->SetDamage(10);
-			newMissile->SetTarget((*mpPlayers)[0]);
-			newMissile->SetLists(mpPlayerBullets);
-
-			newBullet.reset(newMissile.release());
-
-			mpEnemyBullets->push_back(move(newBullet));
-
-			mAttackTimer -= kAttackRate;
-		}
+		mStateTimer -= kStateDuration;
+		mBlaster->SetFiring(false);
+		mMissileLauncher->SetFiring(true);
+		mState = State::Attack1;
 	}
 }
 
@@ -177,6 +130,8 @@ void CEnemyBoss::TakeDamage(int damage)
 	if (GetHealth() < 20)
 	{
 		mState = State::Overdrive;
+		mBlaster->SetFiring(true);
+		mMissileLauncher->SetFiring(true);
 	}
 	if (GetHealth() <= 0)
 	{
@@ -193,6 +148,5 @@ void CEnemyBoss::Reset()
 	SetSpeed(20.0f);
 	mBobbing = 0.0f;
 	mStateTimer = 0.0f;
-	mAttackTimer = 0.0f;
 	mState = State::Enter;
 }

@@ -4,25 +4,7 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>Entities\source</Filter>
     </ClCompile>
-    <ClCompile Include="CWeapon.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
-    <ClCompile Include="CProjectile.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemyManager.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemyBoss.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
     <ClCompile Include="ICollider.cpp">
-      <Filter>Core\source</Filter>
-    </ClCompile>
-    <ClCompile Include="CPool.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
     <ClCompile Include="IDebug.cpp">
@@ -37,9 +19,6 @@
     <ClCompile Include="CPlayState.cpp">
       <Filter>States\source</Filter>
     </ClCompile>
-    <ClCompile Include="CMissile.cpp">
-      <Filter>Entities\source</Filter>
-    </ClCompile>
     <ClCompile Include="CExplosionPool.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
@@ -49,24 +28,33 @@
     <ClCompile Include="IEntity.cpp">
       <Filter>Entities\source</Filter>
     </ClCompile>
+    <ClCompile Include="CWeapon.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyBoss.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyManager.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissile.cpp">
+      <Filter>Entities\source\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectile.cpp">
+      <Filter>Entities\source\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissileLauncher.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlaster.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CWeapon.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CProjectile.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemyManager.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemyBoss.h">
       <Filter>Entities\headers</Filter>
     </ClInclude>
     <ClInclude Include="ICollider.h">
@@ -76,9 +64,6 @@
       <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="IResource.h">
-      <Filter>Core\headers</Filter>
-    </ClInclude>
-    <ClInclude Include="CPool.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
     <ClInclude Include="IDebug.h">
@@ -96,9 +81,6 @@
     <ClInclude Include="CGameState.h">
       <Filter>States\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CMissile.h">
-      <Filter>Entities\headers</Filter>
-    </ClInclude>
     <ClInclude Include="CExplosionPool.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
@@ -107,6 +89,30 @@
     </ClInclude>
     <ClInclude Include="IEntity.h">
       <Filter>Entities\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CWeapon.h">
+      <Filter>Entities\headers\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissileLauncher.h">
+      <Filter>Entities\headers\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlaster.h">
+      <Filter>Entities\headers\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyBoss.h">
+      <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyManager.h">
+      <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissile.h">
+      <Filter>Entities\headers\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectile.h">
+      <Filter>Entities\headers\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +145,24 @@
     </Filter>
     <Filter Include="Entities\source">
       <UniqueIdentifier>{48ed576a-28ed-44cd-a7c4-8d06e0388817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\headers\Weapons">
+      <UniqueIdentifier>{b82ede53-060c-4a14-9206-4ff4db3894ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\source\Weapons">
+      <UniqueIdentifier>{4b3a0171-800e-4f4e-b1e8-23b8c6f333eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\headers\Enemies">
+      <UniqueIdentifier>{b791a4b1-e589-4c24-8f30-029dcf102cc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\source\Enemies">
+      <UniqueIdentifier>{f9290e0a-98e6-4f03-858f-831631044402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\headers\Projectiles">
+      <UniqueIdentifier>{052defc5-035f-4d4a-bc4d-e28aab5ddae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\source\Projectiles">
+      <UniqueIdentifier>{3c27ece5-2d48-441b-b037-eda56451c973}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

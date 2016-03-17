@@ -44,15 +44,15 @@ void IEntity::SetMesh(IMesh* mesh)
 			if (mModel) //If an existing model exists then remove it but preserve the location
 			{
 				CVector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
-				mMesh->RemoveModel(mModel);
+				gEngine->CacheModel(mModel);
 				mMesh = mesh; //Set the new mesh
-				mModel = mMesh->CreateModel();
+				mModel = gEngine->GetModel(mMesh);
 				mModel->SetPosition(pos.x, pos.y, pos.z);
 			}
 			else //If no existing model exists then create one
 			{
 				mMesh = mesh; //Set the new mesh
-				mModel = mMesh->CreateModel();
+				mModel = gEngine->GetModel(mMesh);
 			}
 		}
 		else //No change of mesh
@@ -212,6 +212,6 @@ IEntity::~IEntity()
 {
 	if (mModel && mMesh && gEngine)
 	{
-		mMesh->RemoveModel(mModel);
+		gEngine->CacheModel(mModel);
 	}
 }

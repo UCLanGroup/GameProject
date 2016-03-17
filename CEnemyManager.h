@@ -1,7 +1,6 @@
 #pragma once
 #include "Globals.h"
 #include "CEnemy.h"
-#include "CPool.h"
 #include <list>
 
 class CEnemyManager
@@ -23,9 +22,7 @@ private:
 
 	vector_ptr<Path> mPaths;
 	vector_ptr<SSpawner> mSpawners;
-	std::list<res_ptr<CEnemy>> mEnemies;
-
-	CPool<CEnemy>* mEnemyPool;
+	std::list<unique_ptr<CEnemy>> mEnemies;
 
 	//Statistics
 
@@ -34,7 +31,7 @@ private:
 
 	void ReadInPaths(string& file);
 	void ReadInLevel(string& file);
-	res_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, CVector3& offset);
+	unique_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, CVector3& offset);
 
 	//Stuff the enemies need access to
 	std::vector<CPlayer*>* mpPlayers = 0;
@@ -51,7 +48,7 @@ public:
 	int GetNumOfEnemies() { return mNumOfEnemies; }
 	int GetNumOfKills() { return mNumOfKills; }
 
-	std::list<res_ptr<CEnemy>>& GetEnemies() { return mEnemies; }
+	std::list<unique_ptr<CEnemy>>& GetEnemies() { return mEnemies; }
 
 	void Update(float delta);
 

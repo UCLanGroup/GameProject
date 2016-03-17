@@ -125,6 +125,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CBlaster.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyBoss.cpp" />
     <ClCompile Include="CEnemyManager.cpp" />
@@ -132,10 +133,10 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CGameStateHandler.cpp" />
     <ClCompile Include="CIntroState.cpp" />
     <ClCompile Include="CMissile.cpp" />
+    <ClCompile Include="CMissileLauncher.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayState.cpp" />
     <ClCompile Include="CProjectile.cpp" />
-    <ClCompile Include="CPool.cpp" />
     <ClCompile Include="CWeapon.cpp" />
     <ClCompile Include="ICollider.cpp" />
     <ClCompile Include="IDebug.cpp" />
@@ -146,6 +147,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBlaster.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyBoss.h" />
     <ClInclude Include="CEnemyManager.h" />
@@ -154,10 +156,10 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CGameStateHandler.h" />
     <ClInclude Include="CIntroState.h" />
     <ClInclude Include="CMissile.h" />
+    <ClInclude Include="CMissileLauncher.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayState.h" />
     <ClInclude Include="CProjectile.h" />
-    <ClInclude Include="CPool.h" />
     <ClInclude Include="CWeapon.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ICollidable.h" />

@@ -13,7 +13,6 @@ private:
 
 public:
 	CProjectile();
-	CProjectile(tle::IMesh* mesh, float* matrix, int damage, float speed);
 
 	virtual void Update(float delta);
 	virtual void CheckCollision();

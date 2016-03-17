@@ -13,14 +13,14 @@
 
 using namespace tle;
 
-const float mStartBarPosX = 90;
-const float mStartBarPosY = 936;
-const float mBarSpeed = 100.0f;
-const float mBarSize = 200.0f;
-
 class CPlayState : public CGameState
 {
 private:
+	const float kStartBarPosX = 90;
+	const float kStartBarPosY = 936;
+	const float kBarSpeed = 100.0f;
+	const float kBarSize = 200.0f;
+
 	static CPlayState mPlayState;
 
 	ICamera* mCam;

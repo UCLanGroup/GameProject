@@ -37,21 +37,21 @@ void CIntroState::Init()
 
 
 	// MUSIC
-	if (!gMusic.openFromFile(MUSIC))
-	{
-		cout << "CPlayState.cpp: Error loading music file" << endl;
-	}
-	gMusic.setVolume(15.0f);
-	gMusic.play();
+	///*if (!gMusic.openFromFile(MUSIC))
+	//{
+	//	cout << "CPlayState.cpp: Error loading music file" << endl;
+	//}
+	//gMusic.setVolume(15.0f);
+	//gMusic.play();*/
 
 
 	// SOUND
-	if (!mBufferStart.loadFromFile(SOUND_START))
+	/*if (!mBufferStart.loadFromFile(SOUND_START))
 	{
 		cout << "CIntroState.cpp: Error loading START sound file" << endl;
 	}
 
-	mSound.setBuffer(mBufferStart);
+	mSound.setBuffer(mBufferStart);*/
 }
 
 void CIntroState::Cleanup() 
@@ -85,7 +85,7 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 
 	if (gEngine->KeyHit(KEY_START))
 	{
-		mSound.play();
+		//mSound.play();
 		game->ChangeState(CPlayState::Instance());
 	}
 }

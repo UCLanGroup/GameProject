@@ -8,6 +8,9 @@ using namespace tle;
 class CPlayer : public IEntity
 {
 private:
+	const float kMaxLean = 30.0f;
+	const float kRotateSpeed = 150.0f;
+
 	IMesh* mShieldMesh;
 	IMesh* mProjectileMesh;
 	IModel* mShieldModel;

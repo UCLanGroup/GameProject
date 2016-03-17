@@ -27,8 +27,8 @@ void CPlayState::Init()
 	mCam = gEngine->CreateCamera(kManual, 0.0f, 200.0f, 0.0f);
 	mCam->RotateLocalX(90.0f);
 
-	mpHealthBar = gEngine->CreateSprite("healthbar.png", mStartBarPosX, mStartBarPosY, 0.15f);
-	mpShieldBar = gEngine->CreateSprite("shieldbar.png", mStartBarPosX, mStartBarPosY + 37.0f, 0.15f);
+	mpHealthBar = gEngine->CreateSprite("healthbar.png", kStartBarPosX, kStartBarPosY, 0.15f);
+	mpShieldBar = gEngine->CreateSprite("shieldbar.png", kStartBarPosX, kStartBarPosY + 37.0f, 0.15f);
 
 	// Draw life sprites
 	for (int i = 0; i < mPlayer1.GetLives(); i++)
@@ -53,6 +53,7 @@ void CPlayState::Init()
 
 	//Preload any assets at the start before they are needed
 
+	gEngine->Preload(F16_ENEMY_MESH, 30);
 	gEngine->Preload(HAVOC_BOSS_MESH);
 	gEngine->Preload(MISSILE_MESH);
 
@@ -186,8 +187,8 @@ void CPlayState::Update(CGameStateHandler * game)
 			gEngine->RemoveSprite(mLifeSprites.back());
 			mLifeSprites.pop_back();
 
-			mpHealthBar->SetX(mStartBarPosX);
-			mpShieldBar->SetX(mStartBarPosX);
+			mpHealthBar->SetX(kStartBarPosX);
+			mpShieldBar->SetX(kStartBarPosX);
 		}
 		else
 		{
@@ -218,17 +219,17 @@ void CPlayState::AnimateHealth(float delta)
 	float ratio = static_cast<float>(mPlayer1.GetHealth()) / static_cast<float>(mPlayer1.GetMaxHealth());
 
 	//Find the x position the bar needs to be
-	float target = static_cast<float>(mStartBarPosX) - mBarSize + ratio * mBarSize;
+	float target = static_cast<float>(kStartBarPosX) - kBarSize + ratio * kBarSize;
 
 	//Move the bar towards the required position
 	if (target > mpHealthBar->GetX())
 	{
-		float newLoc = min(target, mpHealthBar->GetX() + (delta * mBarSpeed));
+		float newLoc = min(target, mpHealthBar->GetX() + (delta * kBarSpeed));
 		mpHealthBar->SetX(newLoc);
 	}
 	else
 	{
-		float newLoc = max(target, mpHealthBar->GetX() - (delta * mBarSpeed));
+		float newLoc = max(target, mpHealthBar->GetX() - (delta * kBarSpeed));
 		mpHealthBar->SetX(newLoc);
 	}
 }
@@ -239,17 +240,17 @@ void CPlayState::AnimateShield(float delta)
 	float ratio = static_cast<float>(mPlayer1.GetShield()) / static_cast<float>(mPlayer1.GetMaxShield());
 
 	//Find the x position the bar needs to be
-	float target = static_cast<float>(mStartBarPosX) - mBarSize + ratio * mBarSize;
+	float target = static_cast<float>(kStartBarPosX) - kBarSize + ratio * kBarSize;
 
 	//Move the bar towards the required position
 	if (target > mpShieldBar->GetX())
 	{
-		float newLoc = min(target, mpShieldBar->GetX() + (delta * mBarSpeed));
+		float newLoc = min(target, mpShieldBar->GetX() + (delta * kBarSpeed));
 		mpShieldBar->SetX(newLoc);
 	}
 	else
 	{
-		float newLoc = max(target, mpShieldBar->GetX() - (delta * mBarSpeed));
+		float newLoc = max(target, mpShieldBar->GetX() - (delta * kBarSpeed));
 		mpShieldBar->SetX(newLoc);
 	}
 }

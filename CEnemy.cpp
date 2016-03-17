@@ -9,21 +9,18 @@ const float kSpeed = 1.0f;
 const int kValue = 10;
 const float kRadius = 5.0f;
 
-CEnemy::CEnemy()
+CEnemy::CEnemy(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
 {
 	//Model
-	SetMesh(DEFAULT_ENEMY_MESH);
+	SetMesh(F16_ENEMY_MESH);
 	SetRadius(kRadius);
+
+	mpPlayers = players;
+	mpEnemyBullets = enemyBullets;
+	mpPlayerBullets = playerBullets;
 
 	//All other stats are reset
 	Reset();
-}
-
-CEnemy::CEnemy(Path* path, tlx::CVector3& offset) : CEnemy()
-{
-	//Pathing
-	mpPath = path;
-	mOffset = offset;
 }
 
 //Updates
@@ -52,30 +49,6 @@ void CEnemy::Move(float delta)
 
 		CVector3 newPos = ((A * (mMoveTimer * mMoveTimer * mMoveTimer)) + (B * (mMoveTimer * mMoveTimer)) + (C * mMoveTimer) + D) * 0.5f;
 		newPos = newPos + mOffset;
-
-		/*
-		//Attempt using dot product to rotate towards new position
-
-		Vector3 oldPos(mModel->GetX(), mModel->GetLocalY(), mModel->GetZ());
-		float matrix[16];
-		mModel->GetMatrix(&(matrix[0]));
-		Vector3 forward(matrix[0], matrix[1], matrix[2]); //Get the direction the model is facing
-		Vector3 direction = newPos - oldPos;
-
-		float dot = (forward * direction) / (forward.Length() * direction.Length());
-		float angle = acosf(dot);
-
-		if (angle > 0.01f)
-		{
-			if (dot > 0.0f)
-			{
-				mModel->RotateLocalY(angle);
-			}
-			else
-			{
-				mModel->RotateLocalY(-angle);
-			}
-		}*/
 
 		//Calculate bearing from north
 		float xDif = newPos.x - mModel->GetX();
@@ -157,11 +130,6 @@ void CEnemy::SetSpeed(float speed)
 	mSpeed = speed;
 }
 
-void CEnemy::AddWeapon(CWeapon w) //Perposely use copy constructor
-{
-	mWeapons.push_back(w);
-}
-
 void CEnemy::SetValue(int value)
 {
 	mValue = value;
@@ -171,13 +139,6 @@ void CEnemy::SetPath(Path* path, CVector3& offset)
 {
 	mpPath = path;
 	mOffset = offset;
-}
-
-void CEnemy::SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
-{
-	mpPlayers = players;
-	mpPlayerBullets = playerBullets;
-	mpEnemyBullets = enemyBullets;
 }
 
 //Gets
@@ -190,11 +151,6 @@ int CEnemy::GetHealth()
 float CEnemy::GetSpeed()
 {
 	return mSpeed;
-}
-
-std::vector<CWeapon>* CEnemy::GetWeapons()
-{
-	return &mWeapons;
 }
 
 int CEnemy::GetValue()

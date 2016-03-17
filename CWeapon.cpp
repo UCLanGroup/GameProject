@@ -1,13 +1,12 @@
 #include "CWeapon.h"
 #include <algorithm>
 
-CWeapon::CWeapon(IEntity* parent, tle::IMesh* mesh, int damage, float projSpeed, float fireRate)
+CWeapon::CWeapon(IEntity* parent)
 {
 	mpParent = parent;
-	mpProjMesh = mesh;
-	mDamage = damage;
-	mProjSpeed = projSpeed;
-	mFireRate = fireRate;
+	mDamage = 1;
+	mProjSpeed = 100.0f;
+	mFireRate = 1.0f;
 	mTimer = 0.0f;
 	mpProjectiles = 0;
 	mIsfiring = false;
@@ -26,16 +25,12 @@ void CWeapon::Update(float delta)
 
 	while (mTimer > mFireRate)
 	{
-		float matrix[16];
-		mpParent->GetMatrix(matrix);
+		CProjectile* bullet = Fire();
+		bullet->SetDamage(mDamage);
+		bullet->SetSpeed(mProjSpeed);
+		bullet->SetParent(mpParent);
 
-		res_ptr<CProjectile> newBullet = move(CPool<CProjectile>::GetInstance()->GetRes());
-		newBullet->SetMatrix(matrix);
-		newBullet->SetDamage(mDamage);
-		newBullet->SetSpeed(mProjSpeed);
-		newBullet->SetParent(mpParent);
-
-		mpProjectiles->push_back(move(newBullet));
+		mpProjectiles->push_back(unique_ptr<CProjectile>(bullet));
 
 		mTimer -= mFireRate;
 	}
@@ -73,11 +68,6 @@ IEntity* CWeapon::GetParent()
 	return mpParent;
 }
 
-IMesh* CWeapon::GetProjMesh()
-{
-	return mpProjMesh;
-}
-
 BulletList* CWeapon::GetBulletList()
 {
 	return mpProjectiles;
@@ -113,11 +103,6 @@ void CWeapon::SetFiring(bool isFiring)
 void CWeapon::SetParent(IEntity* pParent)
 {
 	mpParent = pParent;
-}
-
-void CWeapon::SetProjMesh(IMesh* pProjMesh)
-{
-	mpProjMesh = pProjMesh;
 }
 
 void CWeapon::SetBulletList(BulletList* pBulletList)

@@ -5,25 +5,12 @@ CProjectile::CProjectile()
 {
 	SetMesh(BULLET_MESH);
 	//mModel->SetMatrix(matrix);
+	mModel->ResetScale();
 	mModel->Scale(mScale);
 
 	mDamage = 1;
 	mSpeed = 50.0f;
 	mParent = 0;
-	SetRadius(2.0f);
-	SetDead(false);
-}
-
-//The matrix should be the matrix gained from the parent model (the plane/spaceship)
-//This will give the projectile the exact same rotation and location as the parent
-CProjectile::CProjectile(tle::IMesh* mesh, float* matrix, int damage, float speed)
-{
-	SetMesh(mesh);
-	SetMatrix(matrix);
-	mModel->Scale(mScale);
-
-	mDamage = damage;
-	mSpeed = speed;
 	SetRadius(2.0f);
 	SetDead(false);
 }
@@ -70,6 +57,7 @@ void CProjectile::SetSpeed(float speed)
 void CProjectile::SetMatrix(float* matrix)
 {
 	mModel->SetMatrix(matrix);
+	mModel->ResetScale();
 	mModel->Scale(mScale);
 }
 

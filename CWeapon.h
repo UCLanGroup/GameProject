@@ -1,11 +1,9 @@
 #pragma once
 #include "Globals.h"
-#include <list>
 #include <IEngine.h>
 #include "CProjectile.h"
-#include "CPool.h"
 
-using BulletList = std::list<res_ptr<CProjectile>>;
+using BulletList = std::list<unique_ptr<CProjectile>>;
 
 class CWeapon
 {
@@ -16,11 +14,12 @@ private:
 	float mTimer;
 	bool mIsfiring;
 	IEntity* mpParent;
-	tle::IMesh* mpProjMesh;
 	BulletList* mpProjectiles;
 
+	virtual CProjectile* Fire() = 0;
+
 public:
-	CWeapon(IEntity* parent, tle::IMesh* projectileMesh, int damage, float projSpeed, float fireRate);
+	CWeapon(IEntity* parent);
 
 	void Update(float delta);
 	
@@ -32,7 +31,6 @@ public:
 	float GetTimer();
 	bool IsFiring();
 	IEntity* GetParent();
-	IMesh* GetProjMesh();
 	BulletList* GetBulletList();
 
 	//Sets
@@ -43,6 +41,5 @@ public:
 	void SetTimer(float time);
 	void SetFiring(bool isFiring);
 	void SetParent(IEntity* pParent);
-	void SetProjMesh(IMesh* pProjMesh);
 	void SetBulletList(BulletList* pBulletList);
 };

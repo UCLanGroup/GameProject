@@ -6,7 +6,6 @@
 const float kTurnInterval = 0.5f; //Changes turn direction every 0.5f seconds
 const float kTurnSpeed = 90.0f;
 const float kMoveSpeed = 50.0f;	//Default move speed
-const std::vector<string> kSmoke{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" };
 
 CMissile::CMissile()
 {
@@ -18,7 +17,7 @@ CMissile::CMissile()
 	SetDead(false);
 
 	mTimer = kTurnInterval;
-	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, kSmoke, 0.025f);
+	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, std::vector<string>{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" } , 0.025f);
 	mEmitter->SetParticleLife(0.5f);
 	mEmitter->SetParticleScale(2.0f);
 	mEmitter->AttachToParent(mModel);
@@ -103,7 +102,7 @@ void CMissile::SetTarget(IEntity* target)
 	mTarget = target;
 }
 
-void CMissile::SetLists(std::list<res_ptr<CProjectile>>* playerBullets)
+void CMissile::SetLists(std::list<unique_ptr<CProjectile>>* playerBullets)
 {
 	mpPlayerBullets = playerBullets;
 }

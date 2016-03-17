@@ -1,6 +1,5 @@
 #pragma once
 #include "CProjectile.h"
-#include "CPool.h"
 #include <list>
 
 // Description:	Moves towards target haphazardly and can be shot down.
@@ -19,7 +18,7 @@ private:
 	bool mClockwise = false;
 	float mTimer = 0.0f;
 
-	std::list<res_ptr<CProjectile>>* mpPlayerBullets = 0;
+	std::list<unique_ptr<CProjectile>>* mpPlayerBullets = 0;
 
 public:
 	CMissile();
@@ -28,7 +27,7 @@ public:
 	virtual void CheckCollision();
 
 	void SetTarget(IEntity* target);
-	void SetLists(std::list<res_ptr<CProjectile>>* playerBullets);
+	void SetLists(std::list<unique_ptr<CProjectile>>* playerBullets);
 
 	IEntity* GetTarget();
 	bool IsClockwise();
