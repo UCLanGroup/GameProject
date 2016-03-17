@@ -6,7 +6,7 @@ class CMissileLauncher : public CWeapon
 private:
 	BulletList* mpEnemyProjectiles;
 
-	virtual CProjectile* Fire();
+	virtual void Fire();
 
 public:
 	CMissileLauncher(IEntity* parent, int damage, float projSpeed, float fireRate);

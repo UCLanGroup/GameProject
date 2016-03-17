@@ -6,6 +6,7 @@ CMissileLauncher::CMissileLauncher(IEntity* parent, int damage, float projSpeed,
 	SetDamage(damage);
 	SetProjSpeed(projSpeed);
 	SetFireRate(fireRate);
+	SetTarget(0);
 }
 
 void CMissileLauncher::SetEnemyBulletList(BulletList* bulletList)
@@ -13,7 +14,7 @@ void CMissileLauncher::SetEnemyBulletList(BulletList* bulletList)
 	mpEnemyProjectiles = bulletList;
 }
 
-CProjectile* CMissileLauncher::Fire()
+void CMissileLauncher::Fire()
 {
 	CMissile* missile = new CMissile();
 	missile->SetPosition(GetParent()->GetCenterPoint());
@@ -21,5 +22,9 @@ CProjectile* CMissileLauncher::Fire()
 	missile->SetTarget(GetTarget());
 	missile->SetLists(mpEnemyProjectiles);
 
-	return missile;
+	missile->SetDamage(GetDamage());
+	missile->SetSpeed(GetProjSpeed());
+	missile->SetParent(GetParent());
+
+	GetBulletList()->push_back(unique_ptr<CProjectile>(missile));
 }

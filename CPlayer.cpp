@@ -1,6 +1,8 @@
 #include "CPlayer.h"
 #include "CExplosionPool.h"
 #include "CBlaster.h"
+#include "CShotGun.h"
+#include "CMissileLauncher.h"
 
 void CPlayer::Init()
 {
@@ -126,6 +128,22 @@ void CPlayer::Move(float dt)
 		mWeapon->SetFiring(false);
 	}
 	mWeapon->Update(dt);
+
+	if (gEngine->KeyHit(Key_Q))
+	{
+		mWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
+		mWeapon->SetBulletList(mpPlayerBullets);
+	}
+	else if (gEngine->KeyHit(Key_W))
+	{
+		mWeapon.reset(new CMissileLauncher(this, 5, 100.0f, 0.2f));
+		mWeapon->SetBulletList(mpPlayerBullets);
+	}
+	else if (gEngine->KeyHit(Key_E))
+	{
+		mWeapon.reset(new CShotGun(this, 1, 100.0f, 0.33f));
+		mWeapon->SetBulletList(mpPlayerBullets);
+	}
 
 	//Shield Regen
 

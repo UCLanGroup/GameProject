@@ -52,6 +52,9 @@
     <ClCompile Include="CBlaster.cpp">
       <Filter>Entities\source\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="CShotGun.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="CProjectile.h">
       <Filter>Entities\headers\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CShotGun.h">
+      <Filter>Entities\headers\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

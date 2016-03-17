@@ -25,13 +25,7 @@ void CWeapon::Update(float delta)
 
 	while (mTimer > mFireRate)
 	{
-		CProjectile* bullet = Fire();
-		bullet->SetDamage(mDamage);
-		bullet->SetSpeed(mProjSpeed);
-		bullet->SetParent(mpParent);
-
-		mpProjectiles->push_back(unique_ptr<CProjectile>(bullet));
-
+		Fire();
 		mTimer -= mFireRate;
 	}
 }

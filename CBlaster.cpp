@@ -11,7 +11,7 @@ CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate)
 	SetTarget(0);
 }
 
-CProjectile* CBlaster::Fire()
+void CBlaster::Fire()
 {
 	CProjectile* bullet = new CProjectile();
 
@@ -31,5 +31,9 @@ CProjectile* CBlaster::Fire()
 		bullet->SetRotation(rotation);
 	}
 
-	return bullet;
+	bullet->SetDamage(GetDamage());
+	bullet->SetSpeed(GetProjSpeed());
+	bullet->SetParent(GetParent());
+
+	GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
 }

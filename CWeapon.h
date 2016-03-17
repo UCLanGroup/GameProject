@@ -17,7 +17,7 @@ private:
 	IEntity* mpTarget;
 	BulletList* mpProjectiles;
 
-	virtual CProjectile* Fire() = 0;
+	virtual void Fire() = 0;
 
 public:
 	CWeapon(IEntity* parent);

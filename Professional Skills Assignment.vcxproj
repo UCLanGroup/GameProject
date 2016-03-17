@@ -137,6 +137,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayState.cpp" />
     <ClCompile Include="CProjectile.cpp" />
+    <ClCompile Include="CShotGun.cpp" />
     <ClCompile Include="CWeapon.cpp" />
     <ClCompile Include="ICollider.cpp" />
     <ClCompile Include="IDebug.cpp" />
@@ -160,6 +161,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayState.h" />
     <ClInclude Include="CProjectile.h" />
+    <ClInclude Include="CShotGun.h" />
     <ClInclude Include="CWeapon.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="ICollidable.h" />
