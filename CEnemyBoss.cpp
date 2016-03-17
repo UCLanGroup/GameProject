@@ -20,11 +20,13 @@ CEnemyBoss::CEnemyBoss(std::vector<CPlayer*>* players, BulletList* playerBullets
 	mMissileLauncher.reset( new CMissileLauncher(this, 10, 50.0f, 0.5f) );
 	mMissileLauncher->SetBulletList(enemyBullets);
 	mMissileLauncher->SetEnemyBulletList(playerBullets);
+	mMissileLauncher->SetFiring(true);
+
 	if (static_cast<int>(players->size()) > 0)
 	{
+		mBlaster->SetTarget((*players)[0]);
 		mMissileLauncher->SetTarget((*players)[0]);
 	}
-	mMissileLauncher->SetFiring(true);
 
 	Reset();
 }

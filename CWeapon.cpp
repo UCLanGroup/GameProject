@@ -68,6 +68,11 @@ IEntity* CWeapon::GetParent()
 	return mpParent;
 }
 
+IEntity* CWeapon::GetTarget()
+{
+	return mpTarget;
+}
+
 BulletList* CWeapon::GetBulletList()
 {
 	return mpProjectiles;
@@ -103,6 +108,11 @@ void CWeapon::SetFiring(bool isFiring)
 void CWeapon::SetParent(IEntity* pParent)
 {
 	mpParent = pParent;
+}
+
+void CWeapon::SetTarget(IEntity* pTarget)
+{
+	mpTarget = pTarget;
 }
 
 void CWeapon::SetBulletList(BulletList* pBulletList)

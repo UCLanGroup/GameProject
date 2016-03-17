@@ -14,6 +14,7 @@ private:
 	float mTimer;
 	bool mIsfiring;
 	IEntity* mpParent;
+	IEntity* mpTarget;
 	BulletList* mpProjectiles;
 
 	virtual CProjectile* Fire() = 0;
@@ -31,6 +32,7 @@ public:
 	float GetTimer();
 	bool IsFiring();
 	IEntity* GetParent();
+	IEntity* GetTarget();
 	BulletList* GetBulletList();
 
 	//Sets
@@ -41,5 +43,6 @@ public:
 	void SetTimer(float time);
 	void SetFiring(bool isFiring);
 	void SetParent(IEntity* pParent);
+	void SetTarget(IEntity* pTarget);
 	void SetBulletList(BulletList* pBulletList);
 };

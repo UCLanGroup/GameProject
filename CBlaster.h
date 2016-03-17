@@ -4,9 +4,6 @@
 class CBlaster : public CWeapon
 {
 private:
-	BulletList* mpEnemyProjectiles;
-	IEntity* mpTarget;
-
 	virtual CProjectile* Fire();
 
 public:
