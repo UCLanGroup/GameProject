@@ -7,6 +7,7 @@ CMissileLauncher::CMissileLauncher(IEntity* parent, int damage, float projSpeed,
 	SetProjSpeed(projSpeed);
 	SetFireRate(fireRate);
 	SetTarget(0);
+	mpEnemyProjectiles = 0;
 }
 
 void CMissileLauncher::SetEnemyBulletList(BulletList* bulletList)

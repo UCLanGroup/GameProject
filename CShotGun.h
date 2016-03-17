@@ -4,8 +4,10 @@
 class CShotGun : public CWeapon
 {
 private:
+	int mBulletsPerShot;
+
 	virtual void Fire();
 
 public:
-	CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate);
+	CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate, int bulletsPerShot);
 };

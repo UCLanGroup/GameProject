@@ -55,6 +55,9 @@
     <ClCompile Include="CShotGun.cpp">
       <Filter>Entities\source\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="CChaosGun.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -118,6 +121,9 @@
       <Filter>Entities\headers\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="CShotGun.h">
+      <Filter>Entities\headers\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CChaosGun.h">
       <Filter>Entities\headers\Weapons</Filter>
     </ClInclude>
   </ItemGroup>

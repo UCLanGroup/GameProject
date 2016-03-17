@@ -126,6 +126,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CBlaster.cpp" />
+    <ClCompile Include="CChaosGun.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyBoss.cpp" />
     <ClCompile Include="CEnemyManager.cpp" />
@@ -149,6 +150,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBlaster.h" />
+    <ClInclude Include="CChaosGun.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyBoss.h" />
     <ClInclude Include="CEnemyManager.h" />
