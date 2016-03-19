@@ -13,7 +13,7 @@ void CExplosionPool::Init()
 {
 	mMesh = gEngine->LoadMesh(EXPLOSION_MESH);
 
-	for (int i = 2; i <= EXPLOSION_SPRITE_COUNT; i++)
+	for (int i = 1; i <= EXPLOSION_SPRITE_COUNT; i++)
 	{
 		gEngine->Preload(EXPLOSION_MESH, 10, ExplosionTexture(i));
 	}
@@ -22,7 +22,7 @@ void CExplosionPool::Init()
 	for (int i = 0; i < 50; i++)
 	{
 		explosion.reset(new SExplosion);
-		explosion->mModel = mMesh->CreateModel(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
+		explosion->mModel = 0;
 		explosion->mStage = 1;
 		explosion->mTimer = 0.0f;
 		explosion->mRadius = 1.0f;
@@ -35,9 +35,12 @@ void CExplosionPool::Init()
 void CExplosionPool::Spawn(float x, float y, float z, float radius)
 {
 	if (mInActive.size() > 0)
-	{ 
-		//Store the existing model
-		gEngine->CacheModel(mInActive.back()->mModel, ExplosionTexture(mInActive.back()->mStage));
+	{
+		if (mInActive.back()->mModel)
+		{
+			//Store the existing model
+			gEngine->CacheModel(mInActive.back()->mModel, ExplosionTexture(mInActive.back()->mStage));
+		}
 
 		mInActive.back()->mTimer = 0.0f;
 		mInActive.back()->mStage = 1;
@@ -62,8 +65,11 @@ void CExplosionPool::Reset()
 {
 	for (auto explosion = mActive.begin(); explosion != mActive.end(); explosion++)
 	{
-		//Store the existing model
-		gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
+		if (mInActive.back()->mModel)
+		{
+			//Store the existing model
+			gEngine->CacheModel(mInActive.back()->mModel, ExplosionTexture(mInActive.back()->mStage));
+		}
 
 		(*explosion)->mTimer = 0.0f;
 		(*explosion)->mStage = 1;
@@ -92,13 +98,13 @@ void CExplosionPool::Update(float delta)
 		(*explosion)->mTimer += delta;
 		while ((*explosion)->mTimer > EXPLODE_RATE)
 		{
-			if ((*explosion)->mStage < EXPLOSION_SPRITE_COUNT)
+			//Store the existing model
+			gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
+
+			(*explosion)->mStage++;
+
+			if ((*explosion)->mStage <= EXPLOSION_SPRITE_COUNT)
 			{
-				//Store the existing model
-				gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
-
-				(*explosion)->mStage++;
-
 				//Get a model instance with the correct texture
 				(*explosion)->mModel = gEngine->GetModel(mMesh, ExplosionTexture((*explosion)->mStage));
 
@@ -108,15 +114,16 @@ void CExplosionPool::Update(float delta)
 			}
 			else
 			{
-				(*explosion)->mStage++;
+				//If no model is going to replaced the removed one, then set pointer to zero
+				(*explosion)->mModel = 0;
 			}
+
 			(*explosion)->mTimer -= EXPLODE_RATE;
 		}
 
 		//Remove explosion once finished
 		if ((*explosion)->mStage > EXPLOSION_SPRITE_COUNT)
 		{
-			(*explosion)->mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 			mInActive.push_back( move(*explosion) );
 			explosion = mActive.erase(explosion);
 		}
@@ -130,13 +137,14 @@ void CExplosionPool::Update(float delta)
 //Destroy the pool
 void CExplosionPool::CleanUp()
 {
-	for (auto explosion = mInActive.begin(); explosion != mInActive.end(); explosion++)
-	{
-		mMesh->RemoveModel((*explosion)->mModel);
-	}
+	//Inactive explosions can be assumed to not have a model
+
 	for (auto explosion = mActive.begin(); explosion != mActive.end(); explosion++)
 	{
-		mMesh->RemoveModel((*explosion)->mModel);
+		if ((*explosion)->mModel)
+		{
+			mMesh->RemoveModel((*explosion)->mModel);
+		}
 	}
 	gEngine->RemoveMesh(mMesh);
 	mInActive.clear();
