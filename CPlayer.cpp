@@ -4,12 +4,18 @@
 #include "CShotGun.h"
 #include "CMissileLauncher.h"
 #include "CChaosGun.h"
+#include "CMatrix4x4.h"
 
 void CPlayer::Init()
 {
 	//Model
 	SetMesh(PLAYER_MESH);
 	mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_BOTTOM + 10.0f);
+	
+	for (int i = 1; i <= 10; i++)
+	{
+		gEngine->Preload(PLAYER_MESH, 1, PLAYER_INVUL_TEX + to_string(i) + ".png");
+	}
 
 	//Shield
 	mShieldMesh = gEngine->LoadMesh(SHIELD_MESH);
@@ -29,10 +35,14 @@ void CPlayer::Init()
 	mMaxHealth = 100;
 	mShield = 50;
 	mMaxShield = 50;
+	mInvulTexture = 0;
 	mShieldRegenRate = 0.25f;
 	mRegenTimer = 0.0f;
+	mInvulTimer = 0.0f;
+	mInvulTextureTimer = 0.0f;
 	mSpeed = 50.0f;
 	mScore = 0;
+	mInvulTextureAccending = false;
 	SetRadius(5.0f);
 	SetDead(false);
 }
@@ -169,6 +179,57 @@ void CPlayer::Move(float dt)
 			mRegenTimer -= mShieldRegenRate;
 		}
 	}
+
+	//Invulerability
+
+	if (mInvulTimer > 0.0f)
+	{
+		mInvulTimer -= dt;
+		mInvulTextureTimer -= dt;
+
+		if (mInvulTimer < 0.0f)
+		{
+			tlx::CMatrix4x4 matrix;
+			mModel->GetMatrix(matrix.m);
+
+			mShieldModel->DetachFromParent();
+			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+
+			mModel = gEngine->GetModel(GetMesh());
+			mModel->SetMatrix(matrix.m);
+
+			if (mShield > 0)
+			{
+				mShieldModel->AttachToParent(mModel);
+			}
+		}
+		else if(mInvulTextureTimer < 0.0f)
+		{
+			tlx::CMatrix4x4 matrix;
+			mModel->GetMatrix(matrix.m);
+
+			mShieldModel->DetachFromParent();
+			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+
+			do {
+				mInvulTextureTimer += kInvulTextureRate;
+				mInvulTexture += mInvulTextureAccending ? 1 : -1;
+			} while (mInvulTextureTimer < 0.0f);
+			
+			if (mInvulTexture == 1 || mInvulTexture == 10)
+			{
+				mInvulTextureAccending = !mInvulTextureAccending;
+			}
+
+			mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+			mModel->SetMatrix(matrix.m);
+
+			if (mShield > 0)
+			{
+				mShieldModel->AttachToParent(mModel);
+			}
+		}
+	}
 }
 
 void CPlayer::CheckCollision()
@@ -192,6 +253,12 @@ void CPlayer::CheckCollision()
 
 void CPlayer::TakeDamage(int damage)
 {
+	//Don't take damage if invulnerable
+	if (mInvulTimer > 0.0f)
+	{
+		return;
+	}
+
 	mRegenTimer = -5.0f; //5 second delay before shield regen starts
 
 	if (mShield > 0)
@@ -218,6 +285,34 @@ void CPlayer::TakeDamage(int damage)
 	}
 }
 
+void CPlayer::MakeInvulnerable(float time)
+{
+	if (mInvulTimer > 0)
+	{
+		//Already invulnerable, just extend the time
+		mInvulTimer = time;
+		return;
+	}
+	mInvulTimer = time;
+	mInvulTextureTimer = kInvulTextureRate;
+	mInvulTexture = 1;
+	mInvulTextureAccending = true;
+
+	tlx::CMatrix4x4 matrix;
+	mModel->GetMatrix(matrix.m);
+
+	mShieldModel->DetachFromParent();
+	gEngine->CacheModel(mModel);
+
+	mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+	mModel->SetMatrix(matrix.m);
+
+	if (mShield > 0)
+	{
+		mShieldModel->AttachToParent(mModel);
+	}
+}
+
 void CPlayer::LoseLife()
 {
 	CExplosionPool::Instance()->Spawn(mModel->GetX(), mModel->GetY(), mModel->GetZ(), GetRadius() * 2.0f);
@@ -230,6 +325,8 @@ void CPlayer::LoseLife()
 
 		mShieldModel->SetPosition(0.0f, 0.0f, 0.0f);
 		mShieldModel->AttachToParent(mModel);
+		
+		MakeInvulnerable(5.0f);
 
 		SetDead(false);
 		mLives--;

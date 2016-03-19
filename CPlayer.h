@@ -10,6 +10,7 @@ class CPlayer : public IEntity
 private:
 	const float kMaxLean = 30.0f;
 	const float kRotateSpeed = 150.0f;
+	const float kInvulTextureRate = 0.05f;
 
 	IMesh* mShieldMesh;
 	IMesh* mProjectileMesh;
@@ -22,11 +23,16 @@ private:
 	int mMaxHealth;
 	int mShield;
 	int mMaxShield;
+	int mInvulTexture;
 	float mShieldRegenRate;
 	float mRegenTimer;
+	float mInvulTimer;
+	float mInvulTextureTimer;
 	float mSpeed; // speed to move plane
 
 	float mRotation = 0.0f;
+
+	bool mInvulTextureAccending = false;
 
 	unique_ptr<CWeapon> mWeapon;
 
@@ -41,6 +47,7 @@ public:
 	virtual void CheckCollision();
 
 	void TakeDamage(int damage);
+	void MakeInvulnerable(float time);
 	void IncreaseScore(int value);
 	void LoseLife();
 	void GainLife();

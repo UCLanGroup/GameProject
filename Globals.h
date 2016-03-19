@@ -42,6 +42,8 @@ const string METAL_TEX			= "stone.jpg";
 
 const string DUMMY_MESH			= "dummy.x";
 const string PLAYER_MESH		= "mig29.x";
+const string PLAYER_TEX			= "mig29.jpg";
+const string PLAYER_INVUL_TEX	= "mig29Invul";
 const string BULLET_MESH		= "Bullet.x";
 const string MISSILE_MESH		= "missile1.x";
 const string SHIELD_MESH		= "Shield.x";
