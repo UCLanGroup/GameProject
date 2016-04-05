@@ -166,6 +166,10 @@ void CPlayer::Move(float dt)
 		mWeapon.reset(new CLaser(this, 2, 0.1f));
 		mWeapon->SetBulletList(mpPlayerBullets);
 	}
+	else if (gEngine->KeyHit(Key_U))
+	{
+		mWeapon->Upgrade();
+	}
 
 	//Shield Regen
 

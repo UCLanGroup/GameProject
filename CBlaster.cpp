@@ -5,18 +5,21 @@
 
 CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate) : CWeapon(parent)
 {
+	SetMaxLevel(3);
+	SetLevel(1);
 	SetDamage(damage);
 	SetProjSpeed(projSpeed);
 	SetFireRate(fireRate);
 	SetTarget(0);
 }
 
-void CBlaster::Fire()
+CProjectile* CBlaster::CreateBullet()
 {
-	CProjectile* bullet = new CProjectile();
-
 	float matrix[16];
 	GetParent()->GetMatrix(matrix);
+
+	CProjectile* bullet = new CProjectile();
+
 	bullet->SetMatrix(matrix);
 
 	if (GetTarget())
@@ -35,5 +38,49 @@ void CBlaster::Fire()
 	bullet->SetSpeed(GetProjSpeed());
 	bullet->SetParent(GetParent());
 
-	GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+	return bullet;
+}
+
+void CBlaster::Fire()
+{
+	float matrix[16];
+	GetParent()->GetMatrix(matrix);
+
+	CProjectile* bullet;
+
+	switch(GetLevel())
+	{
+	case 1:
+		bullet = CreateBullet();
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	case 2:
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	case 3:
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(6.0f);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalZ(3.0f);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-6.0f);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	default:
+		break;
+
+	}
 }

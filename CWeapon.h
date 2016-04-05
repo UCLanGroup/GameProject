@@ -8,6 +8,8 @@ using BulletList = std::list<unique_ptr<CProjectile>>;
 class CWeapon
 {
 private:
+	int mMaxLevel;
+	int mLevel;
 	int mDamage;
 	float mProjSpeed;
 	float mFireRate;
@@ -25,9 +27,12 @@ public:
 	CWeapon(IEntity* parent);
 
 	void Update(float delta);
+	void Upgrade();
 	
 	//Gets
 
+	int GetMaxLevel();
+	int GetLevel();
 	int GetDamage();
 	float GetProjSpeed();
 	float GetFireRate();
@@ -39,6 +44,8 @@ public:
 
 	//Sets
 
+	void SetMaxLevel(int level);
+	void SetLevel(int level);
 	void SetDamage(int damage);
 	void SetProjSpeed(float projSpeed);
 	void SetFireRate(float fireRate);

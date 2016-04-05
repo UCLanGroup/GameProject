@@ -4,6 +4,8 @@
 CWeapon::CWeapon(IEntity* parent)
 {
 	mpParent = parent;
+	mMaxLevel = 1;
+	mLevel = 1;
 	mDamage = 1;
 	mProjSpeed = 100.0f;
 	mFireRate = 1.0f;
@@ -36,7 +38,25 @@ void CWeapon::Update(float delta)
 	}
 }
 
+void CWeapon::Upgrade()
+{
+	if (mMaxLevel > mLevel)
+	{
+		++mLevel;
+	}
+}
+
 //Gets
+
+int CWeapon::GetMaxLevel()
+{
+	return mMaxLevel;
+}
+
+int CWeapon::GetLevel()
+{
+	return mLevel;
+}
 
 int CWeapon::GetDamage()
 {
@@ -79,6 +99,16 @@ BulletList* CWeapon::GetBulletList()
 }
 
 //Sets
+
+void CWeapon::SetMaxLevel(int level)
+{
+	mMaxLevel = level;
+}
+
+void CWeapon::SetLevel(int level)
+{
+	mLevel = level;
+}
 
 void CWeapon::SetDamage(int damage)
 {
