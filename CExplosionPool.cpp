@@ -98,13 +98,14 @@ void CExplosionPool::Update(float delta)
 		(*explosion)->mTimer += delta;
 		while ((*explosion)->mTimer > EXPLODE_RATE)
 		{
-			//Store the existing model
-			gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
 
-			(*explosion)->mStage++;
-
-			if ((*explosion)->mStage <= EXPLOSION_SPRITE_COUNT)
+			if ((*explosion)->mStage < EXPLOSION_SPRITE_COUNT)
 			{
+				//Store the existing model
+				gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
+
+				(*explosion)->mStage++;
+
 				//Get a model instance with the correct texture
 				(*explosion)->mModel = gEngine->GetModel(mMesh, ExplosionTexture((*explosion)->mStage));
 
@@ -112,10 +113,17 @@ void CExplosionPool::Update(float delta)
 				(*explosion)->mModel->Scale((*explosion)->mRadius);
 				(*explosion)->mModel->SetPosition((*explosion)->mPos.x, (*explosion)->mPos.y, (*explosion)->mPos.z);
 			}
+			else if((*explosion)->mStage == EXPLOSION_SPRITE_COUNT)
+			{
+				gEngine->CacheModel((*explosion)->mModel, ExplosionTexture((*explosion)->mStage));
+				//No model is going to replaced the removed one, so set pointer to zero
+				(*explosion)->mModel = 0;
+
+				(*explosion)->mStage++;
+			}
 			else
 			{
-				//If no model is going to replaced the removed one, then set pointer to zero
-				(*explosion)->mModel = 0;
+				(*explosion)->mStage++;
 			}
 
 			(*explosion)->mTimer -= EXPLODE_RATE;

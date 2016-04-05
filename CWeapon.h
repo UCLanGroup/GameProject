@@ -17,6 +17,8 @@ private:
 	IEntity* mpTarget;
 	BulletList* mpProjectiles;
 
+	sf::Sound mFireSound;
+
 	virtual void Fire() = 0;
 
 public:
@@ -41,8 +43,11 @@ public:
 	void SetProjSpeed(float projSpeed);
 	void SetFireRate(float fireRate);
 	void SetTimer(float time);
-	void SetFiring(bool isFiring);
+	virtual void SetFiring(bool isFiring);
 	void SetParent(IEntity* pParent);
 	void SetTarget(IEntity* pTarget);
 	void SetBulletList(BulletList* pBulletList);
+	void SetFireSound(const sf::SoundBuffer &soundBuffer);
+
+	virtual ~CWeapon();
 };

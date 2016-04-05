@@ -4,6 +4,7 @@
 #include "CShotGun.h"
 #include "CMissileLauncher.h"
 #include "CChaosGun.h"
+#include "CLaser.h"
 #include "CMatrix4x4.h"
 
 void CPlayer::Init()
@@ -158,6 +159,11 @@ void CPlayer::Move(float dt)
 	else if (gEngine->KeyHit(Key_4))
 	{
 		mWeapon.reset(new CChaosGun(this, 2, 100.0f, 0.05f));
+		mWeapon->SetBulletList(mpPlayerBullets);
+	}
+	else if (gEngine->KeyHit(Key_5))
+	{
+		mWeapon.reset(new CLaser(this, 2, 0.1f));
 		mWeapon->SetBulletList(mpPlayerBullets);
 	}
 

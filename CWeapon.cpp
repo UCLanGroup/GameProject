@@ -27,6 +27,12 @@ void CWeapon::Update(float delta)
 	{
 		Fire();
 		mTimer -= mFireRate;
+
+		//Play the fire sound
+		if (mFireSound.getBuffer() != NULL)
+		{
+			mFireSound.play();
+		}
 	}
 }
 
@@ -112,4 +118,14 @@ void CWeapon::SetTarget(IEntity* pTarget)
 void CWeapon::SetBulletList(BulletList* pBulletList)
 {
 	mpProjectiles = pBulletList;
+}
+
+void CWeapon::SetFireSound(const sf::SoundBuffer &soundBuffer)
+{
+	mFireSound.setBuffer(soundBuffer);
+}
+
+CWeapon::~CWeapon()
+{
+
 }
