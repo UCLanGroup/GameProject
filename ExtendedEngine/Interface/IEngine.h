@@ -2,6 +2,7 @@
 #include "TL-Engine.h"
 #include "IAnimation.h"
 #include "IParticleEmitter.h"
+#include "ILoadScreen.h"
 #include "IUsings.h"
 
 namespace tle
@@ -13,14 +14,34 @@ namespace tle
 							New functions
 		****************************************************/
 
-		///////////////
-		//Model Cache//
+		///////////
+		//Loading//
 
 		//Loads the mesh file into the engine
 		//If an amount is specified it will create a number of models and store them for later use
 		//The models will be created and the texture set the what has been provided
 		//A texture of "" will use the default model's texture
-		virtual void Preload(const string& sMesh, const int amount = 0, const string& texture = "") = 0;
+		virtual void Load(const string& sMesh, const int amount = 0, const string& texture = "") = 0;
+
+		//Adds the mesh to a load queue but does not load it
+		//Also adds the amount and texture to of the mesh to be loaded
+		//The models and mesh will be loaded when "LoadQueuedObjects" is called
+		virtual void AddToLoadQueue(const string& sMesh, const int amount = 0, const string& texture = "") = 0;
+
+		//Adds a pointer to a model pointer to the queue
+		//A model of the mesh with the given texture will be created and stored into
+		//the model pointer when "LoadQueuedObjects" is called
+		virtual void AddToLoadQueue(IModel** model, const string& sMesh, const string& texture = "") = 0;
+
+		//Loads all the meshes that had been added to the load queue
+		//If an amount or/and texture was also specified then it will create that
+		//many models from the mesh with the indicated texture
+		//The load screen is optional and allows the engine to call the load screen's update function
+		//After every few objects have been loaded to show progress
+		virtual void LoadQueuedObjects(ILoadScreen* loadScreen) = 0;
+
+		///////////////
+		//Model Cache//
 
 		//Returns an instance of the mesh from the cache that already has the provided texture
 		//if one already exists, otherwise it creates a model with the texture

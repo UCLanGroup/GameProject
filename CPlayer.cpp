@@ -15,7 +15,7 @@ void CPlayer::Init()
 	
 	for (int i = 1; i <= 10; i++)
 	{
-		gEngine->Preload(PLAYER_MESH, 1, PLAYER_INVUL_TEX + to_string(i) + ".png");
+		gEngine->Load(PLAYER_MESH, 1, PLAYER_INVUL_TEX + to_string(i) + ".png");
 	}
 
 	//Shield

@@ -15,7 +15,7 @@ void CExplosionPool::Init()
 
 	for (int i = 1; i <= EXPLOSION_SPRITE_COUNT; i++)
 	{
-		gEngine->Preload(EXPLOSION_MESH, 10, ExplosionTexture(i));
+		gEngine->AddToLoadQueue(EXPLOSION_MESH, 10, ExplosionTexture(i));
 	}
 
 	unique_ptr<SExplosion> explosion;

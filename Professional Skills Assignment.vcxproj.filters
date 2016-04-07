@@ -61,6 +61,9 @@
     <ClCompile Include="CLaser.cpp">
       <Filter>Entities\source\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="CLoadScreen.cpp">
+      <Filter>Core\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -131,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="CLaser.h">
       <Filter>Entities\headers\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CLoadScreen.h">
+      <Filter>Core\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

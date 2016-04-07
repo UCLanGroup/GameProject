@@ -32,6 +32,8 @@ const string SOUND_START		= MEDIA_FOLDER + "\\start.flac";
 const string UI					= "ui.png";					// Tempororay user interface
 const string UI2				= "ui2.png";
 const string LOADING_SCREEN		= "loading_screen.png";
+const string LOADING_BAR		= "loading_bar.png";
+const string LOADING_BARBACK	= "loading_barback.png";
 const string HEALTHBAR			= "healthbar.png";
 
 const string GROUND_SKIN		= "ground.png";

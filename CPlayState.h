@@ -32,7 +32,6 @@ private:
 	ISprite* mUI2;
 	IMesh* mFloorMesh;
 	vector<IModel*> mFloor;
-	ISprite* mLoadScreen;
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;

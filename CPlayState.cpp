@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "CGameStateHandler.h"
 #include "CPlayState.h"
+#include "CLoadScreen.h"
 #include <iostream>
 #include <sstream>
 
@@ -11,7 +12,8 @@ CPlayState CPlayState::mPlayState;
 void CPlayState::Init()
 {
 	// LOADING SCREEN
-	mLoadScreen = gEngine->CreateSprite(LOADING_SCREEN, 0.0f, 0.0f, 0.9f);
+	CLoadScreen* loadScreen = new CLoadScreen();
+
 	gEngine->DrawScene();
 
 	// GRAPHICS
@@ -43,8 +45,9 @@ void CPlayState::Init()
 		float startPosX = 505;
 		float startPosY = 932;
 		float startPosInc = 35;
-		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.01f);
+		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.09f);
 		mLifeSprites.push_back(temp);
+		gEngine->DrawScene();
 	}
 
 	//Text
@@ -60,14 +63,14 @@ void CPlayState::Init()
 
 	//Preload any assets at the start before they are needed
 
-	gEngine->Preload(F16_ENEMY_MESH, 30);
-	gEngine->Preload(HAVOC_BOSS_MESH);
-	gEngine->Preload(MISSILE_MESH);
+	gEngine->AddToLoadQueue(F16_ENEMY_MESH, 30);
+	gEngine->AddToLoadQueue(HAVOC_BOSS_MESH);
+	gEngine->AddToLoadQueue(MISSILE_MESH);
 
 	for (int i = 1; i <= 10; ++i)
 	{
 		//Preload 200 of each of the smoke particles
-		gEngine->Preload(PARTICLE_MODEL, 200, "Smoke" + to_string(i) + ".png");
+		gEngine->AddToLoadQueue(PARTICLE_MODEL, 200, "Smoke" + to_string(i) + ".png");
 	}
 
 	// SOUND
@@ -78,11 +81,13 @@ void CPlayState::Init()
 
 	mSound.setBuffer(mBufferShoot);
 	mSound.setVolume(30.0f);
-	
+
+	//Load all queued objects and update the load screen with progress
+	gEngine->LoadQueuedObjects(loadScreen);
+	delete loadScreen;
+
 	//Reset timer after finished loading assets
 	gEngine->Timer();
-
-	gEngine->RemoveSprite(mLoadScreen);
 }
 
 void CPlayState::Cleanup()
