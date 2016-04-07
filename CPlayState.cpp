@@ -10,6 +10,10 @@ CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
 {
+	// LOADING SCREEN
+	mLoadScreen = gEngine->CreateSprite(LOADING_SCREEN, 0.0f, 0.0f, 0.9f);
+	gEngine->DrawScene();
+
 	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	for (int i = 0; i < kFloorAmount; i++)
@@ -23,7 +27,7 @@ void CPlayState::Init()
 	mPlayer1.SetLists(&mPBullets, &mEBullets);
 	mPlayerList.push_back(&mPlayer1);
 
-	// GRAPHICS
+	// UI
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.2f);
 	mUI2 = gEngine->CreateSprite(UI2, 0.0f, 0.0f, 0.1f);
 
@@ -77,6 +81,8 @@ void CPlayState::Init()
 	
 	//Reset timer after finished loading assets
 	gEngine->Timer();
+
+	gEngine->RemoveSprite(mLoadScreen);
 }
 
 void CPlayState::Cleanup()
