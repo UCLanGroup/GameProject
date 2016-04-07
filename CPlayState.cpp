@@ -12,8 +12,11 @@ void CPlayState::Init()
 {
 	// GRAPHICS
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
-	mFloor = mFloorMesh->CreateModel(-6.0f, -1000.0f, -5.5f);
-	mFloor->SetSkin(METAL_TEX);
+	for (int i = 0; i < kFloorAmount; i++)
+	{
+		mFloor.push_back(mFloorMesh->CreateModel(-6.0f, -1000.0f, kFloorStart + (kFloorSize * i)));
+		mFloor.at(i)->SetSkin(METAL_TEX);
+	}
 
 	// Player
 	mPlayer1.Init();
@@ -80,7 +83,7 @@ void CPlayState::Cleanup()
 {
 	gEngine->RemoveSprite(mUI);
 	gEngine->RemoveCamera(mCam);
-	mFloorMesh->RemoveModel(mFloor);
+	for(auto& item : mFloor) mFloorMesh->RemoveModel(item);
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
@@ -175,6 +178,13 @@ void CPlayState::Update(CGameStateHandler * game)
 			bullet++;
 		}
 	}
+
+	// Move floor
+	for (auto& item : mFloor)
+	{
+		item->MoveLocalZ(kFloorSpeed * mDelta);
+	}
+
 
 	if(mPlayer1.IsDead())
 	{

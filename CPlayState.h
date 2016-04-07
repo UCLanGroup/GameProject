@@ -20,6 +20,10 @@ private:
 	const float kStartBarPosY = 936;
 	const float kBarSpeed = 100.0f;
 	const float kBarSize = 200.0f;
+	const float kFloorSize = 2000.0f;
+	const float kFloorStart = 500.0f;
+	const float kFloorSpeed = -100.0f;
+	const int kFloorAmount = 10;
 
 	static CPlayState mPlayState;
 
@@ -27,7 +31,7 @@ private:
 	ISprite* mUI;
 	ISprite* mUI2;
 	IMesh* mFloorMesh;
-	IModel* mFloor;
+	vector<IModel*> mFloor;
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;
