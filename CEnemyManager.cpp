@@ -177,6 +177,12 @@ unique_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVecto
 		enemy.reset(new CEnemyBoss(mpPlayers, mpPlayerBullets, mpEnemyBullets));
 		return move(enemy);
 
+	case Heavy:
+		enemy.reset(new CEnemy(mpPlayers, mpPlayerBullets, mpEnemyBullets));
+		enemy->SetPath(path, offset);
+		enemy->SetHealth(5);
+		return move(enemy);
+
 	default:
 		return 0;
 		break;

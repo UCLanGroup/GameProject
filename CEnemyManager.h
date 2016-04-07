@@ -8,7 +8,7 @@ class CEnemyManager
 private:
 	//Data types
 
-	enum EnemyType : int { Basic = 0, Boss = 1 };
+	enum EnemyType : int { Basic = 0, Boss = 1, Heavy = 2 };
 	
 	struct SSpawner
 	{
