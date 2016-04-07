@@ -14,13 +14,14 @@ CChaosGun::CChaosGun(IEntity* parent, int damage, float projSpeed, float fireRat
 
 void CChaosGun::Fire()
 {
+	//Random angle between -20 to 20 inclusive
 	float angle = static_cast<float>(rand() % 41 - 20);
 
 	CProjectile* bullet = 0;
 
+	//Pick the type of projectile randomly, an even split
 	if (rand() % 2 == 1)
 	{
-
 		bullet = new CProjectile();
 		bullet->SetDamage(GetDamage());
 	}

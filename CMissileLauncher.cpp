@@ -18,10 +18,14 @@ void CMissileLauncher::SetEnemyBulletList(BulletList* bulletList)
 void CMissileLauncher::Fire()
 {
 	CMissile* missile = new CMissile();
+
+	//Set the position and facing direction to the same as the parent entity
 	missile->SetPosition(GetParent()->GetCenterPoint());
 	missile->SetRotation(GetParent()->GetRotation());
-	missile->SetTarget(GetTarget());
 	missile->SetLists(mpEnemyProjectiles);
+
+	//If target is zero then the missile will just fly forward
+	missile->SetTarget(GetTarget());
 
 	missile->SetDamage(GetDamage());
 	missile->SetSpeed(GetProjSpeed());
