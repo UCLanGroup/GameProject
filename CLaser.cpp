@@ -40,6 +40,7 @@ void CLaser::Fire()
 		bullet->SetDamage(GetDamage());
 		bullet->SetSpeed(GetProjSpeed());
 		bullet->SetParent(GetParent());
+		bullet->SetExplodeable(false);
 
 		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
 

@@ -43,6 +43,7 @@ void CShotGun::Fire()
 		bullet->SetDamage(GetDamage());
 		bullet->SetSpeed(GetProjSpeed());
 		bullet->SetParent(GetParent());
+		bullet->SetExplodeable(true);
 
 		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
 	}

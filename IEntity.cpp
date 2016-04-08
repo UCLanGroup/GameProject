@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "IEntity.h"
 #include "Globals.h"
+#include "CExplosionPool.h"
 
 
 ////////////////////Update////////////////////
@@ -84,11 +85,23 @@ void IEntity::SetRotation(float rotation)
 	}
 }
 
+//Creates an explosion upon death
 void IEntity::SetDead(bool dead)
 {
 	mIsDead = dead;
+
+	if (dead)
+	{
+		CVector3 loc = GetCenterPoint();
+		CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
+	}
 }
 
+//Sets whether the entity explodes upon death
+void IEntity::SetExplodeable(bool explodeable)
+{
+	mIsExplodeable = explodeable;
+}
 
 /////////////////////Gets/////////////////////
 
@@ -132,6 +145,12 @@ bool IEntity::IsOutOfBounds()
 bool IEntity::IsDead()
 {
 	return mIsDead;
+}
+
+//Returns whether the entity is explodeable upon death
+bool IEntity::IsExplodeable()
+{
+	return mIsExplodeable;
 }
 
 

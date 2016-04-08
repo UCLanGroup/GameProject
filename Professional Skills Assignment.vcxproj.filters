@@ -64,6 +64,9 @@
     <ClCompile Include="CLoadScreen.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
+    <ClCompile Include="CWeaponDrop.cpp">
+      <Filter>Entities\source\Drops</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -138,6 +141,12 @@
     <ClInclude Include="CLoadScreen.h">
       <Filter>Core\headers</Filter>
     </ClInclude>
+    <ClInclude Include="IDrop.h">
+      <Filter>Entities\headers\Drops</Filter>
+    </ClInclude>
+    <ClInclude Include="CWeaponDrop.h">
+      <Filter>Entities\headers\Drops</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -187,6 +196,12 @@
     </Filter>
     <Filter Include="Entities\source\Projectiles">
       <UniqueIdentifier>{3c27ece5-2d48-441b-b037-eda56451c973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\headers\Drops">
+      <UniqueIdentifier>{e176d4d7-ea60-4b02-b10b-6ff11f2f1808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\source\Drops">
+      <UniqueIdentifier>{de2a3063-b537-4795-9aa7-7b390c5681ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

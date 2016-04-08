@@ -30,6 +30,7 @@ void CMissileLauncher::Fire()
 	missile->SetDamage(GetDamage());
 	missile->SetSpeed(GetProjSpeed());
 	missile->SetParent(GetParent());
+	missile->SetExplodeable(true);
 
 	GetBulletList()->push_back(unique_ptr<CProjectile>(missile));
 }

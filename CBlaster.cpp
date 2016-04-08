@@ -39,6 +39,7 @@ CProjectile* CBlaster::CreateBullet()
 	bullet->SetDamage(GetDamage());
 	bullet->SetSpeed(GetProjSpeed());
 	bullet->SetParent(GetParent());
+	bullet->SetExplodeable(true);
 
 	return bullet;
 }

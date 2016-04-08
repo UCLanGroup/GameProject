@@ -146,6 +146,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="IDebug.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="CWeaponDrop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -173,8 +174,10 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="ICollidable.h" />
     <ClInclude Include="ICollider.h" />
     <ClInclude Include="IDebug.h" />
+    <ClInclude Include="IDrop.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IResource.h" />
+    <ClInclude Include="CWeaponDrop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

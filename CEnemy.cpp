@@ -1,7 +1,6 @@
 #define _USE_MATH_DEFINES
 #include "CEnemy.h"
 #include "CPlayer.h"
-#include "CExplosionPool.h"
 #include <algorithm>
 
 const int kHealth = 1;
@@ -95,9 +94,6 @@ void CEnemy::CheckCollision()
 			
 			if (IsDead())	//If killed by the bullet
 			{
-				CVector3 loc = GetCenterPoint();
-				CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
-
 				//Check if the bullet was fired by a player, if so then add to their score
 				for (auto player = mpPlayers->begin(); player != mpPlayers->end(); ++player)
 				{
@@ -108,7 +104,7 @@ void CEnemy::CheckCollision()
 				}
 			}
 
-			CExplosionPool::Instance()->Spawn((*bullet)->GetCenterPoint().x, 0.0f, (*bullet)->GetCenterPoint().z, (*bullet)->GetRadius());
+			(*bullet)->SetDead(true);
 			bullet = mpPlayerBullets->erase(bullet);
 		}
 		else

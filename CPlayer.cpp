@@ -26,8 +26,8 @@ void CPlayer::Init()
 
 	//Weapon
 	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
-	mWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
-	mWeapon->SetBulletList(mpPlayerBullets);
+	mMainWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
+	mMainWeapon->SetBulletList(mpPlayerBullets);
 
 	//Stats
 	mHealth = 100;
@@ -133,42 +133,69 @@ void CPlayer::Move(float dt)
 
 	if (gEngine->KeyHeld(KEY_FIRE))
 	{
-		mWeapon->SetFiring(true);
+		//Fire the weapon
+		if (mBonusWeapon)
+		{
+			mBonusWeapon->SetFiring(true);
+			mMainWeapon->SetFiring(false);
+		}
+		else
+		{
+			mMainWeapon->SetFiring(true);
+		}
 	}
 	else
 	{
-		mWeapon->SetFiring(false);
+		mMainWeapon->SetFiring(false);
+		if (mBonusWeapon)
+		{
+			mBonusWeapon->SetFiring(false);
+		}
 	}
-	mWeapon->Update(dt);
 
-	if (gEngine->KeyHit(Key_1))
+	mMainWeapon->Update(dt);
+
+	if (mBonusWeapon)
 	{
-		mWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
-		mWeapon->SetBulletList(mpPlayerBullets);
+		//Update the bonus weapon if there is one
+		mBonusWeapon->Update(dt);
+		mWeaponPowerupTimer -= dt;
+		
+		//Remove the bonus weapon once its duration has ended
+		if (mWeaponPowerupTimer < 0.0f)
+		{
+			mBonusWeapon.reset();
+		}
 	}
-	else if (gEngine->KeyHit(Key_2))
+
+	if (kCheatMode) //If this is false then the contents of the if is optimised away in release mode
 	{
-		mWeapon.reset(new CMissileLauncher(this, 5, 100.0f, 0.2f));
-		mWeapon->SetBulletList(mpPlayerBullets);
-	}
-	else if (gEngine->KeyHit(Key_3))
-	{
-		mWeapon.reset(new CShotGun(this, 1, 100.0f, 0.33f, 5));
-		mWeapon->SetBulletList(mpPlayerBullets);
-	}
-	else if (gEngine->KeyHit(Key_4))
-	{
-		mWeapon.reset(new CChaosGun(this, 2, 100.0f, 0.05f));
-		mWeapon->SetBulletList(mpPlayerBullets);
-	}
-	else if (gEngine->KeyHit(Key_5))
-	{
-		mWeapon.reset(new CLaser(this, 2, 0.1f));
-		mWeapon->SetBulletList(mpPlayerBullets);
-	}
-	else if (gEngine->KeyHit(Key_U))
-	{
-		mWeapon->Upgrade();
+		if (gEngine->KeyHit(Key_1)) //Reset player's main weapon by to level 1
+		{
+			mMainWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
+			mMainWeapon->SetBulletList(mpPlayerBullets);
+			mWeaponPowerupTimer = 0.0f; //Triggers the bonus weapon to be removed during the next frame
+		}
+		else if (gEngine->KeyHit(Key_2))
+		{
+			SetBonusWeapon(new CMissileLauncher(this, 5, 100.0f, 0.2f), 10.0f);
+		}
+		else if (gEngine->KeyHit(Key_3))
+		{
+			SetBonusWeapon(new CShotGun(this, 1, 100.0f, 0.33f, 5), 10.0f);
+		}
+		else if (gEngine->KeyHit(Key_4))
+		{
+			SetBonusWeapon(new CChaosGun(this, 2, 100.0f, 0.05f), 10.0f);
+		}
+		else if (gEngine->KeyHit(Key_5))
+		{
+			SetBonusWeapon(new CLaser(this, 2, 0.1f), 10.0f);
+		}
+		else if (gEngine->KeyHit(Key_U)) //Upgrade main weapon
+		{
+			mMainWeapon->Upgrade();
+		}
 	}
 
 	//Shield Regen
@@ -250,8 +277,7 @@ void CPlayer::CheckCollision()
 		if (CollidesSphere(bullet->get()))
 		{
 			TakeDamage((*bullet)->GetDamage());
-			CVector3 pos = (*bullet)->GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(pos.x, pos.y, pos.z, (*bullet)->GetRadius());
+			(*bullet)->SetDead(true);
 			bullet = mpEnemyBullets->erase(bullet);
 		}
 		else
@@ -357,6 +383,11 @@ void CPlayer::IncreaseScore(int value)
 	mScore += value;
 }
 
+void CPlayer::UpgradeWeapon()
+{
+	mMainWeapon->Upgrade();
+}
+
 //Sets
 
 void CPlayer::SetScore(int score)
@@ -408,12 +439,28 @@ void CPlayer::SetShieldRegen(float regen)
 	mShieldRegenRate = regen;
 }
 
+//Sets the main weapon that the player uses at all times
+void CPlayer::SetMainWeapon(CWeapon* weapon)
+{
+	mMainWeapon.reset(weapon);
+	mMainWeapon->SetBulletList(mpPlayerBullets);
+}
+
+//Sets the bonus weapon of the player, the bonus weapon lasts for a set duration
+//While active the bonus weapon will be used instead of the main weapon
+void CPlayer::SetBonusWeapon(CWeapon* weapon, float duration)
+{
+	mBonusWeapon.reset(weapon);
+	mBonusWeapon->SetBulletList(mpPlayerBullets);
+	mWeaponPowerupTimer = duration;
+}
+
 void CPlayer::SetLists(BulletList* playerBullets, BulletList* enemyBullets)
 {
 	mpPlayerBullets = playerBullets;
 	mpEnemyBullets = enemyBullets;
 
-	if (mWeapon.get()) mWeapon->SetBulletList(playerBullets);
+	if (mMainWeapon.get()) mMainWeapon->SetBulletList(playerBullets);
 }
 
 //Gets
@@ -448,9 +495,9 @@ int CPlayer::GetMaxShield()
 	return mMaxShield;
 }
 
-CWeapon* CPlayer::GetWeapon()
+CWeapon* CPlayer::GetMainWeapon()
 {
-	return mWeapon.get();
+	return mMainWeapon.get();
 }
 
 //Inherited from IEntity
