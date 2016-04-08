@@ -11,7 +11,7 @@ CLoadScreen::CLoadScreen()
 	mLoadBarBack = gEngine->CreateSprite(LOADING_BARBACK, kLoadBarPosX, kLoadBarPosY, 0.07f);
 	mLoadBar = gEngine->CreateSprite(LOADING_BAR, kLoadBarPosX - kLoadBarSize, kLoadBarPosY, 0.06f);
 	mLoadScreen = gEngine->CreateSprite(LOADING_SCREEN, 0.0f, 0.0f, 0.05f);
-	mFont = gEngine->LoadFont("Rockwell", 12U);
+	mFont = gEngine->LoadFont("Rockwell", 15U);
 	mTimer = 0.0f;
 }
 
@@ -36,14 +36,6 @@ void CLoadScreen::Update(float delta)
 		mTimer -= 0.033f;
 		mFont->Draw(GetLoadMessage(), static_cast<int>(kLoadBarPosX), static_cast<int>(kLoadBarPosY + 40.0f), tle::kWhite);
 	}
-
-#ifdef _DEBUG
-	//Output the loading message
-	cout << GetLoadMessage() << endl;
-
-	//The debug mode loads content faster due to the setskin function
-	//However the iostream usage about balances it out
-#endif
 }
 
 //Destroy all stuff used in the loading screen

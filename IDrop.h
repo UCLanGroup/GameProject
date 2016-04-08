@@ -6,6 +6,9 @@
 class IDrop : public IEntity
 {
 public:
+	//Updates the drop
+	virtual void Update(float delta) { /*Does nothing*/};
+
 	//Applies the powerup/bonus to the player
 	virtual void ApplyDrop(CPlayer* player) = 0;
 

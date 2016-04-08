@@ -451,6 +451,7 @@ void CPlayer::SetMainWeapon(CWeapon* weapon)
 void CPlayer::SetBonusWeapon(CWeapon* weapon, float duration)
 {
 	mBonusWeapon.reset(weapon);
+	mBonusWeapon->SetParent(this);
 	mBonusWeapon->SetBulletList(mpPlayerBullets);
 	mWeaponPowerupTimer = duration;
 }

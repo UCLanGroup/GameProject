@@ -9,7 +9,10 @@ class CWeaponDrop : public IDrop
 
 public:
 	//Takes a weapon to create the drop
-	CWeaponDrop(CWeapon* weapon, float duration = 10.0f);
+	CWeaponDrop(CWeapon* weapon, const string& texture, float duration = 10.0f);
+
+	//Updates the drop
+	virtual void Update(float delta);
 
 	//Applies the powerup/bonus to the player
 	virtual void ApplyDrop(CPlayer* player);

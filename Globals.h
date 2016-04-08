@@ -55,6 +55,8 @@ const string LASER_BEAM_TEX		= "LaserBeam.png";
 const string F16_ENEMY_MESH		= "f16.x";
 const string HAVOC_BOSS_MESH	= "Mi28Havoc.x";
 
+const string SHOTGUN_POWER_UP	= "SpreadShotPowerUp.png";
+
 		//Explosions
 const string EXPLOSION_MESH		= "Explosion.x";
 const string EXPLOSION_SPRITE	= "Explosion";

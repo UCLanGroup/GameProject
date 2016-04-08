@@ -29,14 +29,14 @@ void IEntity::SetName(string& name)
 	name = name;
 }
 
-//Sets the entity's mesh and model
-void IEntity::SetMesh(string meshFile)
+//Loads the mesh and creates a model from it with the given texture
+void IEntity::SetMesh(const string& meshFile, const string& textureFile)
 {
-	SetMesh( gEngine->LoadMesh(meshFile) );
+	SetMesh(gEngine->LoadMesh(meshFile), textureFile);
 }
 
-//Sets the entity's mesh and model
-void IEntity::SetMesh(IMesh* mesh)
+//Sets the mesh and creates a model from it with the given texture if the existing model is not of the mesh
+void IEntity::SetMesh(IMesh* mesh, const string& textureFile)
 {
 	if (mesh != 0) //Check if valid mesh
 	{
@@ -45,22 +45,37 @@ void IEntity::SetMesh(IMesh* mesh)
 			if (mModel) //If an existing model exists then remove it but preserve the location
 			{
 				CVector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
-				gEngine->CacheModel(mModel);
+				gEngine->CacheModel(mModel, mModelTexture);
+
 				mMesh = mesh; //Set the new mesh
-				mModel = gEngine->GetModel(mMesh);
+				mModelTexture = textureFile;
+
+				mModel = gEngine->GetModel(mMesh, mModelTexture);
 				mModel->SetPosition(pos.x, pos.y, pos.z);
 			}
 			else //If no existing model exists then create one
 			{
 				mMesh = mesh; //Set the new mesh
-				mModel = gEngine->GetModel(mMesh);
+				mModelTexture = textureFile;
+
+				mModel = gEngine->GetModel(mMesh, mModelTexture);
 			}
 		}
 		else //No change of mesh
 		{
 			if (!mModel) //Check if no model exists, create one if not
 			{
-				mModel = mMesh->CreateModel();
+				mModelTexture = textureFile;
+				mModel = gEngine->GetModel(mMesh, mModelTexture);
+			}
+			else
+			{
+				gEngine->CacheModel(mModel, mModelTexture);
+
+				//Set new texture
+				mModelTexture = textureFile;
+
+				mModel = gEngine->GetModel(mMesh, mModelTexture);
 			}
 		}
 	}
@@ -231,6 +246,6 @@ IEntity::~IEntity()
 {
 	if (mModel && mMesh && gEngine)
 	{
-		gEngine->CacheModel(mModel);
+		gEngine->CacheModel(mModel, mModelTexture);
 	}
 }

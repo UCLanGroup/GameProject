@@ -7,6 +7,9 @@
 #include <iostream>
 #include <sstream>
 
+#include "CShotGun.h"
+#include "CWeaponDrop.h"
+
 CPlayState CPlayState::mPlayState;
 
 void CPlayState::Init()
@@ -66,6 +69,7 @@ void CPlayState::Init()
 	gEngine->AddToLoadQueue(F16_ENEMY_MESH, 30);
 	gEngine->AddToLoadQueue(HAVOC_BOSS_MESH);
 	gEngine->AddToLoadQueue(MISSILE_MESH);
+	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, SHOTGUN_POWER_UP);
 
 	for (int i = 1; i <= 10; ++i)
 	{
@@ -88,6 +92,11 @@ void CPlayState::Init()
 
 	//Reset timer after finished loading assets
 	gEngine->Timer();
+
+	//Test code, please ignore
+	CWeaponDrop* drop = new CWeaponDrop(new CShotGun(0, 1, 100.0f, 0.33f, 5), SHOTGUN_POWER_UP);
+	drop->SetPosition(CVector3{0.0f, 0.0f, 50.0f});
+	mDrops.push_back(unique_ptr<IDrop>(drop));
 }
 
 void CPlayState::Cleanup()
@@ -147,11 +156,31 @@ void CPlayState::Update(CGameStateHandler * game)
 	mPlayer1.Move(mDelta);
 	mPlayer1.CheckCollision();
 
-	if (gEngine->KeyHeld(KEY_FIRE))
+	/*if (gEngine->KeyHeld(KEY_FIRE)) //Needs moving into CWeapon
 	{
 		if (mSound.getStatus() == sf::SoundSource::Stopped)
 		{
 			mSound.play();
+		}
+	}*/
+
+	//Update drops
+	for (auto drop = mDrops.begin(); drop != mDrops.end(); )
+	{
+		(*drop)->Update(mDelta);
+
+		if (mPlayer1.CollidesSphere(drop->get()))
+		{
+			(*drop)->ApplyDrop(&mPlayer1);
+			drop = mDrops.erase(drop);
+		}
+		else if ((*drop)->IsOutOfBounds())
+		{
+			drop = mDrops.erase(drop);
+		}
+		else
+		{
+			drop++;
 		}
 	}
 

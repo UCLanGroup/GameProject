@@ -8,6 +8,7 @@
 #include "CGameState.h"
 #include "CPlayer.h"
 #include "CProjectile.h"
+#include "IDrop.h"
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
 
@@ -49,6 +50,8 @@ private:
 
 	BulletList mPBullets; //Player Projectiles
 	BulletList mEBullets; //Enemy Projectiles
+
+	list_ptr<IDrop> mDrops;
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
 

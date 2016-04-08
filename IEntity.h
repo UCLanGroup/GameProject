@@ -6,10 +6,13 @@
 
 using namespace tle;
 
+const string kDefaultTexture = "";
+
 class IEntity : public ICollidable, public ICollider, public IResource
 {
 private:
 	string name = "Null";
+	string mModelTexture = kDefaultTexture;
 	IMesh* mMesh = 0;
 	bool mIsDead = false;
 	bool mIsExplodeable = true;
@@ -25,8 +28,13 @@ public:
 
 	//Sets
 	void SetName(string& name);
-	void SetMesh(string meshFile);
-	void SetMesh(IMesh* mesh);
+
+	//Loads the mesh and creates a model from it with the given texture
+	void SetMesh(const string& meshFile, const string& textureFile = kDefaultTexture);
+
+	//Sets the mesh and creates a model from it with the given texture if the existing model is not of the mesh
+	void SetMesh(IMesh* mesh, const string& textureFile);
+
 	void SetPosition(tlx::CVector3& pos);
 	void SetRotation(float degrees);
 	void SetDead(bool dead);
