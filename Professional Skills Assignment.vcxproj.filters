@@ -67,6 +67,9 @@
     <ClCompile Include="CWeaponDrop.cpp">
       <Filter>Entities\source\Drops</Filter>
     </ClCompile>
+    <ClCompile Include="CUpgradeDrop.cpp">
+      <Filter>Entities\source\Drops</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -145,6 +148,9 @@
       <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
     <ClInclude Include="CWeaponDrop.h">
+      <Filter>Entities\headers\Drops</Filter>
+    </ClInclude>
+    <ClInclude Include="CUpgradeDrop.h">
       <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,9 +6,13 @@ class ICollidable
 {
 private:
 	float mRadius;
+	bool mCollidable = true;
 public:
 	virtual float GetRadius() { return mRadius; }
 	virtual void SetRadius(float radius) { mRadius = radius; }
+
+	virtual bool IsCollidable() { return mCollidable; }
+	virtual void SetCollidable(bool collidable) { mCollidable = collidable; }
 	
 	virtual tlx::CVector3 GetCenterPoint() = 0;
 

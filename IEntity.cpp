@@ -104,8 +104,9 @@ void IEntity::SetRotation(float rotation)
 void IEntity::SetDead(bool dead)
 {
 	mIsDead = dead;
+	SetCollidable(!dead); //Don't collide if dead, collide if not dead
 
-	if (dead)
+	if (dead && mIsExplodeable)
 	{
 		CVector3 loc = GetCenterPoint();
 		CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
@@ -205,7 +206,14 @@ bool IEntity::GetMatrix(float* matrix)
 //Checks if the collidables bounding spheres collide
 bool IEntity::CollidesSphere(ICollidable* c)
 {
-	return CollideSphere(this->GetCenterPoint(), c->GetCenterPoint(), this->GetRadius(), c->GetRadius());
+	if (IsCollidable() && c->IsCollidable())
+	{
+		return CollideSphere(this->GetCenterPoint(), c->GetCenterPoint(), this->GetRadius(), c->GetRadius());
+	}
+	else
+	{
+		return false;
+	}
 }
 
 //Expensive Mesh to Mesh collision detection

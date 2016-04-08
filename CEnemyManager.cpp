@@ -2,7 +2,17 @@
 #include "CEnemyManager.h"
 #include "CEnemyBoss.h"
 #include "CExplosionPool.h"
+#include "CShotGun.h"
+#include "CLaser.h"
+#include "CWeaponDrop.h"
+#include "CUpgradeDrop.h"
 #include <fstream>
+
+//Chances are out of 1000
+
+const int kUgradeDropChance		= 15;	//1 in   50
+const int kShotgunDropChance	= 5;	//1 in  200
+const int kLaserDropChance		= 1;	//1 in 1000
 
 CEnemyManager::CEnemyManager(string levelFile)
 {
@@ -34,7 +44,8 @@ void CEnemyManager::Update(float delta)
 		//Iterate by either erasing or incrementing
 		if ((*enemy)->IsDead())
 		{
-			mNumOfKills++;
+			CreateRandomDrop((*enemy)->GetCenterPoint());
+			++mNumOfKills;
 			enemy = mEnemies.erase(enemy);
 		}
 		else if ((*enemy)->IsFinished())
@@ -43,7 +54,7 @@ void CEnemyManager::Update(float delta)
 		}
 		else
 		{
-			enemy++;
+			++enemy;
 		}
 	}
 
@@ -79,6 +90,31 @@ void CEnemyManager::Update(float delta)
 		else
 		{
 			spawner++;
+		}
+	}
+
+	//Update drops
+	auto drop = mDrops.begin();
+
+	while (drop != mDrops.end())
+	{
+		(*drop)->Update(delta);
+
+		for (auto player = mpPlayers->begin(); player != mpPlayers->end(); ++player)
+		{
+			if ((*player)->CollidesSphere(drop->get()))
+			{
+				(*drop)->ApplyDrop(*player);
+			}
+		}
+		
+		if ((*drop)->IsOutOfBounds() || (*drop)->IsDead())
+		{
+			drop = mDrops.erase(drop);
+		}
+		else
+		{
+			drop++;
 		}
 	}
 }
@@ -186,6 +222,38 @@ unique_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVecto
 	default:
 		return 0;
 		break;
+	}
+}
+
+void CEnemyManager::CreateRandomDrop(CVector3& pos)
+{
+	int random = rand() % 1000;
+
+	int cumulativeChance = 0;
+	unique_ptr<IDrop> newDrop;
+
+	if (random < (cumulativeChance += kUgradeDropChance)) //Upgrade drop
+	{
+		newDrop.reset(new CUpgradeDrop(UPGRADE_POWER_UP));
+	}
+	else if (random < (cumulativeChance += kShotgunDropChance)) //Upgrade drop
+	{
+		newDrop.reset(new CWeaponDrop(new CShotGun(0, 1, 100.0f, 0.33f, 5), SHOTGUN_POWER_UP));
+	}
+	else if (random < (cumulativeChance += kLaserDropChance)) //Upgrade drop
+	{
+		newDrop.reset(new CWeaponDrop(new CLaser(0, 2, 0.1f), LASER_POWER_UP));
+	}
+	else
+	{
+		//No drop created
+		return;
+	}
+	
+	if (random < cumulativeChance)
+	{
+		newDrop->SetPosition(pos);
+		mDrops.push_back(move(newDrop));
 	}
 }
 

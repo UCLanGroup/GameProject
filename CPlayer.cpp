@@ -364,6 +364,9 @@ void CPlayer::LoseLife()
 		
 		MakeInvulnerable(5.0f);
 
+		mBonusWeapon.reset(); //Ensure there is no bonus weapon
+		mMainWeapon->SetLevel(1); //Reset level to 1
+
 		SetDead(false);
 		mLives--;
 	}

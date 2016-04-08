@@ -5,6 +5,10 @@
 //Shared interface between dropped powerups and other modifiers/bonuses
 class IDrop : public IEntity
 {
+protected:
+	const float kDropScale = 3.0f;
+	const float kDropSpeed = 20.0f;
+
 public:
 	//Updates the drop
 	virtual void Update(float delta) { /*Does nothing*/};
