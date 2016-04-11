@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "CGameStateHandler.h"
 #include "CPlayState.h"
+#include "CPausedState.h"
 #include "CLoadScreen.h"
 #include <iostream>
 #include <sstream>
@@ -133,7 +134,10 @@ void CPlayState::Resume() {}
 void CPlayState::HandleEvents(CGameStateHandler * game)
 {
 	// Keypresses go here
-
+	if (gEngine->KeyHit(KEY_PAUSE))
+	{
+		game->PushState(CPausedState::Instance());
+	}
 
 	if (gEngine->KeyHit(KEY_EXIT))
 	{
@@ -144,6 +148,26 @@ void CPlayState::HandleEvents(CGameStateHandler * game)
 void CPlayState::Update(CGameStateHandler * game)
 {
 	mDelta = gEngine->Timer();
+
+	// fps display
+	static float frameTimer = 0.0f;
+	static int frames = 0;
+	static string fps = " fps";
+
+	frameTimer += mDelta;
+	++frames;
+
+	if (frameTimer > 1.0f)
+	{
+		frameTimer -= 1.0f;
+
+		fps = to_string(frames) + " fps";
+		frames = 0;
+	}
+
+	mFont->Draw(fps, 0, 0, tle::kWhite);
+	
+
 
 	// Animations go here
 

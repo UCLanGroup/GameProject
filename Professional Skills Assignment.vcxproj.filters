@@ -70,6 +70,24 @@
     <ClCompile Include="CUpgradeDrop.cpp">
       <Filter>Entities\source\Drops</Filter>
     </ClCompile>
+    <ClCompile Include="CComponent.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CContainer.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanel.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouseEvent.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CLabel.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CPausedState.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -153,6 +171,24 @@
     <ClInclude Include="CUpgradeDrop.h">
       <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
+    <ClInclude Include="CContainer.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CComponent.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanel.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouseEvent.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLabel.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CPausedState.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -208,6 +244,15 @@
     </Filter>
     <Filter Include="Entities\source\Drops">
       <UniqueIdentifier>{de2a3063-b537-4795-9aa7-7b390c5681ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{de1a9c5b-5f9f-420e-90e7-8a806a294ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\headers">
+      <UniqueIdentifier>{308af897-70ee-42c9-b5a8-acd46edaabb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\source">
+      <UniqueIdentifier>{3c6b14a8-7889-4dd6-b5ad-700c1c0686d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
