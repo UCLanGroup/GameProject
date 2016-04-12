@@ -5,7 +5,7 @@
 
 CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate) : CWeapon(parent)
 {
-	SetMaxLevel(3);
+	SetMaxLevel(6);
 	SetLevel(1);
 	SetDamage(damage);
 	SetProjSpeed(projSpeed);
@@ -46,6 +46,7 @@ CProjectile* CBlaster::CreateBullet()
 
 void CBlaster::Fire()
 {
+	float rotation = GetParent()->GetRotation();
 	CProjectile* bullet;
 
 	//Create a different set of bullets depending on weapon level
@@ -80,6 +81,86 @@ void CBlaster::Fire()
 
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalX(-6.0f); //Slightly to the left
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	case 4:
+		//Two bullets, both slightly off center to either side
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f); //Slightly to the right
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		//Two bullets, one firing to either side
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f); //Slightly forward
+		bullet->SetRotation(rotation - 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
+		bullet->SetRotation(rotation + 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	case 5:
+		//Two bullets, both slightly off center to either side
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f); //Slightly to the right
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		//Two bullets, one firing to either side
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f); //Slightly forward
+		bullet->SetRotation(rotation - 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
+		bullet->SetRotation(rotation + 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		//One bullet, firing backwards
+		bullet = CreateBullet();
+		bullet->SetRotation(rotation + 180);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		break;
+
+	case 6:
+		//Three bullets, two slightly off center to either side, one centered
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(6.0f); //Slightly to the right
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalZ(3.0f); //Slightly forward
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-6.0f); //Slightly to the left
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		//Two bullets, one firing to either side
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(3.0f); //Slightly forward
+		bullet->SetRotation(rotation - 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		bullet = CreateBullet();
+		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
+		bullet->SetRotation(rotation + 30);
+		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+
+		//One bullet, firing backwards
+		bullet = CreateBullet();
+		bullet->SetRotation(rotation + 180);
 		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
 		break;
 

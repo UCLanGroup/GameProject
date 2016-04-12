@@ -189,6 +189,9 @@
     <ClInclude Include="CPausedState.h">
       <Filter>States\headers</Filter>
     </ClInclude>
+    <ClInclude Include="IMouseEventHandler.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

@@ -8,7 +8,7 @@ namespace tle_ui
 	{
 	protected:
 		//All the child components
-		std::vector<CComponent*> mComponents;
+		std::list<CComponent*> mComponents;
 
 	public:
 		//Resizes the component based on child components

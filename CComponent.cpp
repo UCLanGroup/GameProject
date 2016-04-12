@@ -12,10 +12,30 @@ namespace tle_ui
 	{
 		if (eventHandler != nullptr)
 		{
-			if (mX < mouseEvent.GetX() && (mX + mWidth) > mouseEvent.GetX() &&
-				mY < mouseEvent.GetY() && (mY + mHeight) > mouseEvent.GetY())
+			if ((mX < mouseEvent.GetX()) && ((mX + mCalcedWidth) > mouseEvent.GetX()) &&
+				(mY < mouseEvent.GetY()) && ((mY + mCalcedHeight) > mouseEvent.GetY()))
 			{
-				eventHandler(CMouseEvent(this, mouseEvent.GetType(), mouseEvent.GetX(), mouseEvent.GetY()));
+				if (mMouseOver)
+				{
+					if (mouseEvent.GetType() == CMouseEvent::Mouse_Clicked)
+					{
+						eventHandler->MouseClickedEvent(CMouseEvent(this, CMouseEvent::Mouse_Clicked, mouseEvent.GetX(), mouseEvent.GetY()));
+					}
+					else
+					{
+						eventHandler->MouseMovedEvent(CMouseEvent(this, CMouseEvent::Mouse_Moved, mouseEvent.GetX(), mouseEvent.GetY()));
+					}
+				}
+				else
+				{
+					mMouseOver = true;
+					eventHandler->MouseEnteredEvent(CMouseEvent(this, CMouseEvent::Mouse_Entered, mouseEvent.GetX(), mouseEvent.GetY()));
+				}
+			}
+			else if(mMouseOver)
+			{
+				mMouseOver = false;
+				eventHandler->MouseExittedEvent(CMouseEvent(this, CMouseEvent::Mouse_Exitted, mouseEvent.GetX(), mouseEvent.GetY()));
 			}
 		}
 	}
@@ -119,7 +139,7 @@ namespace tle_ui
 	}
 
 	//Adds an event handler to the component that will recieve events from the component
-	void CComponent::SetEventHandler(EventHandler handler)
+	void CComponent::SetEventHandler(IMouseEventHandler* handler)
 	{
 		eventHandler = handler;
 	}

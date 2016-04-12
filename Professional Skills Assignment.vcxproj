@@ -190,6 +190,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="IDebug.h" />
     <ClInclude Include="IDrop.h" />
     <ClInclude Include="IEntity.h" />
+    <ClInclude Include="IMouseEventHandler.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="CWeaponDrop.h" />
   </ItemGroup>

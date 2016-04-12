@@ -53,11 +53,11 @@ namespace tle_ui
 		switch (mVertical)
 		{
 		case Top:
-			mTextY = mY + mCalcedHeight - textHeight - mMargin;
+			mTextY = mY + mMargin;
 			break;
 
 		case Bottom:
-			mTextY = mY + mMargin;
+			mTextY = mY + mCalcedHeight - textHeight - mMargin;
 			break;
 
 		case Center:

@@ -1,6 +1,7 @@
 #pragma once
+#include "IMouseEventHandler.h"
 #include "CMouseEvent.h"
-#include <vector>
+#include <list>
 
 namespace tle_ui
 {
@@ -76,7 +77,7 @@ namespace tle_ui
 		void SetAlignments(Alignment horizontal, Alignment vertical);
 
 		//Adds an event handler to the component that will recieve events from the component
-		void SetEventHandler(EventHandler handler);
+		void SetEventHandler(IMouseEventHandler* handler);
 
 		//Returns the component's width
 		int GetWidth();
@@ -109,6 +110,8 @@ namespace tle_ui
 		Alignment GetHorAlignment();
 
 	protected:
+		bool mMouseOver = false; //Is the mouse currently over this component
+
 		int mX = 0;
 		int mY = 0;
 		int mWidth = kAutoScale;
@@ -124,6 +127,6 @@ namespace tle_ui
 		Alignment mVertical = Alignment::Center; //The vertical alignment
 		Alignment mHorizontal = Alignment::Center; //The horizontal alignment
 		
-		EventHandler eventHandler = nullptr;
+		IMouseEventHandler* eventHandler = nullptr;
 	};
 }

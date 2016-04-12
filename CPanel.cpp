@@ -88,13 +88,13 @@ namespace tle_ui
 				switch (mVertical)
 				{
 				case Top:
+					component->SetY(mY + usedSpace);
 					usedSpace += component->GetHeight();
-					component->SetY(mY + mCalcedHeight - usedSpace);
 					break;
 
 				case Bottom:
-					component->SetY(mY + usedSpace);
 					usedSpace += component->GetHeight();
+					component->SetY(mY + mCalcedHeight - usedSpace);
 					break;
 
 				case Center:

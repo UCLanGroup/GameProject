@@ -13,25 +13,25 @@ namespace tle_ui
 	}
 
 	//Returns the source of the event
-	CComponent* CMouseEvent::GetSource()
+	CComponent* CMouseEvent::GetSource() const
 	{
 		return mSource;
 	}
 
 	//Returns the type of the event
-	CMouseEvent::Type CMouseEvent::GetType()
+	CMouseEvent::Type CMouseEvent::GetType() const
 	{
 		return mType;
 	}
 
 	//Returns the x position of where the event occured
-	int CMouseEvent::GetX()
+	int CMouseEvent::GetX() const
 	{
 		return mX;
 	}
 
 	//Returns the y position of where the event occured
-	int CMouseEvent::GetY()
+	int CMouseEvent::GetY() const
 	{
 		return mY;
 	}
