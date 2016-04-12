@@ -49,16 +49,32 @@ public:
 	bool IsExplodeable();
 
 	//Inherited from ICollidable
+
+	//Returns the center point of the model
 	virtual tlx::CVector3 GetCenterPoint();
+
+	//Returns a pointer to the mesh of the entity's model
 	virtual IMesh* GetMesh();
+
+	//Fills in a 16 size float array with the model's matrix data
 	virtual bool GetMatrix(float* matrix);
 
 	//Inherited from ICollider
+
+	//Returns true if there is a collision between the two entities, else false
+	//If either entity is dead then the result is always false
 	virtual bool CollidesSphere(ICollidable* collidable);
+
+	//Returns true if there is a collision between the two entities, else false
+	//If either entity is dead then the result is always false
 	virtual bool CollidesMesh(ICollidable* collidable);
 
 	//Inherited from IResource
+
+	//Places the entity off screen
 	virtual void Hide();
+
+	//No longer used or supported
 	virtual void Reset() = 0;
 
 	//Destructor

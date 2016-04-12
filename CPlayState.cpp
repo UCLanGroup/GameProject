@@ -70,10 +70,10 @@ void CPlayState::Init()
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, SHOTGUN_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, LASER_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, UPGRADE_POWER_UP);
-
+	
+	//Preload 200 of each of the smoke particles
 	for (int i = 1; i <= 10; ++i)
 	{
-		//Preload 200 of each of the smoke particles
 		gEngine->AddToLoadQueue(PARTICLE_MODEL, 200, "Smoke" + to_string(i) + ".png");
 	}
 
@@ -96,9 +96,12 @@ void CPlayState::Init()
 
 void CPlayState::Cleanup()
 {
-	gEngine->RemoveSprite(mUI);
 	gEngine->RemoveCamera(mCam);
+
+	//Remove the floor models then clear the vector of empty pointers
 	for(auto& item : mFloor) mFloorMesh->RemoveModel(item);
+	mFloor.clear();
+
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
@@ -106,17 +109,18 @@ void CPlayState::Cleanup()
 	mExplosions->CleanUp();
 
 	gEngine->RemoveFont(mFont);
-	for (int i = 0; i < static_cast<int>(mLifeSprites.size()); i++)
-	{
-		gEngine->RemoveSprite(mLifeSprites[i]);
-	}
+
+	//Remove the life sprites then clear the vector of empty pointers
+	for (auto& item : mLifeSprites) gEngine->RemoveSprite(item);
 	mLifeSprites.clear();
+
+	//Clean up UI
+	gEngine->RemoveSprite(mUI);
+	gEngine->RemoveSprite(mUI2);
 	gEngine->RemoveSprite(mpHealthBar);
 	gEngine->RemoveSprite(mpShieldBar);
 
-	// Must be after bullet cleanup. Bullet mesh
-	// needs to exist to remove bullet models. 
-	// Bullet mesh is owned by player.
+	//Clean up player
 	mPlayer1.Cleanup();
 
 	//Clear player list
