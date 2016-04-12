@@ -88,6 +88,9 @@
     <ClCompile Include="CPausedState.cpp">
       <Filter>States\source</Filter>
     </ClCompile>
+    <ClCompile Include="CImage.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -190,6 +193,9 @@
       <Filter>States\headers</Filter>
     </ClInclude>
     <ClInclude Include="IMouseEventHandler.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CImage.h">
       <Filter>UI\headers</Filter>
     </ClInclude>
   </ItemGroup>
