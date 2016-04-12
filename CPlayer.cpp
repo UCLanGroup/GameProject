@@ -7,6 +7,8 @@
 #include "CLaser.h"
 #include "CMatrix4x4.h"
 
+//Initial set up
+//It is not safe to use other player functions until Init is called
 void CPlayer::Init()
 {
 	//Model
@@ -25,37 +27,50 @@ void CPlayer::Init()
 	mShieldModel->AttachToParent(mModel);
 
 	//Weapon
-	mProjectileMesh = gEngine->LoadMesh(BULLET_MESH);
 	mMainWeapon.reset(new CBlaster(this, 1, 100.0f, 0.1f));
 	mMainWeapon->SetBulletList(mpPlayerBullets);
 
 	//Stats
-	mHealth = 100;
-	mScore = 0;
-	mLives = 3;
 	mMaxHealth = 100;
-	mShield = 50;
+	mHealth = 100;
 	mMaxShield = 50;
-	mInvulTexture = 0;
-	mShieldRegenRate = 0.25f;
+	mShield = 50;
+	mSpeed = 50.0f;
+	mRotation = 0.0f;
+
+	mLives = 3;
+	mScore = 0;
+
+	//Timers
 	mRegenTimer = 0.0f;
 	mInvulTimer = 0.0f;
 	mInvulTextureTimer = 0.0f;
-	mSpeed = 50.0f;
-	mScore = 0;
+	mWeaponPowerupTimer = 0.0f;
+
+	//Invul
+	mInvulTexture = 0;
 	mInvulTextureAccending = false;
+
 	SetRadius(5.0f);
 	SetDead(false);
+
+	mInitialised = true;
 }
 
+//Removes all models and sprites
+//It is not safe to use other player functions after Cleanup until Init is called again
 void CPlayer::Cleanup()
 {
 	GetMesh()->RemoveModel(mModel);
 	mModel = 0;
 	mShieldMesh->RemoveModel(mShieldModel);
 	mShieldModel = 0;
+	mMainWeapon.reset();
+
+	mInitialised = false;
 }
 
+//Moves and updates the player
 void CPlayer::Move(float dt)
 {
 	if (gEngine->KeyHeld(KEY_UP))
@@ -204,7 +219,7 @@ void CPlayer::Move(float dt)
 	{
 		mRegenTimer += dt;
 		
-		while (mRegenTimer > mShieldRegenRate && mShield < mMaxShield)
+		while (mRegenTimer > kShieldRegenRate && mShield < mMaxShield)
 		{
 			if (mShield == 0) //Reattach shield if hidden
 			{
@@ -213,7 +228,7 @@ void CPlayer::Move(float dt)
 			}
 			mShield++;
 
-			mRegenTimer -= mShieldRegenRate;
+			mRegenTimer -= kShieldRegenRate;
 		}
 	}
 
@@ -269,6 +284,7 @@ void CPlayer::Move(float dt)
 	}
 }
 
+//Checks the collision between the player and enemy projectiles
 void CPlayer::CheckCollision()
 {
 	//No collision check atm
@@ -287,6 +303,8 @@ void CPlayer::CheckCollision()
 	}
 }
 
+//The player takes damage to the shield or health is there is no shield
+//Sets dead flag if it kills the player
 void CPlayer::TakeDamage(int damage)
 {
 	//Don't take damage if invulnerable
@@ -321,6 +339,7 @@ void CPlayer::TakeDamage(int damage)
 	}
 }
 
+//Makes the player invulnerable for a specific duration
 void CPlayer::MakeInvulnerable(float time)
 {
 	if (mInvulTimer > 0)
@@ -349,6 +368,14 @@ void CPlayer::MakeInvulnerable(float time)
 	}
 }
 
+//Increases the player's score
+//Pass a negative to decrease the score
+void CPlayer::IncreaseScore(int value)
+{
+	mScore += value;
+}
+
+//Removes a life from the player and handles death
 void CPlayer::LoseLife()
 {
 	CExplosionPool::Instance()->Spawn(mModel->GetX(), mModel->GetY(), mModel->GetZ(), GetRadius() * 2.0f);
@@ -365,7 +392,7 @@ void CPlayer::LoseLife()
 		MakeInvulnerable(5.0f);
 
 		mBonusWeapon.reset(); //Ensure there is no bonus weapon
-		mMainWeapon->SetLevel(1); //Reset level to 1
+		mMainWeapon->SetLevel(1); //Reset to level to 1
 
 		SetDead(false);
 		mLives--;
@@ -376,16 +403,13 @@ void CPlayer::LoseLife()
 	}
 }
 
+//Gives the player and extra life
 void CPlayer::GainLife()
 {
 	mLives++;
 }
 
-void CPlayer::IncreaseScore(int value)
-{
-	mScore += value;
-}
-
+//Upgrades the main weapon
 void CPlayer::UpgradeWeapon()
 {
 	mMainWeapon->Upgrade();
@@ -393,16 +417,19 @@ void CPlayer::UpgradeWeapon()
 
 //Sets
 
+//Sets the score
 void CPlayer::SetScore(int score)
 {
 	mScore = score;
 }
 
+//Sets the number of extra lives the player has
 void CPlayer::SetLives(int lives)
 {
 	mLives = lives;
 }
 
+//Sets the health, this is capped at the player's max health
 void CPlayer::SetHealth(int health)
 {
 	if (mMaxHealth < health)
@@ -415,11 +442,13 @@ void CPlayer::SetHealth(int health)
 	}
 }
 
+//Sets the maximum health amount
 void CPlayer::SetMaxHealth(int health)
 {
 	mMaxHealth = health;
 }
 
+//Sets the shield, this is capped at the player's max shield
 void CPlayer::SetShield(int shield)
 {
 	if (mMaxShield < shield)
@@ -432,14 +461,10 @@ void CPlayer::SetShield(int shield)
 	}
 }
 
+//Sets the maximum shield amount
 void CPlayer::SetMaxShield(int shield)
 {
 	mMaxShield = shield;
-}
-
-void CPlayer::SetShieldRegen(float regen)
-{
-	mShieldRegenRate = regen;
 }
 
 //Sets the main weapon that the player uses at all times
@@ -459,6 +484,7 @@ void CPlayer::SetBonusWeapon(CWeapon* weapon, float duration)
 	mWeaponPowerupTimer = duration;
 }
 
+//Gives the player access to the player and enemy bullet lists
 void CPlayer::SetLists(BulletList* playerBullets, BulletList* enemyBullets)
 {
 	mpPlayerBullets = playerBullets;
@@ -469,36 +495,43 @@ void CPlayer::SetLists(BulletList* playerBullets, BulletList* enemyBullets)
 
 //Gets
 
+//Returns the player's score
 int CPlayer::GetScore()
 {
 	return mScore;
 }
 
+//Returns the number of extra lives remaining
 int CPlayer::GetLives()
 {
 	return mLives;
 }
 
+//Returns the current health
 int CPlayer::GetHealth()
 {
 	return mHealth;
 }
 
+//Returns the maximum amount of health
 int CPlayer::GetMaxHealth()
 {
 	return mMaxHealth;
 }
 
+//Returns the current shield
 int CPlayer::GetShield()
 {
 	return mShield;
 }
 
+//Returns the maximum amount of shield
 int CPlayer::GetMaxShield()
 {
 	return mMaxShield;
 }
 
+//Returns a pointer to the main weapon
 CWeapon* CPlayer::GetMainWeapon()
 {
 	return mMainWeapon.get();
@@ -514,6 +547,11 @@ void CPlayer::Reset()
 	mRegenTimer = 0.0f;
 }
 
+//Ensures all player models are destroyed (calls Cleanup())
 CPlayer::~CPlayer()
 {
+	if (mInitialised)
+	{
+		Cleanup();
+	}
 }
