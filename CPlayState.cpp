@@ -87,7 +87,7 @@ void CPlayState::Init()
 	}
 
 	mSound.setBuffer(mBufferShoot);
-	mSound.setVolume(30.0f);
+	mSound.setVolume(0.0f); // 30.0f
 
 	//Load all queued objects and update the load screen with progress
 	gEngine->LoadQueuedObjects(loadScreen);

@@ -14,7 +14,7 @@ CClouds::CClouds()
 	{
 		SCloud* cloudTemp = new SCloud;
 		cloudTemp->model = mCloudMesh->CreateModel( static_cast<float>(GetRandFloat( AREA_BOUNDS_LEFT, AREA_BOUNDS_RIGHT )), 
-													GetRandFloat(-10.0f, 10.0f), 
+													GetRandFloat( mMIN_Y, mMAX_Y ), 
 													static_cast<float>(GetRandInt( 100.0f, 200.0f )) );
 		cloudTemp->model->SetSkin( mCloudTex.at( 4 ) );
 		cloudTemp->model->Scale( GetRandFloat( 10.0f, 40.0f ));
@@ -45,16 +45,18 @@ float CClouds::GetRandFloat(float low, float high)
 	return low + static_cast<float>(rand()) / static_cast<float>(RAND_MAX/(high - low));
 }
 
+// Move cloud down the screen, reset when off-screen
 void CClouds::Move( float delta )
 {
 	for (auto& cloud : mClouds)
 	{
 		cloud->model->MoveLocalZ( -cloud->speed * delta );
 
+		// reset cloud to top of screen
 		if (cloud->model->GetZ() < AREA_BOUNDS_BOTTOM - 50.0f)
 		{
 			cloud->model->SetPosition( static_cast<float>(GetRandFloat( AREA_BOUNDS_LEFT, AREA_BOUNDS_RIGHT )),
-									   GetRandFloat( -10.0f, 10.0f ),
+									   GetRandFloat( mMIN_Y, mMAX_Y ),
 									   static_cast<float>(GetRandInt( 100.0f, 200.0f )) );
 			cloud->model->SetSkin( mCloudTex.at( GetRandInt( 0, 3 ) ) );
 			//cloud->model->Scale( GetRandFloat( 10.0f, 20.0f ) );

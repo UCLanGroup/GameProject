@@ -21,6 +21,8 @@ class CClouds
 
 	const float mMIN_SPEED = 1.0f;
 	const float mMAX_SPEED = 1.5f;
+	const float mMIN_Y = -10.0f;
+	const float mMAX_Y = 10.0f;
 
 public:
 	CClouds();
