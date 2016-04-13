@@ -41,7 +41,7 @@ void CIntroState::Init()
 	{
 		cout << "CPlayState.cpp: Error loading music file" << endl;
 	}
-	gMusic.setVolume(15.0f);
+	gMusic.setVolume(0.0f); // 15.0f
 	gMusic.play();
 
 

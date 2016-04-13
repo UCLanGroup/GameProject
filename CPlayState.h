@@ -10,6 +10,7 @@
 #include "CProjectile.h"
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
+#include "Clouds.h"
 
 using namespace tle;
 
@@ -32,6 +33,8 @@ private:
 	ISprite* mUI2;
 	IMesh* mFloorMesh;
 	vector<IModel*> mFloor;
+	CClouds* mClouds;
+
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;

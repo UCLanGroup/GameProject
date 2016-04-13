@@ -24,6 +24,8 @@ void CPlayState::Init()
 		mFloor.at(i)->SetSkin(METAL_TEX);
 	}
 
+	mClouds = new CClouds;
+
 	// Player
 	mPlayer1.Init();
 	mPlayer1.SetLists(&mPBullets, &mEBullets);
@@ -149,6 +151,8 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	mPlayer1.Move(mDelta);
 	mPlayer1.CheckCollision();
+
+	mClouds->Move( mDelta );
 
 	/*if (gEngine->KeyHeld(KEY_FIRE)) //Needs moving into CWeapon
 	{
