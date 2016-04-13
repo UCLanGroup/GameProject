@@ -32,7 +32,7 @@ void CGameStateHandler::Cleanup()
 void CGameStateHandler::ChangeState(CGameState* state)
 {
 	// Cleanup current state
-	if (!mpGameStates.empty())
+	while (!mpGameStates.empty())
 	{
 		mpGameStates.back()->Cleanup();
 		mpGameStates.pop_back();

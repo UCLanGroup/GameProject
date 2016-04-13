@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <memory>
-#include <ExtendedEngine.h>
+#include <IEngine.h>
 #include <SFML/Audio.hpp>
 
 using namespace tle;
@@ -79,6 +79,7 @@ const float OFF_SCREEN_Z		= 1000.0f;
 // Key codes
 const EKeyCode KEY_EXIT = tle::Key_Escape;
 const EKeyCode KEY_START = tle::Key_Space;
+const EKeyCode KEY_PAUSE = tle::Key_P;
 
 const EKeyCode KEY_LEFT = tle::Key_Left;
 const EKeyCode KEY_RIGHT = tle::Key_Right;

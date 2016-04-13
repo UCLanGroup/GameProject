@@ -2,6 +2,8 @@
 #include "TL-Engine.h"
 #include "IAnimation.h"
 #include "IParticleEmitter.h"
+#include "ISound.h"
+#include "IMusic.h"
 #include "ILoadScreen.h"
 #include "IUsings.h"
 
@@ -97,6 +99,26 @@ namespace tle
 		//Remove the particle emitter if it exists
 		virtual void RemoveEmitter(IParticleEmitter* emitter) = 0;
 
+		/////////
+		//Sound//
+
+		//Creates a sound object from the given file
+		//Returns 0 if the sound could not be loaded
+		virtual ISound* CreateSound(const std::string& soundFile) = 0;
+
+		//Removes the sound if it exists
+		virtual void RemoveSound(ISound* pSound) = 0;
+
+		/////////
+		//Music//
+
+		//Creates a music object from the given file
+		//Returns 0 if the file could not be loaded
+		virtual IMusic* CreateMusic(const std::string& musicFile) = 0;
+
+		//Removes the music if it exists
+		virtual void RemoveMusic(IMusic* pMusic) = 0;
+
 		/***************************************************
 						Additional Controls
 		****************************************************/
@@ -112,5 +134,17 @@ namespace tle
 
 		//Destroys all meshes and therefore all models and particle emitters
 		virtual void ClearMeshCache() = 0;
+
+		//Destroys all music
+		virtual void ClearMusic() = 0;
+
+		//Destroys all sounds
+		virtual void ClearSounds() = 0;
+
+		//Sets the volume for the specific volume modifier
+		virtual void SetVolume(float volume, SoundType type) = 0;
+
+		//Gets the volume for the specific volume modifier
+		virtual float GetVolume(SoundType type) = 0;
 	};
 }

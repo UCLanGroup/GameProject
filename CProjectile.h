@@ -1,5 +1,4 @@
 #pragma once
-#include <IEngine.h>
 #include "IEntity.h"
 
 class CProjectile : public IEntity

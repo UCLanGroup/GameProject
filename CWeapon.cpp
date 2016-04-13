@@ -12,6 +12,7 @@ CWeapon::CWeapon(IEntity* parent)
 	mTimer = 0.0f;
 	mpProjectiles = 0;
 	mIsfiring = false;
+	mFireSound = 0;
 }
 
 void CWeapon::Update(float delta)
@@ -31,9 +32,9 @@ void CWeapon::Update(float delta)
 		mTimer -= mFireRate;
 
 		//Play the fire sound
-		if (mFireSound.getBuffer() != NULL)
+		if (mFireSound)
 		{
-			mFireSound.play();
+			mFireSound->Play();
 		}
 	}
 }
@@ -150,12 +151,12 @@ void CWeapon::SetBulletList(BulletList* pBulletList)
 	mpProjectiles = pBulletList;
 }
 
-void CWeapon::SetFireSound(const sf::SoundBuffer &soundBuffer)
+void CWeapon::SetFireSound(ISound* fireSound)
 {
-	mFireSound.setBuffer(soundBuffer);
+	mFireSound = fireSound;
 }
 
 CWeapon::~CWeapon()
 {
-
+	if (mFireSound) gEngine->RemoveSound(mFireSound);
 }

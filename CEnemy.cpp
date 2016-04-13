@@ -7,6 +7,7 @@ const int kHealth = 1;
 const float kSpeed = 1.0f;
 const int kValue = 10;
 const float kRadius = 5.0f;
+const int kPlayerCollisionDamage = 50;
 
 CEnemy::CEnemy(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
 {
@@ -88,7 +89,7 @@ void CEnemy::CheckCollision()
 	auto bullet = mpPlayerBullets->begin();
 	while (bullet != mpPlayerBullets->end() && !IsDead())
 	{
-		if (CollidesSphere(bullet->get()))
+		if (CollidesSphere(bullet->get())) //Result is false if either entity is already dead
 		{
 			TakeDamage((*bullet)->GetDamage());
 			
@@ -110,6 +111,21 @@ void CEnemy::CheckCollision()
 		else
 		{
 			bullet++;
+		}
+	}
+
+	//Check for collision with the players
+	for (auto player = mpPlayers->begin(); player != mpPlayers->end() && !IsDead(); ++player)
+	{
+		if (CollidesSphere(*player)) //Result is false if either entity is already dead
+		{
+			(*player)->TakeDamage(kPlayerCollisionDamage);
+			TakeDamage(kPlayerCollisionDamage);
+
+			if (IsDead())
+			{
+				(*player)->IncreaseScore(mValue);
+			}
 		}
 	}
 }
