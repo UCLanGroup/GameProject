@@ -10,7 +10,7 @@
 #include "CProjectile.h"
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
-#include "Clouds.h"
+#include "CClouds.h"
 
 using namespace tle;
 
@@ -33,7 +33,7 @@ private:
 	ISprite* mUI2;
 	IMesh* mFloorMesh;
 	vector<IModel*> mFloor;
-	CClouds* mClouds;
+	unique_ptr<CClouds> mClouds;
 
 
 	vector<ISprite*> mLifeSprites;
@@ -54,12 +54,6 @@ private:
 	BulletList mEBullets; //Enemy Projectiles
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
-
-
-			// SOUND
-	sf::SoundBuffer mBufferShoot;
-	sf::Sound mSound;
-	bool mFiring = false;
 
 public:
 	// Setup and destroy state

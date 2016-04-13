@@ -25,7 +25,7 @@ void CPlayState::Init()
 		mFloor.at(i)->SetSkin(METAL_TEX);
 	}
 
-	mClouds = new CClouds;
+	mClouds.reset(new CClouds());
 
 	// Player
 	mPlayer1.Init();
@@ -80,15 +80,6 @@ void CPlayState::Init()
 		gEngine->AddToLoadQueue(PARTICLE_MODEL, 200, "Smoke" + to_string(i) + ".png");
 	}
 
-	// SOUND
-	if (!mBufferShoot.loadFromFile(SOUND_SHOOT))
-	{
-		cout << "CPlayState.cpp: Error loading sound file" << endl;
-	}
-
-	mSound.setBuffer(mBufferShoot);
-	mSound.setVolume(0.0f); // 30.0f
-
 	//Load all queued objects and update the load screen with progress
 	gEngine->LoadQueuedObjects(loadScreen);
 	delete loadScreen;
@@ -108,6 +99,7 @@ void CPlayState::Cleanup()
 	gEngine->RemoveMesh(mFloorMesh);
 	mPBullets.clear();
 	mEBullets.clear();
+	mClouds.reset();
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
 

@@ -91,6 +91,9 @@
     <ClCompile Include="CImage.cpp">
       <Filter>UI\source</Filter>
     </ClCompile>
+    <ClCompile Include="CClouds.cpp">
+      <Filter>Entities\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="CImage.h">
       <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CClouds.h">
+      <Filter>Entities\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

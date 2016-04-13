@@ -60,7 +60,7 @@ void CLaser::SetFiring(bool isFiring)
 		{
 			//Now firing, so add laser beam
 			mpLaserModel = gEngine->GetModel(mpBeamMesh, LASER_BEAM_TEX);
-			mpLaserModel->SetPosition(0.5f, 0.0f, 100.0f);
+			mpLaserModel->SetPosition(0.5f, 0.0f, 50.0f);
 			mpLaserModel->AttachToParent(GetParent()->GetModel());
 
 			//Attaching to parent can screw over the scaling, so reset scale

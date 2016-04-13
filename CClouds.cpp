@@ -1,4 +1,4 @@
-#include "Clouds.h"
+#include "CClouds.h"
 #include <ctime>
 #include "Globals.h"
 
@@ -57,8 +57,11 @@ void CClouds::Move( float delta )
 		{
 			cloud->model->SetPosition( static_cast<float>(GetRandFloat( AREA_BOUNDS_LEFT, AREA_BOUNDS_RIGHT )),
 									   GetRandFloat( mMIN_Y, mMAX_Y ),
-									   static_cast<float>(GetRandInt( 100.0f, 200.0f )) );
+									   static_cast<float>(GetRandFloat( 100.0f, 200.0f )) );
+
+			cloud->model->ResetScale();
 			cloud->model->SetSkin( mCloudTex.at( GetRandInt( 0, 3 ) ) );
+			cloud->model->Scale(GetRandFloat(10.0f, 40.0f));
 			//cloud->model->Scale( GetRandFloat( 10.0f, 20.0f ) );
 			cloud->speed = GetRandFloat( mMIN_SPEED, mMAX_SPEED );
 		}
