@@ -10,6 +10,7 @@ CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate)
 	SetDamage(damage);
 	SetProjSpeed(projSpeed);
 	SetFireRate(fireRate);
+	SetFireSound(gEngine->CreateSound(SOUND_SHOOT));
 	SetTarget(0);
 }
 

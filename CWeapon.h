@@ -1,6 +1,6 @@
 #pragma once
-#include "Globals.h"
 #include <IEngine.h>
+#include "Globals.h"
 #include "CProjectile.h"
 
 using BulletList = std::list<unique_ptr<CProjectile>>;
@@ -19,7 +19,7 @@ private:
 	IEntity* mpTarget;
 	BulletList* mpProjectiles;
 
-	sf::Sound mFireSound;
+	ISound* mFireSound;
 
 	virtual void Fire() = 0;
 
@@ -54,7 +54,7 @@ public:
 	void SetParent(IEntity* pParent);
 	void SetTarget(IEntity* pTarget);
 	void SetBulletList(BulletList* pBulletList);
-	void SetFireSound(const sf::SoundBuffer &soundBuffer);
+	void SetFireSound(ISound* fireSound);
 
 	virtual ~CWeapon();
 };

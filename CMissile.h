@@ -1,5 +1,6 @@
 #pragma once
 #include "CProjectile.h"
+#include <IEngine.h>
 #include <list>
 
 // Description:	Moves towards target haphazardly and can be shot down.

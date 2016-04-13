@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <memory>
-#include <ExtendedEngine.h>
+#include <IEngine.h>
 #include <SFML/Audio.hpp>
 
 using namespace tle;

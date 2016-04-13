@@ -65,8 +65,9 @@ void CPlayState::Init()
 	//Preload any assets at the start before they are needed
 
 	gEngine->AddToLoadQueue(F16_ENEMY_MESH, 30);
-	gEngine->AddToLoadQueue(HAVOC_BOSS_MESH);
-	gEngine->AddToLoadQueue(MISSILE_MESH);
+	gEngine->AddToLoadQueue(HAVOC_BOSS_MESH, 1);
+	gEngine->AddToLoadQueue(MISSILE_MESH, 50);
+	gEngine->AddToLoadQueue(BULLET_MESH, 100);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, SHOTGUN_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, LASER_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, UPGRADE_POWER_UP);
