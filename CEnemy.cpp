@@ -175,6 +175,34 @@ bool CEnemy::IsFinished()
 	return mFinished;
 }
 
+//AI functions
+
+//Calculates the bearing (rotation from north) towards the entity
+float CEnemy::BearingTowards(IEntity* entity)
+{
+	CVector3 dif = entity->GetCenterPoint() - GetCenterPoint();
+
+	//Calculate the bearing from north
+	return 90.0f - (atan2f(dif.z, dif.x) * (180.0f / static_cast<float>(M_PI)));
+}
+
+//Rotates the enemy a small amount towards the entity
+//Rotates in the optimal direction
+void CEnemy::RotateTowards(IEntity* entity, float rotateAmount)
+{
+	float rotation = GetRotation();
+	float rotDif = BearingTowards(entity) - rotation;
+
+	if ((rotDif < 0.0f && rotDif > -180.0f) || (rotDif > 180.0f))
+	{
+		mModel->RotateY(-rotateAmount);
+	}
+	else
+	{
+		mModel->RotateY(rotateAmount);
+	}
+}
+
 //Inherited from IResource
 
 void CEnemy::Reset()

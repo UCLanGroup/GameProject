@@ -1,12 +1,17 @@
 #pragma once
 #include "CEnemyManager.h"
-#include "CEnemyBoss.h"
 #include "CExplosionPool.h"
+#include <fstream>
+
+//Enemies
+#include "CEnemyBoss.h"
+#include "CCruiser.h"
+
+//Item drops
 #include "CShotGun.h"
 #include "CLaser.h"
 #include "CWeaponDrop.h"
 #include "CUpgradeDrop.h"
-#include <fstream>
 
 //Chances are out of 1000
 
@@ -211,12 +216,18 @@ unique_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVecto
 
 	case Boss:
 		enemy.reset(new CEnemyBoss(mpPlayers, mpPlayerBullets, mpEnemyBullets));
+		enemy->SetPosition(offset);
 		return move(enemy);
 
 	case Heavy:
 		enemy.reset(new CEnemy(mpPlayers, mpPlayerBullets, mpEnemyBullets));
 		enemy->SetPath(path, offset);
 		enemy->SetHealth(5);
+		return move(enemy);
+
+	case Cruiser:
+		enemy.reset(new CCruiser(mpPlayers, mpPlayerBullets, mpEnemyBullets));
+		enemy->SetPosition(offset);
 		return move(enemy);
 
 	default:

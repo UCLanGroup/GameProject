@@ -15,7 +15,6 @@ class CEnemy : public IEntity
 private:
 	//Pathing
 	Path* mpPath;
-	CVector3 mOffset;
 	int mPathPos;
 	float mMoveTimer;
 
@@ -25,6 +24,7 @@ private:
 	int mValue;
 
 protected:
+	CVector3 mOffset;
 	std::vector<CPlayer*>* mpPlayers = 0;
 	BulletList* mpPlayerBullets = 0;
 	BulletList* mpEnemyBullets = 0;
@@ -51,6 +51,15 @@ public:
 	float GetSpeed();
 	int GetValue();
 	bool IsFinished();
+
+	//AI functions
+
+	//Calculates the bearing (rotation from north) towards the entity
+	float BearingTowards(IEntity* entity);
+
+	//Rotates the enemy a small amount towards the entity
+	//Rotates in the optimal direction
+	void RotateTowards(IEntity* entity, float rotateAmount);
 
 	//Inherited from IEntity : IResource
 	virtual void Reset();

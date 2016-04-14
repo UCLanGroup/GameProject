@@ -139,9 +139,9 @@ IModel* IEntity::GetModel()
 float IEntity::GetRotation()
 {
 	float matrix[16];
-	mModel->GetMatrix(&(matrix[0]));
+	mModel->GetMatrix(matrix);
 
-	return (atan2f(matrix[2], matrix[0]) * (180.0f / static_cast<float>(M_PI)));
+	return 90 - (atan2f(matrix[10], matrix[8]) * (180.0f / static_cast<float>(M_PI)));
 }
 
 //Checks if the entity's model is out of bounds

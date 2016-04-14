@@ -2,6 +2,7 @@
 #include "CShotGun.h"
 #include "CProjectile.h"
 #include "CMatrix4x4.h"
+#include <algorithm>
 
 CShotGun::CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate, int bulletsPerShot) : CWeapon(parent)
 {

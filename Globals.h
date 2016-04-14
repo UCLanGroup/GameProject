@@ -4,12 +4,10 @@
 #include <vector>
 #include <memory>
 #include <IEngine.h>
-#include <SFML/Audio.hpp>
 
 using namespace tle;
 
 // Globals
-extern sf::Music gMusic;
 extern tle::IEngine* gEngine;
 
 // Constants

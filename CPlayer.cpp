@@ -6,6 +6,7 @@
 #include "CChaosGun.h"
 #include "CLaser.h"
 #include "CMatrix4x4.h"
+#include <algorithm>
 
 //Initial set up
 //It is not safe to use other player functions until Init is called

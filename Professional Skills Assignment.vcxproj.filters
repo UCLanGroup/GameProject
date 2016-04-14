@@ -100,6 +100,12 @@
     <ClCompile Include="CSpinner.cpp">
       <Filter>UI\source</Filter>
     </ClCompile>
+    <ClCompile Include="CMissileBarrage.cpp">
+      <Filter>Entities\source\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="CCruiser.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -215,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="CSpinner.h">
       <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CCruiser.h">
+      <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="CMissileBarrage.h">
+      <Filter>Entities\headers\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
