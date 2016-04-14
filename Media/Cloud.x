@@ -42,7 +42,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
 
    TextureFilename {
-    "Transparent.png";
+    "cloud2_tlxadd.png";
    }
   }
  }

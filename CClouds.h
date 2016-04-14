@@ -17,7 +17,7 @@ class CClouds
 	vector<SCloud*> mClouds;
 	const int mCLOUD_COUNT = 10;
 	const string mQUAD_MESH = "Quad.x";
-	vector<string> mCloudTex = { "cloud0.png", "cloud1.png", "cloud2.png", "cloud3.png", "cloud4.png" };
+	vector<string> mCloudTex = { "cloud0.png", "cloud1.png", "cloud2_tlxadd.png", "cloud3.png", "cloud4.png" };
 
 	const float mMIN_SPEED = 1.0f;
 	const float mMAX_SPEED = 1.5f;

@@ -30,6 +30,7 @@ private:
 	float mDelta = 0.0f;
 
 	bool mPopFlag = false;
+	bool mOptionsFlag = false;
 	bool mQuitFlag = false;
 
 public:
