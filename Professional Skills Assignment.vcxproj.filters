@@ -91,6 +91,13 @@
     <ClCompile Include="CImage.cpp">
       <Filter>UI\source</Filter>
     </ClCompile>
+    <ClCompile Include="Clouds.cpp" />
+    <ClCompile Include="COptionsState.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpinner.cpp">
+      <Filter>UI\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -196,6 +203,13 @@
       <Filter>UI\headers</Filter>
     </ClInclude>
     <ClInclude Include="CImage.h">
+      <Filter>UI\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Clouds.h" />
+    <ClInclude Include="COptionsState.h">
+      <Filter>States\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpinner.h">
       <Filter>UI\headers</Filter>
     </ClInclude>
   </ItemGroup>

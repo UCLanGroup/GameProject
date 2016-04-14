@@ -9,29 +9,33 @@
 
 using namespace tle_ui;
 
-class CPausedState : public CGameState, public IMouseEventHandler
+class COptionsState : public CGameState, public IMouseEventHandler
 {
 private:
 	using CLabel_ptr = std::unique_ptr<CLabel>;
 	using CPanel_ptr = std::unique_ptr<CPanel>;
 
-	static CPausedState mPausedState;
+	enum MenuState {Options, Controls, Sound, Graphics, Nick_Mode};
+	MenuState menuState;
+
+	static COptionsState mOptionsState;
 
 	CPanel_ptr mFrame;
-	CLabel_ptr mPausedLabel;
-	CLabel_ptr mResumeLabel;
 	CLabel_ptr mOptionsLabel;
-	CLabel_ptr mQuitLabel;
+	CLabel_ptr mControlsLabel;
+	CLabel_ptr mSoundLabel;
+	CLabel_ptr mBackLabel;
 
-	IFont* mFont60;
-	IFont* mFont48;
-	IFont* mFont36;
+	tle::IFont* mFont60;
+	tle::IFont* mFont48;
+	tle::IFont* mFont36;
+	tle::IFont* mFont28;
+	tle::IFont* mFont24;
 
 	float mDelta = 0.0f;
 
 	bool mPopFlag = false;
-	bool mOptionsFlag = false;
-	bool mQuitFlag = false;
+	bool mBackFlag = false;
 
 public:
 	// Setup and destroy state
@@ -61,12 +65,12 @@ public:
 	//Handles events from the mouse being moved while over a component
 	void MouseMovedEvent(const CMouseEvent& mouseEvent);
 
-	static CPausedState* Instance()
+	static COptionsState* Instance()
 	{
-		return &mPausedState;
+		return &mOptionsState;
 	}
 
 protected:
-	CPausedState() {}
+	COptionsState() {}
 
 };

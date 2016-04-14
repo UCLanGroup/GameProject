@@ -2,6 +2,7 @@
 #include "CGameStateHandler.h"
 #include "CPausedState.h"
 #include "CIntroState.h"
+#include "COptionsState.h"
 #include "CMouseEvent.h"
 #include <iostream>
 
@@ -40,6 +41,7 @@ void CPausedState::Init()
 	mFrame->Add(mQuitLabel.get());
 
 	mPopFlag = false;
+	mOptionsFlag = false;
 	mQuitFlag = false;
 }
 
@@ -47,6 +49,9 @@ void CPausedState::Cleanup()
 {
 	mFrame.reset();
 	mPausedLabel.reset();
+	mResumeLabel.reset();
+	mOptionsLabel.reset();
+	mQuitLabel.reset();
 
 	//Remove fonts
 	gEngine->RemoveFont(mFont60);
@@ -66,7 +71,13 @@ void CPausedState::Pause()
 //Resumes from a paused state
 void CPausedState::Resume()
 {
+	mPopFlag = false;
+	mOptionsFlag = false;
+	mQuitFlag = false;
 
+	mResumeLabel->SetColor(tle::kWhite);
+	mOptionsLabel->SetColor(tle::kWhite);
+	mQuitLabel->SetColor(tle::kWhite);
 }
 
 // Game loop actions
@@ -92,6 +103,11 @@ void CPausedState::HandleEvents(CGameStateHandler* game)
 	if (gEngine->KeyHit(KEY_EXIT) || mQuitFlag)
 	{
 		game->ChangeState(CIntroState::Instance());
+	}
+
+	if (mOptionsFlag)
+	{
+		game->PushState(COptionsState::Instance());
 	}
 }
 
@@ -151,7 +167,7 @@ void CPausedState::MouseClickedEvent(const CMouseEvent& mouseEvent)
 	}
 	else if (mouseEvent.GetSource() == mOptionsLabel.get())
 	{
-		//
+		mOptionsFlag = true;
 	}
 	else if (mouseEvent.GetSource() == mQuitLabel.get())
 	{
