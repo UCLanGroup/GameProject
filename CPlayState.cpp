@@ -21,7 +21,7 @@ void CPlayState::Init()
 	mFloorMesh = gEngine->LoadMesh(GROUND_MESH);
 	for (int i = 0; i < kFloorAmount; i++)
 	{
-		mFloor.push_back(mFloorMesh->CreateModel(-6.0f, -1000.0f, kFloorStart + (kFloorSize * i)));
+		mFloor.push_back(mFloorMesh->CreateModel(-6.0f, -1000.0f, kFloorStart + ((kFloorSize - 1.0f) * i)));
 		mFloor.at(i)->SetSkin(METAL_TEX);
 	}
 
