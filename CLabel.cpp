@@ -80,6 +80,7 @@ namespace tle_ui
 	//Called by parent component's Draw function
 	void CLabel::Draw()
 	{
+		mpFont->Draw(mText, mTextX - 3, mTextY - 3, tle::kBlack);
 		mpFont->Draw(mText, mTextX, mTextY, mTextColor);
 	}
 

@@ -172,14 +172,6 @@ void COptionsState::MouseEnteredEvent(const CMouseEvent& mouseEvent)
 	{
 		mBackLabel->SetColor(tle::kRed);
 	}
-	//else if (mouseEvent.GetSource() == mOptionsLabel.get())
-	//{
-	//	mOptionsLabel->SetColor(tle::kRed);
-	//}
-	//else if (mouseEvent.GetSource() == mQuitLabel.get())
-	//{
-	//	mQuitLabel->SetColor(tle::kRed);
-	//}
 }
 
 //Handles events from the mouse being moved off of a component
@@ -189,14 +181,6 @@ void COptionsState::MouseExittedEvent(const CMouseEvent& mouseEvent)
 	{
 		mBackLabel->SetColor(tle::kWhite);
 	}
-	//else if (mouseEvent.GetSource() == mOptionsLabel.get())
-	//{
-	//	mOptionsLabel->SetColor(tle::kWhite);
-	//}
-	//else if (mouseEvent.GetSource() == mQuitLabel.get())
-	//{
-	//	mQuitLabel->SetColor(tle::kWhite);
-	//}
 }
 
 //Handles events from the a component being clicked on

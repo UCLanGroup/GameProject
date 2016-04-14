@@ -10,6 +10,8 @@ const float kStateDuration = 5.0f; //Each state lasts for 5 seconds
 CEnemyBoss::CEnemyBoss(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets) : CEnemy(players, playerBullets, enemyBullets)
 {
 	SetMesh(HAVOC_BOSS_MESH);
+	mModel->ResetScale();
+	mModel->ResetOrientation();
 	mModel->Scale(2.0f);
 	mModel->RotateLocalY(180.0f);
 	SetValue(500);
