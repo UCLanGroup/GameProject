@@ -5,6 +5,7 @@
 
 #include "CPanel.h"
 #include "CLabel.h"
+#include "CSpinner.h"
 #include "IMouseEventHandler.h"
 
 using namespace tle_ui;
@@ -14,16 +15,37 @@ class COptionsState : public CGameState, public IMouseEventHandler
 private:
 	using CLabel_ptr = std::unique_ptr<CLabel>;
 	using CPanel_ptr = std::unique_ptr<CPanel>;
-
-	enum MenuState {Options, Controls, Sound, Graphics, Nick_Mode};
-	MenuState menuState;
+	using CSpinner_ptr = std::unique_ptr<CSpinner>;
 
 	static COptionsState mOptionsState;
 
 	CPanel_ptr mFrame;
+
+	//Option menu header
 	CLabel_ptr mOptionsLabel;
+
+	//Controls rebinds header
 	CLabel_ptr mControlsLabel;
+
+	//Sound controls header
 	CLabel_ptr mSoundLabel;
+
+	//Master volume control
+	CPanel_ptr mMasterVolumePanel;
+	CLabel_ptr mMasterVolumeLabel;
+	CSpinner_ptr mMasterVolumeSpinner;
+
+	//Music volume control
+	CPanel_ptr mMusicVolumePanel;
+	CLabel_ptr mMusicVolumeLabel;
+	CSpinner_ptr mMusicVolumeSpinner;
+	
+	//SFX volume control
+	CPanel_ptr mSFXVolumePanel;
+	CLabel_ptr mSFXVolumeLabel;
+	CSpinner_ptr mSFXVolumeSpinner;
+
+	//Return button
 	CLabel_ptr mBackLabel;
 
 	tle::IFont* mFont60;

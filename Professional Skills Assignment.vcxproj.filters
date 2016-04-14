@@ -91,7 +91,9 @@
     <ClCompile Include="CImage.cpp">
       <Filter>UI\source</Filter>
     </ClCompile>
-    <ClCompile Include="Clouds.cpp" />
+    <ClCompile Include="CClouds.cpp">
+      <Filter>Entities\source</Filter>
+    </ClCompile>
     <ClCompile Include="COptionsState.cpp">
       <Filter>States\source</Filter>
     </ClCompile>
@@ -205,7 +207,9 @@
     <ClInclude Include="CImage.h">
       <Filter>UI\headers</Filter>
     </ClInclude>
-    <ClInclude Include="Clouds.h" />
+    <ClInclude Include="CClouds.h">
+      <Filter>Entities\headers</Filter>
+    </ClInclude>
     <ClInclude Include="COptionsState.h">
       <Filter>States\headers</Filter>
     </ClInclude>

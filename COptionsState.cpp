@@ -23,26 +23,81 @@ void COptionsState::Init()
 	mFrame.reset(new CPanel());
 	mFrame->SetSize(gEngine->GetWidth(), gEngine->GetHeight());
 
+	//Option menu header
 	mOptionsLabel.reset(new CLabel(mFont60, "Options"));
 	mOptionsLabel->SetHeight(90);
 	mOptionsLabel->SetVertAlignment(Alignment::Top);
 	mFrame->Add(mOptionsLabel.get());
 
-	mControlsLabel.reset(new CLabel(mFont36, "Controls"));
-	mControlsLabel->SetEventHandler(this);
+	//Controls rebinds header
+	mControlsLabel.reset(new CLabel(mFont48, "Controls"));
 	mFrame->Add(mControlsLabel.get());
 
-	mSoundLabel.reset(new CLabel(mFont36, "Sound"));
-	mSoundLabel->SetEventHandler(this);
+	//Sound controls header
+	mSoundLabel.reset(new CLabel(mFont48, "Sound"));
 	mFrame->Add(mSoundLabel.get());
 
+	//Master volume control
+	mMasterVolumePanel.reset(new CPanel());
+	mMasterVolumePanel->SetOrientation(Orientation::Horizontal);
+
+	mMasterVolumeLabel.reset(new CLabel(mFont36, "Master Volume "));
+	mMasterVolumeLabel->SetHorAlignment(Alignment::Left);
+	mMasterVolumeLabel->SetWidth(250);
+	mMasterVolumePanel->Add(mMasterVolumeLabel.get());
+
+	mMasterVolumeSpinner.reset(new CSpinner(mFont36, static_cast<int>(gEngine->GetVolume(SoundType::Global))));
+	mMasterVolumeSpinner->SetEventHandler(this);
+	mMasterVolumeSpinner->SetMinValue(0);
+	mMasterVolumeSpinner->SetMaxValue(100);
+	mMasterVolumeSpinner->SetIncrement(5);
+	mMasterVolumePanel->Add(mMasterVolumeSpinner.get());
+
+	mFrame->Add(mMasterVolumePanel.get());
+
+	//Music volume control
+	mMusicVolumePanel.reset(new CPanel());
+	mMusicVolumePanel->SetOrientation(Orientation::Horizontal);
+
+	mMusicVolumeLabel.reset(new CLabel(mFont36, "Music Volume "));
+	mMusicVolumeLabel->SetHorAlignment(Alignment::Left);
+	mMusicVolumeLabel->SetWidth(250);
+	mMusicVolumePanel->Add(mMusicVolumeLabel.get());
+
+	mMusicVolumeSpinner.reset(new CSpinner(mFont36, static_cast<int>(gEngine->GetVolume(SoundType::Music))));
+	mMusicVolumeSpinner->SetEventHandler(this);
+	mMusicVolumeSpinner->SetMinValue(0);
+	mMusicVolumeSpinner->SetMaxValue(100);
+	mMusicVolumeSpinner->SetIncrement(5);
+	mMusicVolumePanel->Add(mMusicVolumeSpinner.get());
+
+	mFrame->Add(mMusicVolumePanel.get());
+	
+	//SFX volume control
+	mSFXVolumePanel.reset(new CPanel());
+	mSFXVolumePanel->SetOrientation(Orientation::Horizontal);
+
+	mSFXVolumeLabel.reset(new CLabel(mFont36, "SFX Volume "));
+	mSFXVolumeLabel->SetHorAlignment(Alignment::Left);
+	mSFXVolumeLabel->SetWidth(250);
+	mSFXVolumePanel->Add(mSFXVolumeLabel.get());
+
+	mSFXVolumeSpinner.reset(new CSpinner(mFont36, static_cast<int>(gEngine->GetVolume(SoundType::SFX))));
+	mSFXVolumeSpinner->SetEventHandler(this);
+	mSFXVolumeSpinner->SetMinValue(0);
+	mSFXVolumeSpinner->SetMaxValue(100);
+	mSFXVolumeSpinner->SetIncrement(5);
+	mSFXVolumePanel->Add(mSFXVolumeSpinner.get());
+
+	mFrame->Add(mSFXVolumePanel.get());
+
+	//Return button
 	mBackLabel.reset(new CLabel(mFont36, "Back"));
 	mBackLabel->SetEventHandler(this);
 	mFrame->Add(mBackLabel.get());
+	mFrame->Resize();
 
 	mPopFlag = false;
-
-	menuState = MenuState::Options;
 }
 
 void COptionsState::Cleanup()
@@ -57,6 +112,8 @@ void COptionsState::Cleanup()
 	gEngine->RemoveFont(mFont60);
 	gEngine->RemoveFont(mFont48);
 	gEngine->RemoveFont(mFont36);
+	gEngine->RemoveFont(mFont28);
+	gEngine->RemoveFont(mFont24);
 
 	//Re-enable auto updating of animations and particle emitters
 	gEngine->UnpauseAutoUpdates();
@@ -111,10 +168,10 @@ void COptionsState::Draw(CGameStateHandler* game)
 //Handles events from the mouse being moved over a component
 void COptionsState::MouseEnteredEvent(const CMouseEvent& mouseEvent)
 {
-	//if (mouseEvent.GetSource() == mResumeLabel.get())
-	//{
-	//	mResumeLabel->SetColor(tle::kRed);
-	//}
+	if (mouseEvent.GetSource() == mBackLabel.get())
+	{
+		mBackLabel->SetColor(tle::kRed);
+	}
 	//else if (mouseEvent.GetSource() == mOptionsLabel.get())
 	//{
 	//	mOptionsLabel->SetColor(tle::kRed);
@@ -128,10 +185,10 @@ void COptionsState::MouseEnteredEvent(const CMouseEvent& mouseEvent)
 //Handles events from the mouse being moved off of a component
 void COptionsState::MouseExittedEvent(const CMouseEvent& mouseEvent)
 {
-	//if (mouseEvent.GetSource() == mResumeLabel.get())
-	//{
-	//	mResumeLabel->SetColor(tle::kWhite);
-	//}
+	if (mouseEvent.GetSource() == mBackLabel.get())
+	{
+		mBackLabel->SetColor(tle::kWhite);
+	}
 	//else if (mouseEvent.GetSource() == mOptionsLabel.get())
 	//{
 	//	mOptionsLabel->SetColor(tle::kWhite);
@@ -145,18 +202,22 @@ void COptionsState::MouseExittedEvent(const CMouseEvent& mouseEvent)
 //Handles events from the a component being clicked on
 void COptionsState::MouseClickedEvent(const CMouseEvent& mouseEvent)
 {
-	//if (mouseEvent.GetSource() == mResumeLabel.get())
-	//{
-	//	mPopFlag = true;
-	//}
-	//else if (mouseEvent.GetSource() == mOptionsLabel.get())
-	//{
-	//	//
-	//}
-	//else if (mouseEvent.GetSource() == mQuitLabel.get())
-	//{
-	//	mQuitFlag = true;
-	//}
+	if (mouseEvent.GetSource() == mMasterVolumeSpinner.get())
+	{
+		gEngine->SetVolume(static_cast<float>(mMasterVolumeSpinner->GetValue()), SoundType::Global);
+	}
+	else if (mouseEvent.GetSource() == mMusicVolumeSpinner.get())
+	{
+		gEngine->SetVolume(static_cast<float>(mMusicVolumeSpinner->GetValue()), SoundType::Music);
+	}
+	else if (mouseEvent.GetSource() == mSFXVolumeSpinner.get())
+	{
+		gEngine->SetVolume(static_cast<float>(mSFXVolumeSpinner->GetValue()), SoundType::SFX);
+	}
+	else if (mouseEvent.GetSource() == mBackLabel.get())
+	{
+		mPopFlag = true;
+	}
 }
 
 //Handles events from the mouse being moved while over a component

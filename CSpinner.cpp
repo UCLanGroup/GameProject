@@ -73,7 +73,9 @@ namespace tle_ui
 	{
 		mpFont = font;
 		mLeftLabel = new CLabel(font, "<", mButtonColor);
+		mLeftLabel->SetEventHandler(this);
 		mRightLabel = new CLabel(font, ">", mButtonColor);
+		mRightLabel->SetEventHandler(this);
 		mValueLabel = new CLabel(font, std::to_string(value), mTextColor);
 
 		mValue = value;
@@ -111,7 +113,7 @@ namespace tle_ui
 
 		mLeftLabel->SetPosition(mX + mMargin, mY + mMargin);
 		mValueLabel->SetPosition(mLeftLabel->GetX() + mLeftLabel->GetWidth(), mY + mMargin);
-		mValueLabel->SetPosition(mValueLabel->GetX() + mValueLabel->GetWidth(), mY + mMargin);
+		mRightLabel->SetPosition(mValueLabel->GetX() + mValueLabel->GetWidth(), mY + mMargin);
 	}
 
 	//Update function for manual updating of content
@@ -179,7 +181,7 @@ namespace tle_ui
 		else if (value < mMinValue) mValue = mMinValue;
 		else mValue = value;
 
-		mValueLabel->SetText(std::to_string(value));
+		mValueLabel->SetText(std::to_string(mValue));
 	}
 
 	//Sets the x position of the UI object

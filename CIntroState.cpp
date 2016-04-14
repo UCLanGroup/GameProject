@@ -26,7 +26,6 @@ void CIntroState::Init()
 	mPlane->Scale(6.0f);
 	mPlane->RotateY(180.0f);
 
-
 	// CAMERA
 	mDummyMesh = gEngine->LoadMesh(DUMMY_MESH);
 	mDummy = mDummyMesh->CreateModel(0.0f, 10.0f, 150.0f);
@@ -35,23 +34,16 @@ void CIntroState::Init()
 	mCam->AttachToParent(mDummy);
 	mCam->RotateLocalX(10.0f);
 
-
 	// MUSIC
-	if (!gMusic.openFromFile(MUSIC))
+	//Warning, this is never destroyed, engine does handle clean up of non-destroyed stuff so it's not really bad, just shitty
+	if (!mMusic) //If it doesn't already exist
 	{
-		cout << "CPlayState.cpp: Error loading music file" << endl;
+		mMusic = gEngine->CreateMusic(MUSIC);
+		mMusic->Play();
 	}
-	gMusic.setVolume(0.0f); // 15.0f
-	gMusic.play();
-
 
 	// SOUND
-	if (!mBufferStart.loadFromFile(SOUND_START))
-	{
-		cout << "CIntroState.cpp: Error loading START sound file" << endl;
-	}
-
-	mSound.setBuffer(mBufferStart);
+	mIntroSound = gEngine->CreateSound(SOUND_START);
 }
 
 void CIntroState::Cleanup() 
@@ -67,6 +59,7 @@ void CIntroState::Cleanup()
 	gEngine->RemoveMesh(mDummyMesh);
 	mPlaneMesh->RemoveModel(mPlane);
 	gEngine->RemoveMesh(mPlaneMesh);
+	gEngine->RemoveSound(mIntroSound);
 }
 
 
@@ -85,7 +78,7 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 
 	if (gEngine->KeyHit(KEY_START))
 	{
-		mSound.play();
+		mIntroSound->Play();
 		game->ChangeState(CPlayState::Instance());
 	}
 }
