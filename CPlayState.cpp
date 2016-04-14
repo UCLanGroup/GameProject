@@ -4,10 +4,71 @@
 #include "CGameStateHandler.h"
 #include "CPlayState.h"
 #include "CLoadScreen.h"
+#include "MessageQueue.h"
+#include "CBulletFactory.h"
 #include <iostream>
 #include <sstream>
 
+// controllers are in this.
+using namespace NETTIK;
+
 CPlayState CPlayState::mPlayState;
+
+CEnemyManager* CPlayState::GetEnemyManager()
+{
+	return mEnemyManager.get();
+}
+
+void CPlayState::SetNetwork(ENetworkType type)
+{
+	mNetworkType = type;
+}
+
+void CPlayState::InitNetwork()
+{
+
+	if (mPNetwork != 0)
+		delete(mPNetwork);
+
+	// build the gamenetwork
+	mPNetwork = GameNetwork::Instance();
+	mPNetwork->InitNETTIK(mNetworkType);
+	mPNetwork->GetController<IController>()->CreateInstance("game");
+	mPNetwork->Init();
+
+	// setup connection details.
+	bool connectionStatus = false;
+
+	if (mNetworkType == kNetworkClient)
+		connectionStatus = mPNetwork->GetController<IControllerClient>()->Connect(NET_HOST.c_str(), NET_PORT);
+	else if (mNetworkType == kNetworkServer)
+		connectionStatus = mPNetwork->GetController<IControllerServer>()->Listen(NET_PORT, NET_PLAYERS - 1); // take one away for the server being a "player"
+	else
+		throw std::exception("ENetworkType invalid.");
+
+	if (!connectionStatus)
+	{
+		// Some sort of message box here.
+		cout << "Failed to initialise network controller, server offline? Hostname in use?" << endl;
+		return;
+	}
+
+	mPNetwork->GetController<IController>()->Start();
+}
+
+void CPlayState::InitLives()
+{
+	// Draw life sprites
+	for (int i = 0; i < mPNetwork->GetPlayerFactory().GetLocalPlayer()->GetLives(); i++)
+	{
+		float startPosX = 505;
+		float startPosY = 932;
+		float startPosInc = 35;
+		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.09f);
+		mLifeSprites.push_back(temp);
+		gEngine->DrawScene();
+	}
+}
 
 void CPlayState::Init()
 {
@@ -24,11 +85,6 @@ void CPlayState::Init()
 		mFloor.at(i)->SetSkin(METAL_TEX);
 	}
 
-	// Player
-	mPlayer1.Init();
-	mPlayer1.SetLists(&mPBullets, &mEBullets);
-	mPlayerList.push_back(&mPlayer1);
-
 	// UI
 	mUI = gEngine->CreateSprite(UI, 0.0f, 0.0f, 0.2f);
 	mUI2 = gEngine->CreateSprite(UI2, 0.0f, 0.0f, 0.1f);
@@ -39,23 +95,18 @@ void CPlayState::Init()
 	mpHealthBar = gEngine->CreateSprite("healthbar.png", kStartBarPosX, kStartBarPosY, 0.15f);
 	mpShieldBar = gEngine->CreateSprite("shieldbar.png", kStartBarPosX, kStartBarPosY + 37.0f, 0.15f);
 
-	// Draw life sprites
-	for (int i = 0; i < mPlayer1.GetLives(); i++)
-	{
-		float startPosX = 505;
-		float startPosY = 932;
-		float startPosInc = 35;
-		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.09f);
-		mLifeSprites.push_back(temp);
-		gEngine->DrawScene();
-	}
-
 	//Text
 	mFont = gEngine->LoadFont("Rockwell", 60U);
 
+	// Start up the network controller.
+	InitNetwork();
+
+	// Bullet lists
+	CBulletFactory::Instance()->GetBulletLists(mPBullets, mEBullets);
+
 	// AI
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
-	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
+	mEnemyManager->SetLists(&mPNetwork->GetPlayerFactory().GetList(), mPBullets, mEBullets);
 	
 	// Particles
 	mExplosions = CExplosionPool::Instance();
@@ -91,6 +142,15 @@ void CPlayState::Init()
 
 	//Reset timer after finished loading assets
 	gEngine->Timer();
+
+	// Player
+	if (mPNetwork->GetType() == kNetworkServer)
+	{
+		CPlayerFactory& factory = mPNetwork->GetPlayerFactory();
+		factory.CreateLocalPlayer();
+
+		InitLives();
+	}
 }
 
 void CPlayState::Cleanup()
@@ -99,8 +159,8 @@ void CPlayState::Cleanup()
 	gEngine->RemoveCamera(mCam);
 	for(auto& item : mFloor) mFloorMesh->RemoveModel(item);
 	gEngine->RemoveMesh(mFloorMesh);
-	mPBullets.clear();
-	mEBullets.clear();
+	mPBullets->clear();
+	mEBullets->clear();
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
 
@@ -116,14 +176,21 @@ void CPlayState::Cleanup()
 	// Must be after bullet cleanup. Bullet mesh
 	// needs to exist to remove bullet models. 
 	// Bullet mesh is owned by player.
-	mPlayer1.Cleanup();
+	// mPlayer1.Cleanup();
 
 	//Clear player list
-	mPlayerList.clear();
+	// mPlayerList.clear();
+	
+	// 10.04.16: Above code now gets called in CPlayerFactory destructor.
+	
+	// Close network connections, cleans factory data.
+	if (mPNetwork != 0)
+		mPNetwork->Stop();
 
 	//Clear the cache of particles and other preloaded models/meshes
 	gEngine->ClearModelCache();
 	gEngine->ClearMeshCache();
+
 }
 
 void CPlayState::Pause() {}
@@ -147,8 +214,56 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	// Animations go here
 
-	mPlayer1.Move(mDelta);
-	mPlayer1.CheckCollision();
+	CPlayer* pLocalPlayer;
+	pLocalPlayer = mPNetwork->GetPlayerFactory().GetLocalPlayer();
+
+	if (mPNetwork->GetType() == kNetworkServer)
+	{
+		CPlayerFactory::PlayerList& players = mPNetwork->GetPlayerFactory().GetList();
+
+		for (auto player : players)
+		{
+			player->CheckCollision();
+		}
+
+	}
+
+	mEnemyManager->Update(mDelta);
+
+	mExplosions->Update(mDelta);
+
+	//Update all player projectiles
+	for (auto bullet = mPBullets->begin(); bullet != mPBullets->end(); )
+	{
+		(*bullet)->Update(mDelta);
+
+		if ((*bullet)->IsOutOfBounds())
+		{
+			(*bullet)->Cleanup();
+			bullet = mPBullets->erase(bullet);
+		}
+		else
+		{
+			bullet++;
+		}
+	}
+
+	//Update all enemy projectiles
+	for (auto bullet = mEBullets->begin(); bullet != mEBullets->end(); )
+	{
+		(*bullet)->Update(mDelta);
+		(*bullet)->CheckCollision();
+
+		if ((*bullet)->IsOutOfBounds() || (*bullet)->IsDead())
+		{
+			(*bullet)->Cleanup();
+			bullet = mEBullets->erase(bullet);
+		}
+		else
+		{
+			bullet++;
+		}
+	}
 
 	/*if (gEngine->KeyHeld(KEY_FIRE)) //Needs moving into CWeapon
 	{
@@ -158,51 +273,62 @@ void CPlayState::Update(CGameStateHandler * game)
 		}
 	}*/
 
-	mEnemyManager->Update(mDelta);
-
-	mExplosions->Update(mDelta);
-
-	//Update all player projectiles
-	for (auto bullet = mPBullets.begin(); bullet != mPBullets.end(); )
-	{
-		(*bullet)->Update(mDelta);
-
-		if ((*bullet)->IsOutOfBounds())
-		{
-			bullet = mPBullets.erase(bullet);
-		}
-		else
-		{
-			bullet++;
-		}
-	}
-
-	//Update all enemy projectiles
-	for (auto bullet = mEBullets.begin(); bullet != mEBullets.end(); )
-	{
-		(*bullet)->Update(mDelta);
-		(*bullet)->CheckCollision();
-
-		if ((*bullet)->IsOutOfBounds() || (*bullet)->IsDead())
-		{
-			bullet = mEBullets.erase(bullet);
-		}
-		else
-		{
-			bullet++;
-		}
-	}
-
 	// Move floor
 	for (auto& item : mFloor)
 	{
 		item->MoveLocalZ(kFloorSpeed * mDelta);
 	}
 
+	// Message queue
+	SMessage msg;
+	CMessageQueue::Instance()->Fetch("events", msg);
 
-	if(mPlayer1.IsDead())
+	while (msg.type != kMessageInvalid)
 	{
-		mPlayer1.LoseLife();
+		CPlayer* player;
+
+		switch (msg.type)
+		{
+		case kMessagePlayerInit:
+			player = dynamic_cast<CPlayer*>(msg.entity);
+
+			if (player)
+			{
+				player->Init();
+				player->SetLists(mPBullets, mEBullets);
+			}
+			break;
+
+		case kMessagePlayerCleanup:
+			player = dynamic_cast<CPlayer*>(msg.entity);
+
+			if (player)
+			{
+				player->Cleanup();
+				delete(player);
+			}
+			break;
+		}
+		CMessageQueue::Instance()->Fetch("events", msg);
+	}
+
+	// Suspend following code.
+	if (pLocalPlayer == nullptr)
+	{
+		// Try to find local player.
+		pLocalPlayer = mPNetwork->GetPlayerFactory().GetLocalPlayer();
+
+		if (pLocalPlayer == nullptr)
+			return;
+		else
+			InitLives();
+	}
+
+	pLocalPlayer->Move(mDelta);
+
+	if(pLocalPlayer->IsDead())
+	{
+		pLocalPlayer->LoseLife();
 
 		//If the player has another life then start the new life
 
@@ -226,21 +352,35 @@ void CPlayState::Update(CGameStateHandler * game)
 	//Health Bars
 	AnimateShield(mDelta);
 	AnimateHealth(mDelta);
+
 }
 
 
 void CPlayState::DrawText()
 {
+
+	CPlayer* pLocalPlayer;
+	pLocalPlayer = mPNetwork->GetPlayerFactory().GetLocalPlayer();
+
+	if (pLocalPlayer == nullptr)
+		return;
+
 	stringstream textOut;
 	//textOut.precision(2);
-	textOut << mPlayer1.GetScore();
+	textOut << pLocalPlayer->GetScore();
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
 }
 
 void CPlayState::AnimateHealth(float delta)
 {
+	CPlayer* pLocalPlayer;
+	pLocalPlayer = mPNetwork->GetPlayerFactory().GetLocalPlayer();
+
+	if (pLocalPlayer == nullptr)
+		return;
+
 	//Find the proportion of the bar that should be filled
-	float ratio = static_cast<float>(mPlayer1.GetHealth()) / static_cast<float>(mPlayer1.GetMaxHealth());
+	float ratio = static_cast<float>(pLocalPlayer->GetHealth()) / static_cast<float>(pLocalPlayer->GetMaxHealth());
 
 	//Find the x position the bar needs to be
 	float target = static_cast<float>(kStartBarPosX) - kBarSize + ratio * kBarSize;
@@ -260,8 +400,14 @@ void CPlayState::AnimateHealth(float delta)
 
 void CPlayState::AnimateShield(float delta)
 {
+	CPlayer* pLocalPlayer;
+	pLocalPlayer = mPNetwork->GetPlayerFactory().GetLocalPlayer();
+
+	if (pLocalPlayer == nullptr)
+		return;
+
 	//Find the proportion of the bar that should be filled
-	float ratio = static_cast<float>(mPlayer1.GetShield()) / static_cast<float>(mPlayer1.GetMaxShield());
+	float ratio = static_cast<float>(pLocalPlayer->GetShield()) / static_cast<float>(pLocalPlayer->GetMaxShield());
 
 	//Find the x position the bar needs to be
 	float target = static_cast<float>(kStartBarPosX) - kBarSize + ratio * kBarSize;

@@ -7,10 +7,11 @@
 
 #include "CGameState.h"
 #include "CPlayer.h"
-#include "CProjectile.h"
+#include "CBaseProjectile.h"
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
 
+#include "GameNetwork.h"
 using namespace tle;
 
 class CPlayState : public CGameState
@@ -39,16 +40,12 @@ private:
 
 	IFont* mFont;
 
-	CPlayer mPlayer1;
-	//CPlayer mPlayer2;
-	vector<CPlayer*> mPlayerList; //Used to pass a list of both players to enemies to keep track of
-
 	unique_ptr<CEnemyManager> mEnemyManager;
 
 	CExplosionPool* mExplosions;
 
-	BulletList mPBullets; //Player Projectiles
-	BulletList mEBullets; //Enemy Projectiles
+	BulletList* mPBullets; //Player Projectiles
+	BulletList* mEBullets; //Enemy Projectiles
 
 	float mDelta = 0.0f;		// Delta time (to render previous frame)
 
@@ -58,7 +55,18 @@ private:
 	sf::Sound mSound;
 	bool mFiring = false;
 
+	// Networking
+	GameNetwork* mPNetwork = 0;
+	ENetworkType mNetworkType;
+
 public:
+
+	CEnemyManager* GetEnemyManager();
+
+	void InitLives();
+	void SetNetwork(ENetworkType type);
+	void InitNetwork();
+
 	// Setup and destroy state
 	void Init();
 	void Cleanup();
@@ -75,9 +83,6 @@ public:
 	void DrawText();
 	void AnimateHealth(float delta);
 	void AnimateShield(float delta);
-
-	inline CPlayer* GetPlayer1() { return &mPlayer1; } //Don't call this in enemies, use the playerList passed to them
-	//inline CPlayer* GetPlayer2() { return &mPlayer2; }
 
 	static CPlayState* Instance()
 	{

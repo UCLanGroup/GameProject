@@ -1,7 +1,8 @@
 #define _USE_MATH_DEFINES
 #include "CBlaster.h"
-#include "CProjectile.h"
-
+#include "CBullet.h"
+#include "NETTIK_Networking.hpp"
+using namespace NETTIK;
 
 CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate) : CWeapon(parent)
 {
@@ -13,13 +14,13 @@ CBlaster::CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate)
 	SetTarget(0);
 }
 
-CProjectile* CBlaster::CreateBullet()
+CBaseProjectile* CBlaster::CreateBullet()
 {
 	float matrix[16];
 	GetParent()->GetMatrix(matrix);
 
-	CProjectile* bullet = new CProjectile();
-
+	CBullet* bullet = new CBullet();
+	bullet->Init();
 	bullet->SetMatrix(matrix);
 
 	//If there's a target then fire directly at the target
@@ -40,13 +41,13 @@ CProjectile* CBlaster::CreateBullet()
 	bullet->SetSpeed(GetProjSpeed());
 	bullet->SetParent(GetParent());
 	bullet->SetExplodeable(true);
-
+	
 	return bullet;
 }
 
 void CBlaster::Fire()
 {
-	CProjectile* bullet;
+	CBaseProjectile* bullet;
 
 	//Create a different set of bullets depending on weapon level
 	switch(GetLevel())
@@ -54,33 +55,33 @@ void CBlaster::Fire()
 	case 1:
 		//One bullet centered
 		bullet = CreateBullet();
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 		break;
 
 	case 2:
 		//Two bullets, both slightly off center to either side
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalX(3.0f); //Slightly to the right
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalX(-3.0f); //Slightly to the left
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 		break;
 
 	case 3:
 		//Three bullets, two slightly off center to either side, one centered
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalX(6.0f); //Slightly to the right
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalZ(3.0f); //Slightly forward
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 
 		bullet = CreateBullet();
 		bullet->GetModel()->MoveLocalX(-6.0f); //Slightly to the left
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 		break;
 
 	default:

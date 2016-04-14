@@ -1,0 +1,6 @@
+syntax = "2";
+
+message RPC_Fire
+{
+	uint32 filler = 1;
+}

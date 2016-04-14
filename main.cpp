@@ -30,7 +30,7 @@ void main()
 	// Main game loop
 	while (gEngine->IsRunning())
 	{
-		if(gEngine->IsActive())
+		if(1)
 		{
 			game.HandleEvents();
 			game.Update();

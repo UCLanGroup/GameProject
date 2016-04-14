@@ -1,4 +1,5 @@
 #include "CWeapon.h"
+#include "GameNetwork.h"
 #include <algorithm>
 
 CWeapon::CWeapon(IEntity* parent)
@@ -27,6 +28,7 @@ void CWeapon::Update(float delta)
 
 	while (mTimer > mFireRate)
 	{
+		GameNetwork::Instance()->FireWeapon(mpParent);
 		Fire();
 		mTimer -= mFireRate;
 

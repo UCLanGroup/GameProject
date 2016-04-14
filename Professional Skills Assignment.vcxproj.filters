@@ -43,9 +43,6 @@
     <ClCompile Include="CMissile.cpp">
       <Filter>Entities\source\Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="CProjectile.cpp">
-      <Filter>Entities\source\Projectiles</Filter>
-    </ClCompile>
     <ClCompile Include="CMissileLauncher.cpp">
       <Filter>Entities\source\Weapons</Filter>
     </ClCompile>
@@ -69,6 +66,30 @@
     </ClCompile>
     <ClCompile Include="CUpgradeDrop.cpp">
       <Filter>Entities\source\Drops</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageQueue.cpp">
+      <Filter>Netcode\headers</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerFactory.cpp">
+      <Filter>Netcode\source\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="CBaseProjectile.cpp">
+      <Filter>Entities\source\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Entities\source\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletFactory.cpp">
+      <Filter>Netcode\source\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNetwork.cpp">
+      <Filter>States\source</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkServer.cpp">
+      <Filter>Netcode\source</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkClient.cpp">
+      <Filter>Netcode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +150,6 @@
     <ClInclude Include="CMissile.h">
       <Filter>Entities\headers\Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="CProjectile.h">
-      <Filter>Entities\headers\Projectiles</Filter>
-    </ClInclude>
     <ClInclude Include="CShotGun.h">
       <Filter>Entities\headers\Weapons</Filter>
     </ClInclude>
@@ -153,9 +171,39 @@
     <ClInclude Include="CUpgradeDrop.h">
       <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
+    <ClInclude Include="GameNetwork.h">
+      <Filter>Netcode\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkClient.h">
+      <Filter>Netcode\headers\Client</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkServer.h">
+      <Filter>Netcode\headers\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerFactory.h">
+      <Filter>Netcode\headers\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageQueue.h">
+      <Filter>Netcode\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CBaseProjectile.h">
+      <Filter>Entities\headers\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Entities\headers\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CBulletFactory.h">
+      <Filter>Netcode\headers\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCodes.h">
+      <Filter>Netcode\headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="ProtoEvents.proto">
+      <Filter>Netcode</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -208,6 +256,27 @@
     </Filter>
     <Filter Include="Entities\source\Drops">
       <UniqueIdentifier>{de2a3063-b537-4795-9aa7-7b390c5681ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode">
+      <UniqueIdentifier>{5454d888-69cf-462e-aff9-b599d91fb706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\headers">
+      <UniqueIdentifier>{13df7e1a-6f66-44c1-b492-9ccd10c59b46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\source">
+      <UniqueIdentifier>{3397c076-ed52-484a-b5d2-a190b88154f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\headers\Client">
+      <UniqueIdentifier>{1ea21387-81ea-4ed9-9f78-667b5e674916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\headers\Server">
+      <UniqueIdentifier>{23cd1011-2a22-4f1d-8321-c33980bc3e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\headers\Factories">
+      <UniqueIdentifier>{c1203a84-8ada-4297-890d-ec79c811e797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Netcode\source\Factories">
+      <UniqueIdentifier>{33eb22d6-29fc-4375-9b27-2c4c6a4f81ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -6,6 +6,32 @@
 #include "CChaosGun.h"
 #include "CLaser.h"
 #include "CMatrix4x4.h"
+#include "NETTIK_Networking.hpp"
+
+void CPlayer::NetworkUpdate(ReplicationInfo& info)
+{
+
+	if (!mModel)
+		return;
+
+	CVector3 position;
+	position.Set(mModel->GetX(), mModel->GetY(), mModel->GetZ());
+
+	auto& net_position = mNetworkPos.get();
+
+	if (position.x != net_position.x || position.y != net_position.y || position.z != net_position.z)
+	{
+		if (info.ShouldBroadcast())
+		{
+			mNetworkPos.Set(position.x, position.y, position.z);
+		}
+		else if (info.ShouldReplicate())
+		{
+			mModel->SetPosition(net_position.x, net_position.y, net_position.z);
+		}
+	}
+
+}
 
 void CPlayer::Init()
 {
@@ -30,13 +56,13 @@ void CPlayer::Init()
 	mMainWeapon->SetBulletList(mpPlayerBullets);
 
 	//Stats
-	mHealth = 100;
+	mHealth.Set(100);
 	mScore = 0;
-	mLives = 3;
-	mMaxHealth = 100;
-	mShield = 50;
-	mMaxShield = 50;
-	mInvulTexture = 0;
+	mLives.Set(3);
+	mMaxHealth.Set(100);
+	mShield.Set(50);
+	mMaxShield.Set(50);
+	mInvulTexture.Set(0);
 	mShieldRegenRate = 0.25f;
 	mRegenTimer = 0.0f;
 	mInvulTimer = 0.0f;
@@ -54,6 +80,29 @@ void CPlayer::Cleanup()
 	mModel = 0;
 	mShieldMesh->RemoveModel(mShieldModel);
 	mShieldModel = 0;
+}
+
+void CPlayer::Fire()
+{
+	//Fire the weapon
+	if (mBonusWeapon)
+	{
+		mBonusWeapon->SetFiring(true);
+		mMainWeapon->SetFiring(false);
+	}
+	else
+	{
+		mMainWeapon->SetFiring(true);
+	}
+}
+
+void CPlayer::StopFiring()
+{
+	mMainWeapon->SetFiring(false);
+	if (mBonusWeapon)
+	{
+		mBonusWeapon->SetFiring(false);
+	}
 }
 
 void CPlayer::Move(float dt)
@@ -133,24 +182,11 @@ void CPlayer::Move(float dt)
 
 	if (gEngine->KeyHeld(KEY_FIRE))
 	{
-		//Fire the weapon
-		if (mBonusWeapon)
-		{
-			mBonusWeapon->SetFiring(true);
-			mMainWeapon->SetFiring(false);
-		}
-		else
-		{
-			mMainWeapon->SetFiring(true);
-		}
+		Fire();
 	}
 	else
 	{
-		mMainWeapon->SetFiring(false);
-		if (mBonusWeapon)
-		{
-			mBonusWeapon->SetFiring(false);
-		}
+		StopFiring();
 	}
 
 	mMainWeapon->Update(dt);
@@ -200,18 +236,18 @@ void CPlayer::Move(float dt)
 
 	//Shield Regen
 
-	if (mShield < mMaxShield)
+	if (mShield.get() < mMaxShield.get())
 	{
 		mRegenTimer += dt;
 		
-		while (mRegenTimer > mShieldRegenRate && mShield < mMaxShield)
+		while (mRegenTimer > mShieldRegenRate && mShield.get() < mMaxShield.get())
 		{
-			if (mShield == 0) //Reattach shield if hidden
+			if (mShield.get() == 0) //Reattach shield if hidden
 			{
 				mShieldModel->SetPosition(0.0f, 0.0f, 0.0f);
 				mShieldModel->AttachToParent(mModel);
 			}
-			mShield++;
+			mShield.get()++;
 
 			mRegenTimer -= mShieldRegenRate;
 		}
@@ -230,12 +266,12 @@ void CPlayer::Move(float dt)
 			mModel->GetMatrix(matrix.m);
 
 			mShieldModel->DetachFromParent();
-			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture.get()) + ".png");
 
 			mModel = gEngine->GetModel(GetMesh());
 			mModel->SetMatrix(matrix.m);
 
-			if (mShield > 0)
+			if (mShield.get() > 0)
 			{
 				mShieldModel->AttachToParent(mModel);
 			}
@@ -246,22 +282,22 @@ void CPlayer::Move(float dt)
 			mModel->GetMatrix(matrix.m);
 
 			mShieldModel->DetachFromParent();
-			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+			gEngine->CacheModel(mModel, PLAYER_INVUL_TEX + to_string(mInvulTexture.get()) + ".png");
 
 			do {
 				mInvulTextureTimer += kInvulTextureRate;
-				mInvulTexture += mInvulTextureAccending ? 1 : -1;
+				mInvulTexture.get() += mInvulTextureAccending ? 1 : -1;
 			} while (mInvulTextureTimer < 0.0f);
 			
-			if (mInvulTexture == 1 || mInvulTexture == 10)
+			if (mInvulTexture.get() == 1 || mInvulTexture.get() == 10)
 			{
 				mInvulTextureAccending = !mInvulTextureAccending;
 			}
 
-			mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+			mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture.get()) + ".png");
 			mModel->SetMatrix(matrix.m);
 
-			if (mShield > 0)
+			if (mShield.get() > 0)
 			{
 				mShieldModel->AttachToParent(mModel);
 			}
@@ -272,12 +308,16 @@ void CPlayer::Move(float dt)
 void CPlayer::CheckCollision()
 {
 	//No collision check atm
+	if (!mpEnemyBullets)
+		return;
+
 	for (auto bullet = mpEnemyBullets->begin(); bullet != mpEnemyBullets->end(); /**/)
 	{
 		if (CollidesSphere(bullet->get()))
 		{
 			TakeDamage((*bullet)->GetDamage());
 			(*bullet)->SetDead(true);
+			(*bullet)->Cleanup();
 			bullet = mpEnemyBullets->erase(bullet);
 		}
 		else
@@ -297,25 +337,25 @@ void CPlayer::TakeDamage(int damage)
 
 	mRegenTimer = -5.0f; //5 second delay before shield regen starts
 
-	if (mShield > 0)
+	if (mShield.get() > 0)
 	{
-		if (damage >= mShield) //Shield is destroyed
+		if (damage >= mShield.get()) //Shield is destroyed
 		{
 			//Apply left over damage to health
-			mHealth -= damage - mShield;
+			mHealth.get() -= damage - mShield.get();
 
 			//Remove shield model
 			mShieldModel->DetachFromParent();
 			mShieldModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 		}
-		mShield -= min(damage, mShield);
+		mShield.get() -= min(damage, mShield.get());
 	}
 	else
 	{
-		mHealth -= damage;
+		mHealth.get() -= damage;
 	}
 
-	if (mHealth <= 0)
+	if (mHealth.get() <= 0)
 	{
 		SetDead(true);
 	}
@@ -331,7 +371,7 @@ void CPlayer::MakeInvulnerable(float time)
 	}
 	mInvulTimer = time;
 	mInvulTextureTimer = kInvulTextureRate;
-	mInvulTexture = 1;
+	mInvulTexture.get() = 1;
 	mInvulTextureAccending = true;
 
 	tlx::CMatrix4x4 matrix;
@@ -340,10 +380,10 @@ void CPlayer::MakeInvulnerable(float time)
 	mShieldModel->DetachFromParent();
 	gEngine->CacheModel(mModel);
 
-	mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture) + ".png");
+	mModel = gEngine->GetModel(GetMesh(), PLAYER_INVUL_TEX + to_string(mInvulTexture.get()) + ".png");
 	mModel->SetMatrix(matrix.m);
 
-	if (mShield > 0)
+	if (mShield.get() > 0)
 	{
 		mShieldModel->AttachToParent(mModel);
 	}
@@ -353,7 +393,7 @@ void CPlayer::LoseLife()
 {
 	CExplosionPool::Instance()->Spawn(mModel->GetX(), mModel->GetY(), mModel->GetZ(), GetRadius() * 2.0f);
 
-	if (mLives)
+	if (mLives.get())
 	{
 		mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_BOTTOM + 10.0f);
 		mHealth = mMaxHealth;
@@ -368,7 +408,7 @@ void CPlayer::LoseLife()
 		mMainWeapon->SetLevel(1); //Reset level to 1
 
 		SetDead(false);
-		mLives--;
+		mLives.get()--;
 	}
 	else
 	{
@@ -378,7 +418,7 @@ void CPlayer::LoseLife()
 
 void CPlayer::GainLife()
 {
-	mLives++;
+	mLives.get()++;
 }
 
 void CPlayer::IncreaseScore(int value)
@@ -400,41 +440,41 @@ void CPlayer::SetScore(int score)
 
 void CPlayer::SetLives(int lives)
 {
-	mLives = lives;
+	mLives.get() = lives;
 }
 
 void CPlayer::SetHealth(int health)
 {
-	if (mMaxHealth < health)
+	if (mMaxHealth.get() < health)
 	{
-		mHealth = mMaxHealth;
+		mHealth.get() = mMaxHealth.get();
 	}
 	else
 	{
-		mHealth = health;
+		mHealth.get() = health;
 	}
 }
 
 void CPlayer::SetMaxHealth(int health)
 {
-	mMaxHealth = health;
+	mMaxHealth.get() = health;
 }
 
 void CPlayer::SetShield(int shield)
 {
-	if (mMaxShield < shield)
+	if (mMaxShield.get() < shield)
 	{
-		mShield = mMaxShield;
+		mShield.get() = mMaxShield.get();
 	}
 	else
 	{
-		mShield = shield;
+		mShield.get() = shield;
 	}
 }
 
 void CPlayer::SetMaxShield(int shield)
 {
-	mMaxShield = shield;
+	mMaxShield.get() = shield;
 }
 
 void CPlayer::SetShieldRegen(float regen)
@@ -476,27 +516,27 @@ int CPlayer::GetScore()
 
 int CPlayer::GetLives()
 {
-	return mLives;
+	return mLives.get();
 }
 
 int CPlayer::GetHealth()
 {
-	return mHealth;
+	return mHealth.get();
 }
 
 int CPlayer::GetMaxHealth()
 {
-	return mMaxHealth;
+	return mMaxHealth.get();
 }
 
 int CPlayer::GetShield()
 {
-	return mShield;
+	return mShield.get();
 }
 
 int CPlayer::GetMaxShield()
 {
-	return mMaxShield;
+	return mMaxShield.get();
 }
 
 CWeapon* CPlayer::GetMainWeapon()
@@ -507,10 +547,10 @@ CWeapon* CPlayer::GetMainWeapon()
 //Inherited from IEntity
 void CPlayer::Reset()
 {
-	mHealth = 100;
-	mMaxHealth = 100;
-	mShield = 50;
-	mMaxShield = 50;
+	mHealth.get() = 100;
+	mMaxHealth.get() = 100;
+	mShield.get() = 50;
+	mMaxShield.get() = 50;
 	mRegenTimer = 0.0f;
 }
 

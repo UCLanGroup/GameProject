@@ -6,7 +6,7 @@
 
 //Forward declare
 class CPlayer;
-class CProjectile;
+class CBaseProjectile;
 
 using Path = std::vector<CVector3>;
 

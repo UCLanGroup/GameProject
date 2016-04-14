@@ -1,9 +1,9 @@
 #pragma once
 #include "Globals.h"
 #include <IEngine.h>
-#include "CProjectile.h"
+#include "CBaseProjectile.h"
 
-using BulletList = std::list<unique_ptr<CProjectile>>;
+using BulletList = std::list<unique_ptr<CBaseProjectile>>;
 
 class CWeapon
 {
@@ -21,9 +21,11 @@ private:
 
 	sf::Sound mFireSound;
 
+public:
+
+	// Moved to allow access from network
 	virtual void Fire() = 0;
 
-public:
 	CWeapon(IEntity* parent);
 
 	void Update(float delta);

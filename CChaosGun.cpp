@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include "CChaosGun.h"
-#include "CProjectile.h"
+#include "CBaseProjectile.h"
+#include "CBullet.h"
 #include "CMissile.h"
 #include "CMatrix4x4.h"
 
@@ -17,17 +18,20 @@ void CChaosGun::Fire()
 	//Random angle between -20 to 20 inclusive
 	float angle = static_cast<float>(rand() % 41 - 20);
 
-	CProjectile* bullet = 0;
+	CBaseProjectile* bullet = 0;
 
 	//Pick the type of projectile randomly, an even split
 	if (rand() % 2 == 1)
 	{
-		bullet = new CProjectile();
+		bullet = new CBullet();
+		bullet->Init();
+
 		bullet->SetDamage(GetDamage());
 	}
 	else
 	{
 		bullet = new CMissile();
+		bullet->Init();
 		bullet->SetDamage(GetDamage() * 5);
 	}
 
@@ -37,5 +41,5 @@ void CChaosGun::Fire()
 	bullet->SetParent(GetParent());
 	bullet->SetExplodeable(true);
 
-	GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+	GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 }

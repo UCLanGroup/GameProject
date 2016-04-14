@@ -9,6 +9,14 @@ const float kMoveSpeed = 50.0f;	//Default move speed
 
 CMissile::CMissile()
 {
+}
+
+void CMissile::Init()
+{
+	if (mInitialized)
+		return;
+	mInitialized = true;
+
 	SetMesh(MISSILE_MESH);
 
 	SetDamage(10);
@@ -17,11 +25,22 @@ CMissile::CMissile()
 	SetDead(false);
 
 	mTimer = kTurnInterval;
-	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, std::vector<string>{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" } , 0.025f);
+	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, std::vector<string>{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" }, 0.025f);
 	mEmitter->SetParticleLife(0.5f);
 	mEmitter->SetParticleScale(2.0f);
 	mEmitter->AttachToParent(mModel);
 	mEmitter->Start();
+}
+
+void CMissile::Cleanup()
+{
+	if (mEmitter)
+	{
+		mEmitter->DetachFromParent();
+		mEmitter->Stop();
+		gEngine->RemoveEmitter(mEmitter);
+		mEmitter = 0;
+	}
 }
 
 void CMissile::Update(float delta)
@@ -81,6 +100,8 @@ void CMissile::CheckCollision()
 			//Explosions!
 			CVector3 loc = (*bullet)->GetCenterPoint();
 			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, (*bullet)->GetRadius());
+
+			(*bullet)->Cleanup();
 			mpPlayerBullets->erase(bullet);
 
 			loc = GetCenterPoint();
@@ -102,7 +123,7 @@ void CMissile::SetTarget(IEntity* target)
 	mTarget = target;
 }
 
-void CMissile::SetLists(std::list<unique_ptr<CProjectile>>* playerBullets)
+void CMissile::SetLists(std::list<unique_ptr<CBaseProjectile>>* playerBullets)
 {
 	mpPlayerBullets = playerBullets;
 }
@@ -125,7 +146,4 @@ void CMissile::Reset()
 
 CMissile::~CMissile()
 {
-	mEmitter->DetachFromParent();
-	mEmitter->Stop();
-	gEngine->RemoveEmitter(mEmitter);
 }

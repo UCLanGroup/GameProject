@@ -105,6 +105,7 @@ void CEnemy::CheckCollision()
 			}
 
 			(*bullet)->SetDead(true);
+			(*bullet)->Cleanup();
 			bullet = mpPlayerBullets->erase(bullet);
 		}
 		else

@@ -2,12 +2,20 @@
 #include "Globals.h"
 #include "IEntity.h"
 #include "CWeapon.h"
+#include "NetObject.h"
+#include "NetVar.h"
+#include "CNetVarVector.h"
 
 using namespace tle;
 
-class CPlayer : public IEntity
+class CPlayer : public IEntity, public NetObject
 {
 private:
+	DEFINE_NETOBJECT("Player");
+
+	// A shared position that gets applied in NetworkUpdate.
+	DEFINE_NetVector(mNetworkPos, false);
+
 	const float kMaxLean = 30.0f;
 	const float kRotateSpeed = 150.0f;
 	const float kInvulTextureRate = 0.05f;
@@ -19,12 +27,13 @@ private:
 
 	int mScore;
 
-	int mHealth;
-	int mLives;
-	int mMaxHealth;
-	int mShield;
-	int mMaxShield;
-	int mInvulTexture;
+	DEFINE_NetVar(int, mHealth, true);
+	DEFINE_NetVar(int, mLives, true);
+	DEFINE_NetVar(int, mMaxHealth, true);
+	DEFINE_NetVar(int, mShield, true);
+	DEFINE_NetVar(int, mMaxShield, true);
+	DEFINE_NetVar(int, mInvulTexture, true);
+
 	float mShieldRegenRate;
 	float mRegenTimer;
 	float mInvulTimer;
@@ -71,6 +80,9 @@ public:
 	//Upgrades the mmain weapon
 	void UpgradeWeapon();
 
+	void Fire();
+	void StopFiring();
+
 	//Sets
 	void SetScore(int score);
 	void SetLives(int lives);
@@ -102,6 +114,8 @@ public:
 
 	//Inherited from IEntity
 	virtual void Reset();
+
+	void NetworkUpdate(ReplicationInfo& replication);
 
 	//Ensures all player models are destroyed (calls Cleanup())
 	~CPlayer();

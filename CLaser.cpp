@@ -1,5 +1,5 @@
 #include "CLaser.h"
-#include "CProjectile.h"
+#include "CBullet.h"
 #include "CMatrix4x4.h"
 
 CLaser::CLaser(IEntity* parent, int damage, float fireRate) : CWeapon(parent)
@@ -32,7 +32,8 @@ void CLaser::Fire()
 
 	for (int i = 0; i < 35; i++)
 	{
-		CProjectile* bullet = new CProjectile();
+		CBullet* bullet = new CBullet();
+		bullet->Init();
 
 		bullet->SetPosition(pos);
 		bullet->SetRotation(rotation);
@@ -42,7 +43,7 @@ void CLaser::Fire()
 		bullet->SetParent(GetParent());
 		bullet->SetExplodeable(false);
 
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 
 		//Increment position of next bullet
 		pos += direction;

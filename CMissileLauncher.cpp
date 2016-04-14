@@ -1,5 +1,7 @@
 #include "CMissileLauncher.h"
 #include "CMissile.h"
+#include "IController.hpp"
+using namespace NETTIK;
 
 CMissileLauncher::CMissileLauncher(IEntity* parent, int damage, float projSpeed, float fireRate) : CWeapon(parent)
 {
@@ -18,6 +20,7 @@ void CMissileLauncher::SetEnemyBulletList(BulletList* bulletList)
 void CMissileLauncher::Fire()
 {
 	CMissile* missile = new CMissile();
+	missile->Init();
 
 	//Set the position and facing direction to the same as the parent entity
 	missile->SetPosition(GetParent()->GetCenterPoint());
@@ -32,5 +35,5 @@ void CMissileLauncher::Fire()
 	missile->SetParent(GetParent());
 	missile->SetExplodeable(true);
 
-	GetBulletList()->push_back(unique_ptr<CProjectile>(missile));
+	GetBulletList()->push_back(unique_ptr<CBaseProjectile>(missile));
 }

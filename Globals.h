@@ -78,6 +78,7 @@ const float OFF_SCREEN_Z		= 1000.0f;
 // Key codes
 const EKeyCode KEY_EXIT = tle::Key_Escape;
 const EKeyCode KEY_START = tle::Key_Space;
+const EKeyCode KEY_JOIN = tle::Key_C;
 
 const EKeyCode KEY_LEFT = tle::Key_Left;
 const EKeyCode KEY_RIGHT = tle::Key_Right;
@@ -85,3 +86,8 @@ const EKeyCode KEY_UP = tle::Key_Up;
 const EKeyCode KEY_DOWN = tle::Key_Down;
 
 const EKeyCode KEY_FIRE = tle::Key_Space;
+
+// Network config
+const int NET_PORT = 1337;
+const string NET_HOST = "127.0.0.1";
+const int NET_PLAYERS = 2;

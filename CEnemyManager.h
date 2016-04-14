@@ -48,6 +48,8 @@ public:
 
 	//Sets
 	void SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets);
+	void SetSpawnerTimes(float time);
+	float GetFirstSpawnerTime();
 
 	//Gets
 	int GetNumOfEnemies() { return mNumOfEnemies; }
@@ -60,3 +62,19 @@ public:
 
 	~CEnemyManager();
 };
+
+inline void CEnemyManager::SetSpawnerTimes(float time)
+{
+	for (auto& spawner : mSpawners)
+	{
+		spawner->mTimer = time;
+	}
+}
+
+inline float CEnemyManager::GetFirstSpawnerTime()
+{
+	if (mSpawners.size() == 0)
+		return 0.0f;
+
+	return mSpawners.at(0)->mTimer;
+}

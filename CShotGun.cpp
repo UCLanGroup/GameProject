@@ -1,7 +1,8 @@
 #define _USE_MATH_DEFINES
 #include "CShotGun.h"
-#include "CProjectile.h"
+#include "CBullet.h"
 #include "CMatrix4x4.h"
+#include "GameNetwork.h"
 
 CShotGun::CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate, int bulletsPerShot) : CWeapon(parent)
 {
@@ -29,12 +30,13 @@ void CShotGun::Fire()
 	//The amount it rotates by is dependant on the number of bullets
 	rot.SetRotationY((-60.0f / static_cast<float>(mBulletsPerShot - 1)) / (180.0f / static_cast<float>(M_PI)));
 
-	CProjectile* bullet = 0;
+	CBullet* bullet = 0;
 
 	for (int i = 0; i < mBulletsPerShot;  i++)
 	{
 		//Create a bullet with the current matrix
-		bullet = new CProjectile();
+		bullet = new CBullet();
+		bullet->Init();
 		bullet->SetMatrix(matrix.m);
 
 		//Rotate the matrix so that the next bullet heads at a slightly different angle
@@ -45,6 +47,6 @@ void CShotGun::Fire()
 		bullet->SetParent(GetParent());
 		bullet->SetExplodeable(true);
 
-		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
+		GetBulletList()->push_back(unique_ptr<CBaseProjectile>(bullet));
 	}
 }

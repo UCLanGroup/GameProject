@@ -86,6 +86,14 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 	if (gEngine->KeyHit(KEY_START))
 	{
 		mSound.play();
+		CPlayState::Instance()->SetNetwork(kNetworkServer);
+		game->ChangeState(CPlayState::Instance());
+	}
+
+	if (gEngine->KeyHit(KEY_JOIN))
+	{
+		mSound.play();
+		CPlayState::Instance()->SetNetwork(kNetworkClient);
 		game->ChangeState(CPlayState::Instance());
 	}
 }

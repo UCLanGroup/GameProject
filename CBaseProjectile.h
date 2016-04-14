@@ -2,17 +2,21 @@
 #include <IEngine.h>
 #include "IEntity.h"
 
-class CProjectile : public IEntity
+class CBaseProjectile : public IEntity
 {
-private:
+protected:
 	IEntity* mParent;
 
 	int mDamage;
 	float mSpeed;
 	float mScale = 0.3f;
+	bool mInitialized = false;
 
 public:
-	CProjectile();
+	CBaseProjectile();
+
+	virtual void Init() = 0;
+	virtual void Cleanup() = 0;
 
 	virtual void Update(float delta);
 	virtual void CheckCollision();
@@ -31,5 +35,5 @@ public:
 	//Inherited from IEntity : IResource
 	virtual void Reset();
 
-	virtual ~CProjectile();
+	virtual ~CBaseProjectile();
 };
