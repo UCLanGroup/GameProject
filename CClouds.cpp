@@ -16,7 +16,7 @@ CClouds::CClouds()
 		cloudTemp->model = mCloudMesh->CreateModel( static_cast<float>(GetRandFloat( AREA_BOUNDS_LEFT, AREA_BOUNDS_RIGHT )), 
 													GetRandFloat( mMIN_Y, mMAX_Y ), 
 													static_cast<float>(GetRandInt( 100.0f, 200.0f )) );
-		cloudTemp->model->SetSkin( mCloudTex.at( 4 ) );
+		cloudTemp->model->SetSkin(mCloudTex.at(GetRandInt(0, 4)));
 		cloudTemp->model->Scale( GetRandFloat( 10.0f, 40.0f ));
 		cloudTemp->speed = GetRandFloat( mMIN_SPEED, mMAX_SPEED );
 		mClouds.push_back( cloudTemp );
@@ -60,7 +60,7 @@ void CClouds::Move( float delta )
 									   static_cast<float>(GetRandFloat( 100.0f, 200.0f )) );
 
 			cloud->model->ResetScale();
-			cloud->model->SetSkin( mCloudTex.at( GetRandInt( 0, 3 ) ) );
+			//cloud->model->SetSkin( mCloudTex.at( GetRandInt( 0, 3 ) ) );
 			cloud->model->Scale(GetRandFloat(10.0f, 40.0f));
 			//cloud->model->Scale( GetRandFloat( 10.0f, 20.0f ) );
 			cloud->speed = GetRandFloat( mMIN_SPEED, mMAX_SPEED );

@@ -129,7 +129,7 @@ void CEnemyBoss::TakeDamage(int damage)
 	//Take damage? Potential invulnerable state
 	SetHealth( GetHealth() - damage );
 
-	if (GetHealth() < 20)
+	if (GetHealth() < 60)
 	{
 		mState = State::Overdrive;
 		mBlaster->SetFiring(true);
@@ -145,7 +145,7 @@ void CEnemyBoss::TakeDamage(int damage)
 void CEnemyBoss::Reset()
 {
 	mModel->SetPosition(0.0f, 0.0f, AREA_BOUNDS_TOP + 20.0f);
-	SetHealth(100);
+	SetHealth(400);
 	SetRadius(20.0f);
 	SetSpeed(20.0f);
 	mBobbing = 0.0f;
