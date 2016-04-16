@@ -73,6 +73,7 @@ void CPlayState::Init()
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, SHOTGUN_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, LASER_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, UPGRADE_POWER_UP);
+	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, HEALTH_POWER_UP);
 	
 	//Preload 200 of each of the smoke particles
 	for (int i = 1; i <= 10; ++i)
@@ -147,26 +148,6 @@ void CPlayState::HandleEvents(CGameStateHandler * game)
 void CPlayState::Update(CGameStateHandler * game)
 {
 	mDelta = gEngine->Timer();
-
-	// fps display
-	static float frameTimer = 0.0f;
-	static int frames = 0;
-	static string fps = " fps";
-
-	frameTimer += mDelta;
-	++frames;
-
-	if (frameTimer > 1.0f)
-	{
-		frameTimer -= 1.0f;
-
-		fps = to_string(frames) + " fps";
-		frames = 0;
-	}
-
-	mFont->Draw(fps, 0, 0, tle::kWhite);
-	
-
 
 	// Animations go here
 
@@ -260,6 +241,24 @@ void CPlayState::DrawText()
 	//textOut.precision(2);
 	textOut << mPlayer1.GetScore();
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
+
+	// fps display
+	static float frameTimer = 0.0f;
+	static int frames = 0;
+	static string fps = " fps";
+
+	frameTimer += mDelta;
+	++frames;
+
+	if (frameTimer > 1.0f)
+	{
+		frameTimer -= 1.0f;
+
+		fps = to_string(frames) + " fps";
+		frames = 0;
+	}
+
+	mFont->Draw(fps, 0, 0, tle::kWhite);
 }
 
 void CPlayState::AnimateHealth(float delta)

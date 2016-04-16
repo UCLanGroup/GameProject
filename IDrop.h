@@ -11,7 +11,7 @@ protected:
 
 public:
 	//Updates the drop
-	virtual void Update(float delta) { /*Does nothing*/};
+	virtual void Update(float delta) = 0;
 
 	//Applies the powerup/bonus to the player
 	virtual void ApplyDrop(CPlayer* player) = 0;

@@ -7,8 +7,6 @@ namespace tle_ui
 {
 	const int kAutoScale = -1;
 
-	typedef void(*EventHandler)(const CMouseEvent& mouseEvent);
-
 	enum Orientation : int { Vertical, Horizontal };
 	enum Alignment : int {Left, Right, Center, Top, Bottom};
 	

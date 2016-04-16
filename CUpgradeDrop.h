@@ -5,7 +5,7 @@
 class CUpgradeDrop : public IDrop
 {
 public:
-	//Takes a weapon to create the drop
+	//No additional data required
 	CUpgradeDrop(const string& texture);
 
 	//Updates the drop

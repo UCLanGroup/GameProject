@@ -212,6 +212,17 @@ void CPlayer::Move(float dt)
 		{
 			mMainWeapon->Upgrade();
 		}
+		else if (gEngine->KeyHit(Key_I)) //Toggle player invulnerability
+		{
+			if (mInvulTimer > 0.0f) //Turn off
+			{
+				mInvulTimer = 0.00001f;
+			}
+			else
+			{
+				MakeInvulnerable(999999.9f);
+			}
+		}
 	}
 
 	//Shield Regen
