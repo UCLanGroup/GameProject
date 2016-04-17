@@ -208,6 +208,10 @@ void CPlayer::Move(float dt)
 		{
 			SetBonusWeapon(new CLaser(this, 2, 0.1f), 10.0f);
 		}
+		else if (gEngine->KeyHit(Key_6))
+		{
+			SetBonusWeapon(new CShotGun(this, 1, 100.0f, 0.33f, 72, 360.0f), 10.0f);
+		}
 		else if (gEngine->KeyHit(Key_U)) //Upgrade main weapon
 		{
 			mMainWeapon->Upgrade();

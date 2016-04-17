@@ -4,19 +4,20 @@
 #include "CMatrix4x4.h"
 #include <algorithm>
 
-CShotGun::CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate, int bulletsPerShot) : CWeapon(parent)
+CShotGun::CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate, int bulletsPerShot, float spreadArea) : CWeapon(parent)
 {
 	SetDamage(damage);
 	SetProjSpeed(projSpeed);
 	SetFireRate(fireRate);
 	SetTarget(0);
-	mBulletsPerShot = max(bulletsPerShot, 3); //Ensures there is at least 3
+	mBulletsPerShot = max(bulletsPerShot, 3);	//Ensures there is at least 3
+	mSpreadArea = max(spreadArea, 0.0f);		//Ensures it is positive
 }
 
 void CShotGun::Fire()
 {
-	float additionRotation = 30.0f;
-	float rotationDelta = (-60.0f / static_cast<float>(mBulletsPerShot - 1));
+	float additionRotation = mSpreadArea / 2.0f;
+	float rotationDelta = (-mSpreadArea / static_cast<float>(mBulletsPerShot - 1));
 
 	CProjectile* bullet = 0;
 
