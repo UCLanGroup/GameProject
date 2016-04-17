@@ -15,36 +15,20 @@ CShotGun::CShotGun(IEntity* parent, int damage, float projSpeed, float fireRate,
 
 void CShotGun::Fire()
 {
-	//Get the matrix of the entity that weild this weapon
-	tlx::CMatrix4x4 matrix;
-	GetParent()->GetMatrix(matrix.m);
-
-	//Create a rotation matrix
-	tlx::CMatrix4x4 rot;
-	rot.SetRotationY(30.0f / (180.0f / static_cast<float>(M_PI)));
-
-	//Rotate the parent's matrix away from the center
-	matrix *= rot;
-
-	//Update the rotation matrix to rotate in the opposite direction
-	//The amount it rotates by is dependant on the number of bullets
-	rot.SetRotationY((-60.0f / static_cast<float>(mBulletsPerShot - 1)) / (180.0f / static_cast<float>(M_PI)));
+	float additionRotation = 30.0f;
+	float rotationDelta = (-60.0f / static_cast<float>(mBulletsPerShot - 1));
 
 	CProjectile* bullet = 0;
 
 	for (int i = 0; i < mBulletsPerShot;  i++)
 	{
 		//Create a bullet with the current matrix
-		bullet = new CProjectile();
-		bullet->SetMatrix(matrix.m);
+		bullet = CreateProjectile<CProjectile>();
 
-		//Rotate the matrix so that the next bullet heads at a slightly different angle
-		matrix *= rot;
+		bullet->GetModel()->RotateY(additionRotation);
 
-		bullet->SetDamage(GetDamage());
-		bullet->SetSpeed(GetProjSpeed());
-		bullet->SetParent(GetParent());
-		bullet->SetExplodeable(true);
+		//Update the rotation
+		additionRotation += rotationDelta;
 
 		GetBulletList()->push_back(unique_ptr<CProjectile>(bullet));
 	}

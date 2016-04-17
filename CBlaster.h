@@ -8,5 +8,4 @@ private:
 
 public:
 	CBlaster(IEntity* parent, int damage, float projSpeed, float fireRate);
-	CProjectile* CreateBullet();
 };

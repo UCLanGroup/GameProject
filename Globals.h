@@ -49,10 +49,12 @@ const string BULLET_MESH		= "Bullet.x";
 const string MISSILE_MESH		= "missile1.x";
 const string SHIELD_MESH		= "Shield.x";
 const string LASER_BEAM_TEX		= "LaserBeam.png";
-const string QUAD_MESH = "Quad.x";
+const string QUAD_MESH			= "Quad.x";
 
 const string F16_ENEMY_MESH		= "f16.x";
 const string HAVOC_BOSS_MESH	= "Mi28Havoc.x";
+const string MIG142_ENEMY_MESH	= "Mig142.x";
+const string HALO_BOSS_MESH		= "Mi-26_Halo.x";
 
 const string SHOTGUN_POWER_UP	= "SpreadShotPowerUp.png";
 const string LASER_POWER_UP		= "LaserPowerUp.png";

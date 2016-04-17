@@ -234,6 +234,9 @@
     <ClInclude Include="CHealthDrop.h">
       <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
+    <ClInclude Include="CHaloBoss.h">
+      <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

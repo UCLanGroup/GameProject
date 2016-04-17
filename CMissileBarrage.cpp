@@ -17,26 +17,13 @@ void CMissileBarrage::SetEnemyBulletList(BulletList* bulletList)
 
 void CMissileBarrage::Fire()
 {
-	float matrix[16];
-	GetParent()->GetMatrix(matrix);
 	float offsetMagnitude = static_cast<float>(rand() % 21 - 10);
 
-	CVector3 offset(matrix[0], matrix[1], matrix[2]);
+	CMissile* missile = CreateProjectile<CMissile>(true);
 
-	CMissile* missile = new CMissile();
-
-	//Set the position and facing direction to the same as the parent entity
-	missile->SetPosition(GetParent()->GetCenterPoint() + (offset * offsetMagnitude));
-	missile->SetRotation(GetParent()->GetRotation());
+	missile->GetModel()->MoveLocalX(offsetMagnitude);
 	missile->SetLists(mpEnemyProjectiles);
-
-	//If target is zero then the missile will just fly forward
-	missile->SetTarget(GetTarget());
-
-	missile->SetDamage(GetDamage());
-	missile->SetSpeed(GetProjSpeed());
-	missile->SetParent(GetParent());
-	missile->SetExplodeable(true);
+	missile->SetTarget(GetTarget()); //If target is zero then the missile will just fly forward
 
 	GetBulletList()->push_back(unique_ptr<CProjectile>(missile));
 }
