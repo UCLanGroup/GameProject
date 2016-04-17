@@ -109,6 +109,9 @@
     <ClCompile Include="CHealthDrop.cpp">
       <Filter>Entities\source\Drops</Filter>
     </ClCompile>
+    <ClCompile Include="CHaloBoss.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">

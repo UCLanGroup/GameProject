@@ -55,11 +55,17 @@ public:
 	//AI functions
 
 	//Calculates the bearing (rotation from north) towards the entity
-	float BearingTowards(IEntity* entity);
+	float BearingTowards(const CVector3& pos);
 
-	//Rotates the enemy a small amount towards the entity
+	//Rotates the enemy a small amount towards the position
 	//Rotates in the optimal direction
-	void RotateTowards(IEntity* entity, float rotateAmount);
+	//Returns true if it has fully rotated towards the pos
+	bool RotateTowards(const CVector3& pos, float rotateAmount);
+
+	//Moves the enemy towards the position linearly without turning
+	//by an amount based on the delta and speed
+	//Returns true if it reaches the target position
+	bool MoveDirectlyTowards(const CVector3& pos, float delta);
 
 	//Inherited from IEntity : IResource
 	virtual void Reset();

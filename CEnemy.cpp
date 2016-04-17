@@ -178,20 +178,21 @@ bool CEnemy::IsFinished()
 //AI functions
 
 //Calculates the bearing (rotation from north) towards the entity
-float CEnemy::BearingTowards(IEntity* entity)
+float CEnemy::BearingTowards(const CVector3& pos)
 {
-	CVector3 dif = entity->GetCenterPoint() - GetCenterPoint();
+	CVector3 dif = pos - GetCenterPoint();
 
 	//Calculate the bearing from north
 	return 90.0f - (atan2f(dif.z, dif.x) * (180.0f / static_cast<float>(M_PI)));
 }
 
-//Rotates the enemy a small amount towards the entity
+//Rotates the enemy a small amount towards the position
 //Rotates in the optimal direction
-void CEnemy::RotateTowards(IEntity* entity, float rotateAmount)
+//Returns true if it has fully rotated towards the pos
+bool CEnemy::RotateTowards(const CVector3& pos, float rotateAmount)
 {
 	float rotation = GetRotation();
-	float rotDif = BearingTowards(entity) - rotation;
+	float rotDif = BearingTowards(pos) - rotation;
 
 	if ((rotDif < 0.0f && rotDif > -180.0f) || (rotDif > 180.0f))
 	{
@@ -200,6 +201,30 @@ void CEnemy::RotateTowards(IEntity* entity, float rotateAmount)
 	else
 	{
 		mModel->RotateY(rotateAmount);
+	}
+
+	return (abs(rotDif) < abs(rotateAmount));
+}
+
+//Moves the enemy towards the position linearly without turning
+//by an amount based on the delta and speed
+//Returns true if it reaches the target position
+bool CEnemy::MoveDirectlyTowards(const CVector3& pos, float delta)
+{
+	CVector3 posDif = pos - GetCenterPoint();
+	float distance = posDif.Length();
+	float distToTravel = delta * mSpeed;
+
+	if (distance > distToTravel)
+	{
+		CVector3 moveAmount = posDif * (distToTravel / distance);
+		mModel->Move(moveAmount.x, moveAmount.y, moveAmount.z);
+		return false;
+	}
+	else
+	{
+		SetPosition(pos);
+		return true;
 	}
 }
 

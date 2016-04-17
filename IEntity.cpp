@@ -82,7 +82,7 @@ void IEntity::SetMesh(IMesh* mesh, const string& textureFile)
 }
 
 //Sets the entity's position
-void IEntity::SetPosition(tlx::CVector3& pos)
+void IEntity::SetPosition(const tlx::CVector3& pos)
 {
 	if (mModel)
 	{

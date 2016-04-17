@@ -35,7 +35,7 @@ public:
 	//Sets the mesh and creates a model from it with the given texture if the existing model is not of the mesh
 	void SetMesh(IMesh* mesh, const string& textureFile);
 
-	void SetPosition(tlx::CVector3& pos);
+	void SetPosition(const tlx::CVector3& pos);
 	void SetRotation(float degrees);
 	void SetDead(bool dead);
 	void SetExplodeable(bool explodeable);

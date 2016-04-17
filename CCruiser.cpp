@@ -53,9 +53,9 @@ void CCruiser::Move(float delta)
 		break;
 	case State::Rotate:
 	{
-		RotateTowards((*mpPlayers)[0], delta * kRotateSpeed);
+		RotateTowards((*mpPlayers)[0]->GetCenterPoint(), delta * kRotateSpeed);
 
-		float bearingToTarget = BearingTowards((*mpPlayers)[0]);
+		float bearingToTarget = BearingTowards((*mpPlayers)[0]->GetCenterPoint());
 		float rotation = GetRotation();
 
 		float rotDif = bearingToTarget > rotation ? bearingToTarget - rotation : rotation - bearingToTarget;
