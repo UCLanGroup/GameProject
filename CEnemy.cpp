@@ -153,6 +153,11 @@ void CEnemy::SetPath(Path* path, CVector3& offset)
 	mOffset = offset;
 }
 
+void CEnemy::SetWaveID(int ID)
+{
+	mWaveID = ID;
+}
+
 //Gets
 
 int CEnemy::GetHealth()
@@ -168,6 +173,11 @@ float CEnemy::GetSpeed()
 int CEnemy::GetValue()
 {
 	return mValue;
+}
+
+int CEnemy::GetWaveID()
+{
+	return mWaveID;
 }
 
 bool CEnemy::IsFinished()

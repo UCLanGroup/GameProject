@@ -2,6 +2,7 @@
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
 #include <fstream>
+#include <iostream>
 
 //Enemies
 #include "CEnemyBoss.h"
@@ -41,6 +42,18 @@ void CEnemyManager::SetLists(std::vector<CPlayer*>* players, BulletList* playerB
 //Upate all enemies
 void CEnemyManager::Update(float delta)
 {
+	if (!(mEnemies.size() || mActiveSpawners.size())) //If both are empty
+	{
+		if (mInactiveSpawners.size() > 0)
+		{
+			do
+			{
+				mActiveSpawners.push_back(move(mInactiveSpawners.front()));
+				mInactiveSpawners.pop_front();
+			} while (mInactiveSpawners.size() > 0 && !mInactiveSpawners.front()->mPause);
+		}
+	}
+
 	//Move all enemies
 	auto enemy = mEnemies.begin();
 
@@ -67,9 +80,9 @@ void CEnemyManager::Update(float delta)
 	}
 
 	//Spawn enemies
-	auto spawner = mSpawners.begin();
+	auto spawner = mActiveSpawners.begin();
 
-	while (spawner != mSpawners.end())
+	while (spawner != mActiveSpawners.end())
 	{
 		(*spawner)->mTimer += delta;
 
@@ -93,7 +106,7 @@ void CEnemyManager::Update(float delta)
 		//If spawner is depleted (no more enemies to spawn) then remove it from the list
 		if ((*spawner)->mEnemyAmount == 0)
 		{
-			spawner = mSpawners.erase(spawner);
+			spawner = mActiveSpawners.erase(spawner);
 		}
 		else
 		{
@@ -191,6 +204,7 @@ void CEnemyManager::ReadInLevel(string& file)
 			inFile >> spawner->mTimer;
 			inFile >> pathID;
 			inFile >> x >> y >> z;
+			inFile >> spawner->mPause;
 			
 			spawner->mType = static_cast<EnemyType>(type);
 			spawner->mpPath = mPaths[pathID].get();
@@ -198,7 +212,7 @@ void CEnemyManager::ReadInLevel(string& file)
 
 			mNumOfEnemies += spawner->mEnemyAmount;
 
-			mSpawners.push_back(move(spawner));
+			mInactiveSpawners.push_back(move(spawner));
 		}
 
 		//Close file once finished with it
@@ -278,6 +292,12 @@ void CEnemyManager::CreateRandomDrop(CVector3& pos)
 		newDrop->SetPosition(pos);
 		mDrops.push_back(move(newDrop));
 	}
+}
+
+bool CEnemyManager::IsLevelCleared()
+{
+	//Returns true if all are empty
+	return !(mEnemies.size() || mActiveSpawners.size() || mInactiveSpawners.size());
 }
 
 CEnemyManager::~CEnemyManager()

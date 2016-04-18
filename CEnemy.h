@@ -23,6 +23,8 @@ private:
 	float mSpeed;
 	int mValue;
 
+	int mWaveID = 0;
+
 protected:
 	CVector3 mOffset;
 	std::vector<CPlayer*>* mpPlayers = 0;
@@ -45,11 +47,13 @@ public:
 	void SetSpeed(float speed);
 	void SetValue(int value);
 	void SetPath(Path* path, CVector3& offset);
+	void SetWaveID(int ID);
 
 	//Gets
 	int GetHealth();
 	float GetSpeed();
 	int GetValue();
+	int GetWaveID();
 	bool IsFinished();
 
 	//AI functions

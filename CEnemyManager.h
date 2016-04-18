@@ -19,10 +19,12 @@ private:
 		float mTimer;
 		Path* mpPath;
 		CVector3 mOffset;
+		bool mPause; //Pauses the level at this spawner until all previous enemies are dead
 	};
 
 	vector_ptr<Path> mPaths;
-	vector_ptr<SSpawner> mSpawners;
+	list_ptr<SSpawner> mInactiveSpawners;
+	list_ptr<SSpawner> mActiveSpawners;
 	std::list<unique_ptr<CEnemy>> mEnemies;
 	list_ptr<IDrop> mDrops;
 
@@ -55,6 +57,8 @@ public:
 
 	list_ptr<CEnemy>& GetEnemies() { return mEnemies; }
 	list_ptr<IDrop>& GetDrops() { return mDrops; }
+
+	bool IsLevelCleared();
 
 	void Update(float delta);
 
