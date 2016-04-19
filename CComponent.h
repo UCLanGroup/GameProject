@@ -1,6 +1,7 @@
 #pragma once
 #include "IMouseEventHandler.h"
 #include "CMouseEvent.h"
+#include <ISound.h>
 #include <list>
 
 namespace tle_ui
@@ -13,6 +14,11 @@ namespace tle_ui
 	//Base UI component
 	class CComponent
 	{
+	private:
+
+		tle::ISound* mpMouseOverSound = 0; //If not null (zero), the sound is played when the mouse is moved over the component
+		tle::ISound* mpMouseClickSound = 0; //If not null (zero), the sound is played when the component is clicked on
+
 	public:
 
 		//Resizes the component based on child components
@@ -77,6 +83,19 @@ namespace tle_ui
 		//Adds an event handler to the component that will recieve events from the component
 		void SetEventHandler(IMouseEventHandler* handler);
 
+		//Sets the sound that is played when the mouse is moved over the component
+		//If the sound is a null pointer then no sound is played
+		virtual void SetMouseOverSound(tle::ISound* pSound);
+
+		//Sets the sound that is played when the component is clicked on
+		//If the sound is a null pointer then no sound is played
+		virtual void SetMouseClickSound(tle::ISound* pSound);
+
+		//Sets the sound that is played when the mouse is moved over the component
+		//Sets the sound that is played when the component is clicked on
+		//If a sound is a null pointer then no sound is played
+		virtual void SetSounds(tle::ISound* pMouseOver, tle::ISound* pMouseClick);
+
 		//Returns the component's width
 		int GetWidth();
 
@@ -106,6 +125,14 @@ namespace tle_ui
 
 		//returns the way the contents are aligned horizontally within the component
 		Alignment GetHorAlignment();
+
+		//Gets the sound that is played when the mouse is moved over the component
+		//If no sound then zero is returned
+		tle::ISound* GetMouseOverSound();
+
+		//Sets the sound that is played when the component is clicked on
+		//If no sound then zero is returned
+		tle::ISound* SetMouseClickSound();
 
 	protected:
 		bool mMouseOver = false; //Is the mouse currently over this component

@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{09E3BFC2-BE9D-42C6-AD13-08A2F474390E}</ProjectGuid>
     <RootNamespace>Professional Skills Assignment</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -23,7 +24,7 @@
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -160,6 +161,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="ICollider.cpp" />
     <ClCompile Include="IDebug.cpp" />
     <ClCompile Include="IEntity.cpp" />
+    <ClCompile Include="KeyBinds.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CWeaponDrop.cpp" />
   </ItemGroup>
@@ -209,6 +211,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="IMouseEventHandler.h" />
     <ClInclude Include="IResource.h" />
     <ClInclude Include="CWeaponDrop.h" />
+    <ClInclude Include="KeyBinds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

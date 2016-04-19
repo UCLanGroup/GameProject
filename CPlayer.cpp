@@ -6,6 +6,7 @@
 #include "CChaosGun.h"
 #include "CLaser.h"
 #include "CMatrix4x4.h"
+#include "KeyBinds.h"
 #include <algorithm>
 
 //Initial set up
@@ -74,7 +75,7 @@ void CPlayer::Cleanup()
 //Moves and updates the player
 void CPlayer::Move(float dt)
 {
-	if (gEngine->KeyHeld(KEY_UP))
+	if (gEngine->KeyHeld(KeyBinds::Up))
 	{
 		mModel->MoveZ(mSpeed * dt);
 		if (mModel->GetZ() > AREA_BOUNDS_TOP)
@@ -82,7 +83,7 @@ void CPlayer::Move(float dt)
 			mModel->SetZ(AREA_BOUNDS_TOP);
 		}
 	}
-	if (gEngine->KeyHeld(KEY_DOWN))
+	if (gEngine->KeyHeld(KeyBinds::Down))
 	{
 		mModel->MoveZ(-mSpeed * dt);
 		if (mModel->GetZ() < AREA_BOUNDS_BOTTOM)
@@ -92,7 +93,7 @@ void CPlayer::Move(float dt)
 	}
 
 	bool rotatePlane = true;
-	if (!gEngine->KeyHeld(KEY_LEFT) && !gEngine->KeyHeld(KEY_RIGHT))
+	if (!gEngine->KeyHeld(KeyBinds::Left) && !gEngine->KeyHeld(KeyBinds::Right))
 	{
 		rotatePlane = false;
 	}
@@ -114,7 +115,7 @@ void CPlayer::Move(float dt)
 		}
 	}
 
-	if (gEngine->KeyHeld(KEY_LEFT))
+	if (gEngine->KeyHeld(KeyBinds::Left))
 	{
 		mModel->MoveX(-mSpeed * dt);
 		if (mModel->GetX() < AREA_BOUNDS_LEFT)
@@ -129,7 +130,7 @@ void CPlayer::Move(float dt)
 			mRotation -= rotAmount;
 		}
 	}
-	if (gEngine->KeyHeld(KEY_RIGHT))
+	if (gEngine->KeyHeld(KeyBinds::Right))
 	{
 		mModel->MoveX(mSpeed * dt);
 		if (mModel->GetX() > AREA_BOUNDS_RIGHT)
@@ -147,7 +148,7 @@ void CPlayer::Move(float dt)
 
 	//Weapon
 
-	if (gEngine->KeyHeld(KEY_FIRE))
+	if (gEngine->KeyHeld(KeyBinds::Fire))
 	{
 		//Fire the weapon
 		if (mBonusWeapon)

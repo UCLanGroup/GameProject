@@ -81,6 +81,19 @@ namespace tle_ui
 		//Sets the x and y position of the UI object
 		virtual void SetPosition(int x, int y) final;
 
+		//Sets the sound that is played when the mouse is moved over the component
+		//If the sound is a null pointer then no sound is played
+		virtual void SetMouseOverSound(tle::ISound* pSound);
+
+		//Sets the sound that is played when the component is clicked on
+		//If the sound is a null pointer then no sound is played
+		virtual void SetMouseClickSound(tle::ISound* pSound);
+
+		//Sets the sound that is played when the mouse is moved over the component
+		//Sets the sound that is played when the component is clicked on
+		//If a sound is a null pointer then no sound is played
+		virtual void SetSounds(tle::ISound* pMouseOver, tle::ISound* pMouseClick);
+
 		//Returns the font used to create the text
 		tle::IFont* GetFont();
 

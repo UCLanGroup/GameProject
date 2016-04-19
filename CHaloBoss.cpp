@@ -79,6 +79,8 @@ void CHaloBoss::Update(float delta)
 	mRightMissileBarrage->Update(delta);
 	mLeftMissileBarrage->Update(delta);
 
+	float xDif = GetRadius() * 2.0f;
+
 	//State transitions
 	switch (mState)
 	{
@@ -92,7 +94,7 @@ void CHaloBoss::Update(float delta)
 		break;
 
 	case State::MoveTop:
-		if (MoveDirectlyTowards(kTopPos, delta) && RotateTowards(kCenterPos, delta * kRotateSpeed))
+		if (MoveDirectlyTowards(kTopPos, delta) & RotateTowards(kCenterPos, delta * kRotateSpeed))
 		{
 			mState = State::MissileAttack;
 			mRightMissileBarrage->SetFiring(true);
@@ -112,6 +114,35 @@ void CHaloBoss::Update(float delta)
 		break;
 
 	case State::MissileAttack:
+
+		//Find smallest xDif from a player
+		for (auto player = mpPlayers->begin(); player != mpPlayers->end(); player++)
+		{
+			CVector3 locDif = (*player)->GetCenterPoint() - GetCenterPoint();
+			if (abs(locDif.x) < abs(xDif))
+			{
+				xDif = locDif.x;
+			}
+		}
+
+		if (abs(xDif) < GetRadius()) //Check if player is below
+		{
+			if (xDif > 0.0f) //Dodge left
+			{
+				if (AREA_BOUNDS_LEFT < mModel->GetX() - GetRadius())
+				{
+					mModel->MoveX(GetSpeed() * -delta);
+				}
+			}
+			else //Dodge right
+			{
+				if (AREA_BOUNDS_RIGHT > mModel->GetX() + GetRadius())
+				{
+					mModel->MoveX(GetSpeed() * delta);
+				}
+			}
+		}
+
 		if (mStateTimer > kMissileAttackDuration)
 		{
 			mState = State::MoveCenter;

@@ -19,6 +19,7 @@ namespace tle_ui
 				{
 					if (mouseEvent.GetType() == CMouseEvent::Mouse_Clicked)
 					{
+						if (mpMouseClickSound) mpMouseClickSound->Play();
 						eventHandler->MouseClickedEvent(CMouseEvent(this, CMouseEvent::Mouse_Clicked, mouseEvent.GetX(), mouseEvent.GetY()));
 					}
 					else
@@ -29,6 +30,7 @@ namespace tle_ui
 				else
 				{
 					mMouseOver = true;
+					if (mpMouseOverSound) mpMouseOverSound->Play();
 					eventHandler->MouseEnteredEvent(CMouseEvent(this, CMouseEvent::Mouse_Entered, mouseEvent.GetX(), mouseEvent.GetY()));
 				}
 			}
@@ -144,6 +146,29 @@ namespace tle_ui
 		eventHandler = handler;
 	}
 
+	//Sets the sound that is played when the mouse is moved over the component
+	//If the sound is a null pointer then no sound is played
+	void CComponent::SetMouseOverSound(tle::ISound* pSound)
+	{
+		mpMouseOverSound = pSound;
+	}
+
+	//Sets the sound that is played when the component is clicked on
+	//If the sound is a null pointer then no sound is played
+	void CComponent::SetMouseClickSound(tle::ISound* pSound)
+	{
+		mpMouseClickSound = pSound;
+	}
+
+	//Sets the sound that is played when the mouse is moved over the component
+	//Sets the sound that is played when the component is clicked on
+	//If a sound is a null pointer then no sound is played
+	void CComponent::SetSounds(tle::ISound* pMouseOver, tle::ISound* pMouseClick)
+	{
+		mpMouseOverSound = pMouseOver;
+		mpMouseClickSound = pMouseClick;
+	}
+
 	//Returns the component's width
 	int CComponent::GetWidth()
 	{
@@ -202,5 +227,19 @@ namespace tle_ui
 	Alignment CComponent::GetHorAlignment()
 	{
 		return mHorizontal;
+	}
+
+	//Gets the sound that is played when the mouse is moved over the component
+	//If no sound then zero is returned
+	tle::ISound* CComponent::GetMouseOverSound()
+	{
+		return mpMouseOverSound;
+	}
+
+	//Sets the sound that is played when the component is clicked on
+	//If no sound then zero is returned
+	tle::ISound* CComponent::SetMouseClickSound()
+	{
+		return mpMouseClickSound;
 	}
 }

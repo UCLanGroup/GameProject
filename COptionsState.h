@@ -1,5 +1,6 @@
 #pragma once
 #include <IEngine.h>
+#include "KeyBinds.h"
 #include "CGameState.h"
 #include <memory>
 
@@ -27,6 +28,31 @@ private:
 	//Controls rebinds header
 	CLabel_ptr mControlsLabel;
 
+	//Fire key control
+	CPanel_ptr mFireKeyPanel;
+	CLabel_ptr mFireKey1Label;
+	CLabel_ptr mFireKey2Label;
+
+	//Up key control
+	CPanel_ptr mUpKeyPanel;
+	CLabel_ptr mUpKey1Label;
+	CLabel_ptr mUpKey2Label;
+
+	//Down key control
+	CPanel_ptr mDownKeyPanel;
+	CLabel_ptr mDownKey1Label;
+	CLabel_ptr mDownKey2Label;
+
+	//Left key control
+	CPanel_ptr mLeftKeyPanel;
+	CLabel_ptr mLeftKey1Label;
+	CLabel_ptr mLeftKey2Label;
+
+	//Right key control
+	CPanel_ptr mRightKeyPanel;
+	CLabel_ptr mRightKey1Label;
+	CLabel_ptr mRightKey2Label;
+
 	//Sound controls header
 	CLabel_ptr mSoundLabel;
 
@@ -45,6 +71,11 @@ private:
 	CLabel_ptr mSFXVolumeLabel;
 	CSpinner_ptr mSFXVolumeSpinner;
 
+	//Interface volume control
+	CPanel_ptr mInterfaceVolumePanel;
+	CLabel_ptr mInterfaceVolumeLabel;
+	CSpinner_ptr mInterfaceVolumeSpinner;
+
 	//Return button
 	CLabel_ptr mBackLabel;
 
@@ -54,9 +85,18 @@ private:
 	tle::IFont* mFont28;
 	tle::IFont* mFont24;
 
+	//UI Interface sounds
+	tle::ISound* mMouseOverSound;
+	tle::ISound* mMouseClickSound;
+
 	float mDelta = 0.0f;
 
 	bool mPopFlag = false;
+	bool mFireKeyFlag = false;
+	bool mUpKeyFlag = false;
+	bool mDownKeyFlag = false;
+	bool mRightKeyFlag = false;
+	bool mLeftKeyFlag = false;
 	bool mBackFlag = false;
 
 public:

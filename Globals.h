@@ -25,6 +25,8 @@ const string INTRO_START		= "menustart.png";			// Temporary start text
 const string MUSIC				= MEDIA_FOLDER + "\\music.flac";
 const string SOUND_SHOOT		= MEDIA_FOLDER + "\\shoot.flac";
 const string SOUND_START		= MEDIA_FOLDER + "\\start.flac";
+const string SOUND_MOUSE_OVER	= MEDIA_FOLDER + "\\mouseOver.flac";
+const string SOUND_MOUSE_CLICK	= MEDIA_FOLDER + "\\mouseClick.flac";
 
 		// Gameplay
 const string UI					= "ui.png";					// Tempororay user interface
@@ -81,10 +83,3 @@ const float OFF_SCREEN_Z		= 1000.0f;
 const EKeyCode KEY_EXIT = tle::Key_Escape;
 const EKeyCode KEY_START = tle::Key_Space;
 const EKeyCode KEY_PAUSE = tle::Key_P;
-
-const EKeyCode KEY_LEFT = tle::Key_Left;
-const EKeyCode KEY_RIGHT = tle::Key_Right;
-const EKeyCode KEY_UP = tle::Key_Up;
-const EKeyCode KEY_DOWN = tle::Key_Down;
-
-const EKeyCode KEY_FIRE = tle::Key_Space;

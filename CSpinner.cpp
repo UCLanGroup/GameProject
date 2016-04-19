@@ -222,6 +222,38 @@ namespace tle_ui
 		mY = y;
 	}
 
+	//Sets the sound that is played when the mouse is moved over the component
+	//If the sound is a null pointer then no sound is played
+	void CSpinner::SetMouseOverSound(tle::ISound* pSound)
+	{
+		CComponent::SetMouseOverSound(pSound);
+		mLeftLabel->SetMouseOverSound(pSound);
+		mRightLabel->SetMouseOverSound(pSound);
+	}
+
+	//Sets the sound that is played when the component is clicked on
+	//If the sound is a null pointer then no sound is played
+	void CSpinner::SetMouseClickSound(tle::ISound* pSound)
+	{
+		CComponent::SetMouseClickSound(pSound);
+		mLeftLabel->SetMouseClickSound(pSound);
+		mRightLabel->SetMouseClickSound(pSound);
+	}
+
+	//Sets the sound that is played when the mouse is moved over the component
+	//Sets the sound that is played when the component is clicked on
+	//If a sound is a null pointer then no sound is played
+	void CSpinner::SetSounds(tle::ISound* pMouseOver, tle::ISound* pMouseClick)
+	{
+		CComponent::SetMouseOverSound(pMouseOver);
+		mLeftLabel->SetMouseOverSound(pMouseOver);
+		mRightLabel->SetMouseOverSound(pMouseOver);
+
+		CComponent::SetMouseClickSound(pMouseClick);
+		mLeftLabel->SetMouseClickSound(pMouseClick);
+		mRightLabel->SetMouseClickSound(pMouseClick);
+	}
+
 	//Returns the font used to create the text
 	tle::IFont* CSpinner::GetFont()
 	{

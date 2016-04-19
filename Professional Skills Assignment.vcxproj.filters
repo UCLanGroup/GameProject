@@ -112,6 +112,9 @@
     <ClCompile Include="CHaloBoss.cpp">
       <Filter>Entities\source\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="KeyBinds.cpp">
+      <Filter>Core\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="CHaloBoss.h">
       <Filter>Entities\headers\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyBinds.h">
+      <Filter>Core\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

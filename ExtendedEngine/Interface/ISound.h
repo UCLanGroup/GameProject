@@ -3,7 +3,7 @@
 
 namespace tle
 {
-	enum SoundType {SFX, Ambient, Music, Global};
+	enum SoundType {SFX, Ambient, Music, Interface, Global};
 
 	//Sound interface that manages a sf::sound object adding some controls and hiding others
 	class ISound
