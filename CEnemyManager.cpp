@@ -15,12 +15,14 @@
 #include "CWeaponDrop.h"
 #include "CUpgradeDrop.h"
 #include "CHealthDrop.h"
+#include "CLifeDrop.h"
 
 //Chances are out of 1000
 
 const int kUgradeDropChance		= 15;	//1 in   50
 const int kShotgunDropChance	= 5;	//1 in  200
 const int kHealthDropChance		= 2;	//1 in  500
+const int kLifeDropChance		= 2;	//1 in  500
 const int kLaserDropChance		= 1;	//1 in 1000
 
 CEnemyManager::CEnemyManager(string levelFile)
@@ -280,6 +282,10 @@ void CEnemyManager::CreateRandomDrop(CVector3& pos)
 	else if (random < (cumulativeChance += kLaserDropChance)) //Weapon drop
 	{
 		newDrop.reset(new CWeaponDrop(new CLaser(0, 2, 0.1f), LASER_POWER_UP));
+	}
+	else if (random < (cumulativeChance += kLifeDropChance)) //Life drop
+	{
+		newDrop.reset(new CLifeDrop(LIFE_POWER_UP));
 	}
 	else
 	{

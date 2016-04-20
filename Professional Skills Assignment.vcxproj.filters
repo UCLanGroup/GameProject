@@ -115,6 +115,9 @@
     <ClCompile Include="KeyBinds.cpp">
       <Filter>Core\source</Filter>
     </ClCompile>
+    <ClCompile Include="CLifeDrop.cpp">
+      <Filter>Entities\source\Drops</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -245,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="KeyBinds.h">
       <Filter>Core\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLifeDrop.h">
+      <Filter>Entities\headers\Drops</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

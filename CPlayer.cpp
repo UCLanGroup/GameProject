@@ -423,7 +423,8 @@ void CPlayer::LoseLife()
 //Gives the player and extra life
 void CPlayer::GainLife()
 {
-	mLives++;
+	if (mLives < kMaxLives)
+		++mLives;
 }
 
 //Upgrades the main weapon

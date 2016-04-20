@@ -10,6 +10,11 @@
 
 CPlayState CPlayState::mPlayState;
 
+const float kLifeSpritePosX = 505;
+const float kLifeSpritePosY = 932;
+const float kLifeSpritePosZ = 0.09;
+const float kLifeSpritePosInc = 35;
+
 void CPlayState::Init()
 {
 	// LOADING SCREEN
@@ -45,10 +50,7 @@ void CPlayState::Init()
 	// Draw life sprites
 	for (int i = 0; i < mPlayer1.GetLives(); i++)
 	{
-		float startPosX = 505;
-		float startPosY = 932;
-		float startPosInc = 35;
-		ISprite* temp = gEngine->CreateSprite("life.png", startPosX + startPosInc * static_cast<float>(i), startPosY, 0.09f);
+		ISprite* temp = gEngine->CreateSprite("life.png", kLifeSpritePosX + kLifeSpritePosInc * static_cast<float>(i), kLifeSpritePosY, kLifeSpritePosZ);
 		mLifeSprites.push_back(temp);
 		gEngine->DrawScene();
 	}
@@ -75,6 +77,7 @@ void CPlayState::Init()
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, LASER_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, UPGRADE_POWER_UP);
 	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, HEALTH_POWER_UP);
+	gEngine->AddToLoadQueue(PARTICLE_MODEL, 10, LIFE_POWER_UP);
 	
 	//Preload 200 of each of the smoke particles
 	for (int i = 1; i <= 10; ++i)
@@ -206,6 +209,14 @@ void CPlayState::Update(CGameStateHandler * game)
 		item->MoveLocalZ(kFloorSpeed * mDelta);
 	}
 
+	//If the player gains a life, add a new life sprite
+	//Unfortunately there isn't an easy way to do this event driven so we'll just check every frame instead
+	while (mPlayer1.GetLives() > static_cast<int>(mLifeSprites.size()))
+	{
+		ISprite* temp = gEngine->CreateSprite("life.png", kLifeSpritePosX + kLifeSpritePosInc * static_cast<float>(mLifeSprites.size()), kLifeSpritePosY, kLifeSpritePosZ);
+		mLifeSprites.push_back(temp);
+		gEngine->DrawScene();
+	}
 
 	if(mPlayer1.IsDead())
 	{

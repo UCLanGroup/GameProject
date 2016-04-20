@@ -62,6 +62,7 @@ const string SHOTGUN_POWER_UP	= "SpreadShotPowerUp.png";
 const string LASER_POWER_UP		= "LaserPowerUp.png";
 const string UPGRADE_POWER_UP	= "UpgradePowerUp.png";
 const string HEALTH_POWER_UP	= "HealthPowerUp.png";
+const string LIFE_POWER_UP		= "LifePowerUp.png";
 
 		//Explosions
 const string EXPLOSION_MESH		= "Explosion.x";

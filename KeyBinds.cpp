@@ -104,6 +104,6 @@ std::string KeyBinds::ToString(tle::EKeyCode key)
 	case 0x6D: return "Num -";  
 	case 0x6E: return "Num .";
 	case 0x6F: return "Num /";
-	default: return "";
+	default: return "Unknown";
 	}
 }

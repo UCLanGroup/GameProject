@@ -12,6 +12,7 @@ private:
 	const float kRotateSpeed = 150.0f;		//The turn speed in degrees for leaning sideways
 	const float kInvulTextureRate = 0.05f;	//The rate at which invul textures are animated
 	const float kShieldRegenRate = 0.25f;	//The rate at which shield health regens
+	const int kMaxLives = 8;
 	const bool kCheatMode = true;			//gg wp
 
 	bool mInitialised = false;	//Stores whether the player has been initialised
