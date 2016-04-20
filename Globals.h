@@ -22,11 +22,12 @@ const string INTRO_BG			= "menu.png";				// Temporary background image
 const string INTRO_START		= "menustart.png";			// Temporary start text
 
 		// Sound
-const string MUSIC				= MEDIA_FOLDER + "\\music.flac";
+const string GAME_MUSIC			= MEDIA_FOLDER + "\\game_music.flac";
+const string MENU_MUSIC			= MEDIA_FOLDER + "\\menu_music.flac";
 const string SOUND_SHOOT		= MEDIA_FOLDER + "\\shoot.flac";
 const string SOUND_START		= MEDIA_FOLDER + "\\start.flac";
-const string SOUND_MOUSE_OVER	= MEDIA_FOLDER + "\\mouseOver.flac";
-const string SOUND_MOUSE_CLICK	= MEDIA_FOLDER + "\\mouseClick.flac";
+const string SOUND_MOUSE_OVER	= MEDIA_FOLDER + "\\mouse_over.flac";
+const string SOUND_MOUSE_CLICK	= MEDIA_FOLDER + "\\mouse_confirm.flac";
 
 		// Gameplay
 const string UI					= "ui.png";					// Tempororay user interface

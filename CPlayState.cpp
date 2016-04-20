@@ -89,6 +89,12 @@ void CPlayState::Init()
 	gEngine->LoadQueuedObjects(loadScreen);
 	delete loadScreen;
 
+	if (!mMusic) //If it doesn't already exist
+	{
+		mMusic = gEngine->CreateMusic( GAME_MUSIC );
+		mMusic->Play();
+	}
+
 	//Reset timer after finished loading assets
 	gEngine->Timer();
 }
@@ -129,6 +135,8 @@ void CPlayState::Cleanup()
 	//Clear the cache of particles and other preloaded models/meshes
 	gEngine->ClearModelCache();
 	gEngine->ClearMeshCache();
+
+	mMusic->Stop();
 }
 
 void CPlayState::Pause() {}
@@ -154,6 +162,12 @@ void CPlayState::Update(CGameStateHandler * game)
 	mDelta = gEngine->Timer();
 
 	// Animations go here
+
+	// Restart music if coming from new game
+	if (mMusic->GetStatus() == sf::SoundSource::Stopped)
+	{
+		mMusic->Play();
+	}
 
 	mPlayer1.Move(mDelta);
 	mPlayer1.CheckCollision();

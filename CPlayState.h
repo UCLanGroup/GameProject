@@ -35,6 +35,7 @@ private:
 	vector<IModel*> mFloor;
 	unique_ptr<CClouds> mClouds;
 
+	IMusic* mMusic = nullptr;
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;

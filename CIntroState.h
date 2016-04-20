@@ -32,8 +32,8 @@ private:
 	float mPlaneMoveSpeed = 15.0f;
 	float mCameraMoveSpeed = 2.0f;
 
-	IMusic* mMusic = 0;
-	ISound* mIntroSound = 0;
+	IMusic* mMusic = nullptr;
+	ISound* mIntroSound = nullptr;
 
 public:
 	// Setup and destroy state
