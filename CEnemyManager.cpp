@@ -297,7 +297,7 @@ void CEnemyManager::CreateRandomDrop(CVector3& pos)
 	}
 	else if (random < (cumulativeChance += kShotgunDropChance)) //Weapon drop
 	{
-		newDrop.reset(new CWeaponDrop(new CShotGun(0, 1, 100.0f, 0.33f, 5), SHOTGUN_POWER_UP));
+		newDrop.reset(new CWeaponDrop(new CShotGun(0, 1, 100.0f, 0.33f, 12), SHOTGUN_POWER_UP));
 	}
 	else if (random < (cumulativeChance += kHealthDropChance)) //Health drop
 	{

@@ -221,7 +221,7 @@ void CPlayState::Update(CGameStateHandler * game)
 	for (auto& item : mFloor)
 	{
 		if (item->GetZ() < kFloorResetAmount)
-			item->SetZ(kFloorSize - 23.0f); // weird white line
+			item->SetZ(kFloorSize - 24.0f); // weird white line
 
 		item->MoveLocalZ(kFloorSpeed * mDelta);
 

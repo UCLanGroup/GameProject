@@ -199,7 +199,7 @@ void CPlayer::Move(float dt)
 		}
 		else if (gEngine->KeyHit(Key_3))
 		{
-			SetBonusWeapon(new CShotGun(this, 1, 100.0f, 0.33f, 5), 10.0f);
+			SetBonusWeapon(new CShotGun(this, 1, 100.0f, 0.33f, 12), 10.0f);
 		}
 		else if (gEngine->KeyHit(Key_4))
 		{

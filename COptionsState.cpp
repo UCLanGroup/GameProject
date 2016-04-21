@@ -48,6 +48,7 @@ void COptionsState::Init()
 	mFireKeyPanel->Add(mFireKey1Label.get());
 
 	mFireKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Fire)));
+	mFireKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
 	mFireKey2Label->SetHorAlignment(Alignment::Left);;
 	mFireKey2Label->SetWidth(200);
 	mFireKey2Label->SetEventHandler(this);
@@ -65,6 +66,7 @@ void COptionsState::Init()
 	mUpKeyPanel->Add(mUpKey1Label.get());
 
 	mUpKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Up)));
+	mUpKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
 	mUpKey2Label->SetHorAlignment(Alignment::Left);;
 	mUpKey2Label->SetWidth(200);
 	mUpKey2Label->SetEventHandler(this);
@@ -82,6 +84,7 @@ void COptionsState::Init()
 	mDownKeyPanel->Add(mDownKey1Label.get());
 
 	mDownKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Down)));
+	mDownKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
 	mDownKey2Label->SetHorAlignment(Alignment::Left);;
 	mDownKey2Label->SetWidth(200);
 	mDownKey2Label->SetEventHandler(this);
@@ -99,6 +102,7 @@ void COptionsState::Init()
 	mLeftKeyPanel->Add(mLeftKey1Label.get());
 
 	mLeftKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Left)));
+	mLeftKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
 	mLeftKey2Label->SetHorAlignment(Alignment::Left);;
 	mLeftKey2Label->SetWidth(200);
 	mLeftKey2Label->SetEventHandler(this);
@@ -116,6 +120,7 @@ void COptionsState::Init()
 	mRightKeyPanel->Add(mRightKey1Label.get());
 
 	mRightKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Right)));
+	mRightKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
 	mRightKey2Label->SetHorAlignment(Alignment::Left);;
 	mRightKey2Label->SetWidth(200);
 	mRightKey2Label->SetEventHandler(this);
