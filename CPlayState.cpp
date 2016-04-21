@@ -197,7 +197,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		}
 		else
 		{
-			bullet++;
+			++bullet;
 		}
 	}
 
@@ -213,7 +213,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		}
 		else
 		{
-			bullet++;
+			++bullet;
 		}
 	}
 

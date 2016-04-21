@@ -110,7 +110,7 @@ void CEnemy::CheckCollision()
 		}
 		else
 		{
-			bullet++;
+			++bullet;
 		}
 	}
 

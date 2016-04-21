@@ -92,7 +92,7 @@ void CMissile::CheckCollision()
 		}
 		else
 		{
-			bullet++;
+			++bullet;
 		}
 	}
 }

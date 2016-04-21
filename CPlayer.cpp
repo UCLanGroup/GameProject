@@ -315,7 +315,7 @@ void CPlayer::CheckCollision()
 		}
 		else
 		{
-			bullet++;
+			++bullet;
 		}
 	}
 }
