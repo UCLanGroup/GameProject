@@ -118,6 +118,9 @@
     <ClCompile Include="CLifeDrop.cpp">
       <Filter>Entities\source\Drops</Filter>
     </ClCompile>
+    <ClCompile Include="CSuicider.cpp">
+      <Filter>Entities\source\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayer.h">
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="CLifeDrop.h">
       <Filter>Entities\headers\Drops</Filter>
+    </ClInclude>
+    <ClInclude Include="CSuicider.h">
+      <Filter>Entities\headers\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

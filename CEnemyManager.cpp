@@ -8,6 +8,7 @@
 #include "CEnemyBoss.h"
 #include "CCruiser.h"
 #include "CHaloBoss.h"
+#include "CSuicider.h"
 
 //Item drops
 #include "CShotGun.h"
@@ -251,6 +252,11 @@ unique_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVecto
 
 	case HaloBoss:
 		enemy.reset(new CHaloBoss(mpPlayers, mpPlayerBullets, mpEnemyBullets));
+		enemy->SetPosition(offset);
+		return move(enemy);
+
+	case Suicider:
+		enemy.reset(new CSuicider(mpPlayers, mpPlayerBullets, mpEnemyBullets));
 		enemy->SetPosition(offset);
 		return move(enemy);
 
