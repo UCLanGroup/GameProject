@@ -15,7 +15,7 @@ class CClouds
 {
 	IMesh* mCloudMesh;
 	vector<SCloud*> mClouds;
-	const int mCLOUD_COUNT = 10;
+	const size_t mCLOUD_COUNT = 10;
 	const string mCLOUD_MESH = "cloud.x";
 	vector<string> mCloudTex = { "cloud0.png", "cloud1.png", "cloud2.png", "cloud3.png", "cloud4.png" };
 

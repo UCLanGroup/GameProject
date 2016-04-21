@@ -6,7 +6,7 @@
 
 CClouds::CClouds()
 {
-	srand( time( NULL ) );
+	srand( static_cast<unsigned int>(time( NULL )) );
 
 	mCloudMesh = gEngine->LoadMesh( mCLOUD_MESH );
 
@@ -15,7 +15,7 @@ CClouds::CClouds()
 		SCloud* cloudTemp = new SCloud;
 		cloudTemp->model = mCloudMesh->CreateModel( static_cast<float>(GetRandFloat( AREA_BOUNDS_LEFT, AREA_BOUNDS_RIGHT )), 
 													GetRandFloat( mMIN_Y, mMAX_Y ), 
-													static_cast<float>(GetRandInt( 100.0f, 200.0f )) );
+													static_cast<float>(GetRandInt( 100, 200 )) );
 		cloudTemp->model->SetSkin(mCloudTex.at( GetRandInt(0, 4)));
 		cloudTemp->model->Scale( GetRandFloat( 10.0f, 40.0f ));
 		cloudTemp->speed = GetRandFloat( mMIN_SPEED, mMAX_SPEED );
