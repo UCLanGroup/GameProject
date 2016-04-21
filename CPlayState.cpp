@@ -220,7 +220,11 @@ void CPlayState::Update(CGameStateHandler * game)
 	// Move floor
 	for (auto& item : mFloor)
 	{
+		if (item->GetZ() < kFloorResetAmount)
+			item->SetZ(kFloorSize - 23.0f); // weird white line
+
 		item->MoveLocalZ(kFloorSpeed * mDelta);
+
 	}
 
 	//If the player gains a life, add a new life sprite

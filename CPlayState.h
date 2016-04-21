@@ -23,8 +23,10 @@ private:
 	const float kBarSize = 200.0f;
 	const float kFloorSize = 2000.0f;
 	const float kFloorStart = 500.0f;
-	const float kFloorSpeed = -100.0f;
-	const int kFloorAmount = 10;
+	const float kFloorSpeed = -500.0f;
+	const int kFloorAmount = 2;
+
+	const float kFloorResetAmount = -kFloorSize;
 
 	static CPlayState mPlayState;
 
