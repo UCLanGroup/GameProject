@@ -23,6 +23,10 @@ private:
 	CLabel_ptr mOptionsLabel;
 	CLabel_ptr mQuitLabel;
 
+	//UI Interface sounds
+	tle::ISound* mMouseOverSound;
+	tle::ISound* mMouseClickSound;
+
 	IFont* mFont60;
 	IFont* mFont48;
 	IFont* mFont36;

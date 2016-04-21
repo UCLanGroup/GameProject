@@ -3,7 +3,7 @@
 #include "CPlayer.h"
 #include <iostream>
 
-const float kRotateSpeed = 120.0f;
+const float kRotateSpeed = 110.0f;
 
 CSuicider::CSuicider(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets) : CEnemy(players, playerBullets, enemyBullets)
 {
@@ -18,7 +18,7 @@ CSuicider::CSuicider(std::vector<CPlayer*>* players, BulletList* playerBullets, 
 	SetHealth(10);
 	SetRadius(10.0f);
 	SetValue(30);
-	SetSpeed(60.0f);
+	SetSpeed(50.0f);
 }
 
 void CSuicider::Move(float delta)

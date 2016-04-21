@@ -102,7 +102,8 @@ void CEnemyBoss::Update(float delta)
 {
 	if (mState == State::Overdrive) delta *= 2.0f;
 	Move(delta);
-	(mModel->GetNode(6))->RotateY(delta * kRotateSpeed); //Rotate spinny thing
+	if (mModel->GetNumNodes() > 1)
+		(mModel->GetNode(6))->RotateY(delta * kRotateSpeed); //Rotate spinny thing
 	if (mState == State::Enter) return; //Don't do anything when entering
 
 	mBlaster->Update(delta);

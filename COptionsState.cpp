@@ -20,7 +20,9 @@ void COptionsState::Init()
 
 	//Create Sounds
 	mMouseOverSound = gEngine->CreateSound(SOUND_MOUSE_OVER);
+	mMouseOverSound->SetType(SoundType::Interface);
 	mMouseClickSound = gEngine->CreateSound(SOUND_MOUSE_CLICK);
+	mMouseClickSound->SetType(SoundType::Interface);
 
 	//Create UI container
 	mFrame.reset(new CPanel());
@@ -191,7 +193,7 @@ void COptionsState::Init()
 	mInterfaceVolumeLabel->SetWidth(280);
 	mInterfaceVolumePanel->Add(mInterfaceVolumeLabel.get());
 
-	mInterfaceVolumeSpinner.reset(new CSpinner(mFont36, static_cast<int>(gEngine->GetVolume(SoundType::SFX))));
+	mInterfaceVolumeSpinner.reset(new CSpinner(mFont36, static_cast<int>(gEngine->GetVolume(SoundType::Interface))));
 	mInterfaceVolumeSpinner->SetSounds(mMouseOverSound, mMouseClickSound);
 	mInterfaceVolumeSpinner->SetEventHandler(this);
 	mInterfaceVolumeSpinner->SetMinValue(0);

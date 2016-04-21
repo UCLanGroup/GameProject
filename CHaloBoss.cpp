@@ -64,7 +64,8 @@ void CHaloBoss::Move(float delta)
 void CHaloBoss::Update(float delta)
 {
 	//Rotate rotor
-	(mModel->GetNode(5))->RotateY(delta * kRotorSpeed);
+	if (mModel->GetNumNodes() > 1)
+		(mModel->GetNode(5))->RotateY(delta * kRotorSpeed);
 
 	//State timer updates
 	if (GetHealth() < kOverdriveLimit)
@@ -94,7 +95,7 @@ void CHaloBoss::Update(float delta)
 		break;
 
 	case State::MoveTop:
-		if (MoveDirectlyTowards(kTopPos, delta) & RotateTowards(kCenterPos, delta * kRotateSpeed))
+		if (MoveDirectlyTowards(kTopPos, delta) & RotateTowards(kCenterPos, delta * kRotateSpeed)) //The bitwise instead of logical AND is intended
 		{
 			mState = State::MissileAttack;
 			mRightMissileBarrage->SetFiring(true);

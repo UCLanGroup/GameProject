@@ -76,7 +76,8 @@ void CCruiser::Move(float delta)
 void CCruiser::Update(float delta)
 {
 	mStateTimer += delta;
-	(mModel->GetNode(6))->RotateY(delta * kRotorSpeed); //Rotate spinny thing
+	if (mModel->GetNumNodes() > 1)
+		(mModel->GetNode(6))->RotateY(delta * kRotorSpeed); //Rotate spinny thing
 
 	mWeapon->Update(delta);
 

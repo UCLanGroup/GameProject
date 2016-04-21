@@ -45,6 +45,8 @@ private:
 	unique_ptr<CEnemy> CreateEnemy(EnemyType type, Path* path, CVector3& offset);
 	void CreateRandomDrop(CVector3& pos);
 
+	bool mNickMode = false;
+
 public:
 	CEnemyManager(string levelFile);
 

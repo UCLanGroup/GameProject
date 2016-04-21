@@ -98,6 +98,13 @@ void CEnemyManager::Update(float delta)
 			//Create the enemy
 			unique_ptr<CEnemy> enemy = move( CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset) );
 
+			if (mNickMode)
+			{
+				enemy->SetMesh(PARTICLE_MODEL, "Nick Cage.png");
+				enemy->GetModel()->ResetScale();
+				enemy->GetModel()->Scale(10.0f);
+			}
+
 			//mTimer is currently the amount of time passed since the enemy should have spawned
 			//So update enemy with mTimer for delta
 			enemy->Update((*spawner)->mTimer);
@@ -140,6 +147,17 @@ void CEnemyManager::Update(float delta)
 		{
 			drop++;
 		}
+	}
+
+	if (!mNickMode && gEngine->KeyHit(tle::EKeyCode::Key_Numpad5))
+	{
+		for (auto enemy = mEnemies.begin(); enemy != mEnemies.end(); ++enemy)
+		{
+			(*enemy)->SetMesh(PARTICLE_MODEL, "Nick Cage.png");
+			(*enemy)->GetModel()->ResetScale();
+			(*enemy)->GetModel()->Scale(10.0f);
+		}
+		mNickMode = true;
 	}
 }
 
