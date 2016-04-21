@@ -34,11 +34,11 @@ void CIntroState::Init()
 	mCam->AttachToParent(mDummy);
 	mCam->RotateLocalX(10.0f);
 
-	// MUSIC
+	// GAME_MUSIC
 	//Warning, this is never destroyed, engine does handle clean up of non-destroyed stuff so it's not really bad, just shitty
 	if (!mMusic) //If it doesn't already exist
 	{
-		mMusic = gEngine->CreateMusic(MUSIC);
+		mMusic = gEngine->CreateMusic(MENU_MUSIC);
 		mMusic->Play();
 	}
 
@@ -78,6 +78,7 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 
 	if (gEngine->KeyHit(KEY_START))
 	{
+		mMusic->Stop();
 		mIntroSound->Play();
 		game->ChangeState(CPlayState::Instance());
 	}
@@ -85,6 +86,12 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 
 void CIntroState::Update(CGameStateHandler* game)
 {
+	// Restart music if coming from game over / menu
+	if (mMusic->GetStatus() == sf::SoundSource::Stopped)
+	{
+		mMusic->Play();
+	}
+
 	mDelta = gEngine->Timer();
 
 	// Animations go here
