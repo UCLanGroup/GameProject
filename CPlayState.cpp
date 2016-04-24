@@ -307,7 +307,7 @@ void CPlayState::DrawText()
 		frames = 0;
 	}
 
-	mFont->Draw(fps, 0, 0, tle::kWhite);
+	mFont->Draw(fps, 7, 0, tle::kWhite);
 
 	CCheatManager::SCheat* recent;
 	recent = mCheatManager.GetRecentlyActivated();
@@ -322,7 +322,7 @@ void CPlayState::DrawText()
 	
 	if (mRecentCheatDisplay > 0.0f)
 	{
-		mFont->Draw(mRecentCheat->description, 0, 840, tle::kWhite);
+		mFont->Draw(mRecentCheat->description, 7, 840, tle::kWhite);
 		mRecentCheatDisplay -= mDelta;
 	}
 }
