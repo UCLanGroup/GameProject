@@ -62,6 +62,21 @@ void CPlayState::Init()
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
 	
+	mCheatManager.Register("NICKCAGE", [this]()
+	{
+		mEnemyManager->DoNickCageMode();
+	});
+
+	mCheatManager.Register("IMGOD", [this]()
+	{
+		GetPlayer1()->SetCheatMode(true);
+	});
+
+	mCheatManager.Register("IMNOTGOD", [this]()
+	{
+		GetPlayer1()->SetCheatMode(false);
+	});
+
 	// Particles
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
@@ -146,6 +161,8 @@ void CPlayState::Resume() {}
 void CPlayState::HandleEvents(CGameStateHandler * game)
 {
 	// Keypresses go here
+	mCheatManager.Update();
+
 	if (gEngine->KeyHit(KEY_PAUSE))
 	{
 		game->PushState(CPausedState::Instance());
@@ -155,6 +172,7 @@ void CPlayState::HandleEvents(CGameStateHandler * game)
 	{
 		game->Quit();
 	}
+
 }
 
 void CPlayState::Update(CGameStateHandler * game)

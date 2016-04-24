@@ -185,7 +185,7 @@ void CPlayer::Move(float dt)
 		}
 	}
 
-	if (kCheatMode) //If this is false then the contents of the if is optimised away in release mode
+	if (mCheatMode) 
 	{
 		if (gEngine->KeyHit(Key_1)) //Reset player's main weapon by to level 1
 		{
@@ -435,6 +435,11 @@ void CPlayer::UpgradeWeapon()
 
 //Sets
 
+void CPlayer::SetCheatMode(bool cheatmode)
+{
+	mCheatMode = cheatmode;
+}
+
 //Sets the score
 void CPlayer::SetScore(int score)
 {
@@ -512,6 +517,12 @@ void CPlayer::SetLists(BulletList* playerBullets, BulletList* enemyBullets)
 }
 
 //Gets
+
+//Returns the cheat mode flag.
+bool CPlayer::GetCheatMode()
+{
+	return mCheatMode;
+}
 
 //Returns the player's score
 int CPlayer::GetScore()

@@ -11,6 +11,7 @@
 #include "CEnemyManager.h"
 #include "CExplosionPool.h"
 #include "CClouds.h"
+#include "CCheatManager.h"
 
 using namespace tle;
 
@@ -38,6 +39,8 @@ private:
 	unique_ptr<CClouds> mClouds;
 
 	IMusic* mMusic = nullptr;
+
+	CCheatManager mCheatManager;
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;
