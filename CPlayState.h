@@ -18,6 +18,9 @@ using namespace tle;
 class CPlayState : public CGameState
 {
 private:
+
+	const float kCheatDisplayTime = 2.0f;
+
 	const float kStartBarPosX = 90;
 	const float kStartBarPosY = 936;
 	const float kBarSpeed = 100.0f;
@@ -41,6 +44,9 @@ private:
 	IMusic* mMusic = nullptr;
 
 	CCheatManager mCheatManager;
+	CCheatManager::SCheat* mRecentCheat;
+	
+	float mRecentCheatDisplay = 0.0f;
 
 	vector<ISprite*> mLifeSprites;
 	ISprite* mpHealthBar;

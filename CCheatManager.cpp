@@ -1,6 +1,6 @@
 #include "CCheatManager.h"
 
-void CCheatManager::Register(std::string keystream, CheatFunction_t fn)
+void CCheatManager::Register(std::string keystream, std::string description, CheatFunction_t fn)
 {
 	KeyStream stream;
 
@@ -9,7 +9,7 @@ void CCheatManager::Register(std::string keystream, CheatFunction_t fn)
 		stream.emplace_back(static_cast<tle::EKeyCode>(keystream[i]));
 
 	// Create a cheat entry.
-	mCheats.push_back(Cheat_ptr(new SCheat{ 0, stream, fn }));
+	mCheats.push_back(Cheat_ptr(new SCheat{ 0, stream, description, fn }));
 }
 
 void CCheatManager::Update()
@@ -30,6 +30,8 @@ void CCheatManager::Update()
 			{
 				cheat->currentIndex = 0;
 				cheat->fn();
+
+				mRecent = cheat.get();
 			}
 
 		}

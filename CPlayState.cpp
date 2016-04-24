@@ -62,17 +62,17 @@ void CPlayState::Init()
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
 	
-	mCheatManager.Register("NICKCAGE", [this]()
+	mCheatManager.Register("NICKCAGE", "Nick Cage mode enabled", [this]()
 	{
 		mEnemyManager->DoNickCageMode();
 	});
 
-	mCheatManager.Register("IMGOD", [this]()
+	mCheatManager.Register("IMGOD", "Cheat mode enabled", [this]()
 	{
 		GetPlayer1()->SetCheatMode(true);
 	});
 
-	mCheatManager.Register("IMNOTGOD", [this]()
+	mCheatManager.Register("IMNOTGOD", "Cheat mode disabled", [this]()
 	{
 		GetPlayer1()->SetCheatMode(false);
 	});
@@ -308,6 +308,23 @@ void CPlayState::DrawText()
 	}
 
 	mFont->Draw(fps, 0, 0, tle::kWhite);
+
+	CCheatManager::SCheat* recent;
+	recent = mCheatManager.GetRecentlyActivated();
+
+	if (recent != nullptr)
+	{
+		mRecentCheat = recent;
+		mRecentCheatDisplay = kCheatDisplayTime;
+	}
+
+	//////
+	
+	if (mRecentCheatDisplay > 0.0f)
+	{
+		mFont->Draw(mRecentCheat->description, 0, 840, tle::kWhite);
+		mRecentCheatDisplay -= mDelta;
+	}
 }
 
 void CPlayState::AnimateHealth(float delta)

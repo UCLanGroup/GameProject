@@ -152,7 +152,6 @@ void CEnemyManager::Update(float delta)
 
 void CEnemyManager::DoNickCageMode()
 {
-
 	if (!mNickMode)
 	{
 		for (auto enemy = mEnemies.begin(); enemy != mEnemies.end(); ++enemy)
