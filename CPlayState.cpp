@@ -292,7 +292,7 @@ void CPlayState::DrawText()
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
 
 	// fps display
-	static float frameTimer = 0.0f;
+	static float frameTimer = 1.0f;
 	static int frames = 0;
 	static string fps = " fps";
 
