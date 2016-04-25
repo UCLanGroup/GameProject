@@ -21,7 +21,7 @@ CMissile::CMissile()
 	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, std::vector<string>{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" } , 0.025f);
 	mEmitter->SetParticleLife(0.5f);
 	mEmitter->SetParticleScale(2.0f);
-	mEmitter->RotateY(GetRotation());
+	mEmitter->RotateY(GetRotation() + 90);
 	mEmitter->AttachToParent(mModel);
 	mEmitter->Start();
 }
@@ -30,6 +30,9 @@ void CMissile::Update(float delta)
 {
 	//Move forward
 	mModel->MoveLocalZ(GetSpeed() * delta);
+
+	mEmitter->ResetOrientation();
+	mEmitter->RotateY(GetRotation() + 90);
 
 	//If provided with a target then head towards it
 	if (mTarget != 0)
