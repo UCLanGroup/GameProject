@@ -7,6 +7,7 @@ const float kRotateSpeed = 40.0f;
 const float kRotorSpeed = 720.0f; //Rotation Speed
 const float kFireDuration = 1.5f;
 const float kRotationMargin = 2.5f;
+const float kRadius = 10.0f;
 
 CCruiser::CCruiser(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets) : CEnemy(players, playerBullets, enemyBullets)
 {
@@ -29,7 +30,7 @@ CCruiser::CCruiser(std::vector<CPlayer*>* players, BulletList* playerBullets, Bu
 	}*/
 
 	SetHealth(25);
-	SetRadius(10.0f);
+	SetRadius(kRadius);
 	SetValue(50);
 	SetSpeed(30.0f);
 	mStateTimer = 0.0f;
@@ -99,6 +100,15 @@ void CCruiser::Update(float delta)
 	default:
 		break;
 	}
+}
+
+//Nick Cage Mode
+void CCruiser::ActivateTheCage()
+{
+	SetMesh(PARTICLE_MODEL, NICK_CAGE);
+	mModel->ResetScale();
+	mModel->Scale(kRadius);
+	mWeapon->ActivateTheCage();
 }
 
 void CCruiser::Reset()

@@ -35,5 +35,8 @@ public:
 
 	virtual void Reset();
 
+	//Nick Cage mode
+	virtual void ActivateTheCage();
+
 	virtual ~CMissile();
 };

@@ -30,5 +30,8 @@ public:
 	//Inherited from IEntity : IResource
 	virtual void Reset();
 
+	//Nick Cage mode
+	virtual void ActivateTheCage();
+
 	virtual ~CProjectile();
 };

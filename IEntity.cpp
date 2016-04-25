@@ -40,18 +40,19 @@ void IEntity::SetMesh(IMesh* mesh, const string& textureFile)
 {
 	if (mesh != 0) //Check if valid mesh
 	{
-		if (mMesh != mesh) //Check if mesh has been changed
+		if (mMesh != mesh || mModelTexture != textureFile) //Check if mesh or texture has been changed
 		{
-			if (mModel) //If an existing model exists then remove it but preserve the location
+			if (mModel) //If an existing model exists then remove it but preserve the location, rotation, scale
 			{
-				CVector3 pos(mModel->GetX(), mModel->GetY(), mModel->GetZ());
+				float m[16];
+				mModel->GetMatrix(m);
 				gEngine->CacheModel(mModel, mModelTexture);
 
 				mMesh = mesh; //Set the new mesh
 				mModelTexture = textureFile;
 
 				mModel = gEngine->GetModel(mMesh, mModelTexture);
-				mModel->SetPosition(pos.x, pos.y, pos.z);
+				mModel->SetMatrix(m);
 			}
 			else //If no existing model exists then create one
 			{
@@ -66,15 +67,6 @@ void IEntity::SetMesh(IMesh* mesh, const string& textureFile)
 			if (!mModel) //Check if no model exists, create one if not
 			{
 				mModelTexture = textureFile;
-				mModel = gEngine->GetModel(mMesh, mModelTexture);
-			}
-			else
-			{
-				gEngine->CacheModel(mModel, mModelTexture);
-
-				//Set new texture
-				mModelTexture = textureFile;
-
 				mModel = gEngine->GetModel(mMesh, mModelTexture);
 			}
 		}
@@ -244,6 +236,16 @@ void IEntity::Hide()
 	{
 		mModel->SetPosition(OFF_SCREEN_X, OFF_SCREEN_Y, OFF_SCREEN_Z);
 	}
+}
+
+
+///////////////////Nick Cage//////////////////
+
+
+//Nick Cage Mode
+void IEntity::ActivateTheCage()
+{
+	//To dothing as default
 }
 
 

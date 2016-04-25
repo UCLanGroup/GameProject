@@ -74,6 +74,12 @@ void CProjectile::Reset()
 	SetDead(false);
 }
 
+//Nick Cage mode
+void CProjectile::ActivateTheCage()
+{
+	//Do nothing by default
+}
+
 CProjectile::~CProjectile()
 {
 	//Model destruction is handled by IEntity destructor

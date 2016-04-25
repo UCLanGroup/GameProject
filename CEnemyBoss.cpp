@@ -155,3 +155,11 @@ void CEnemyBoss::Reset()
 	mStateTimer = 0.0f;
 	mState = State::Enter;
 }
+
+void CEnemyBoss::ActivateTheCage()
+{
+	SetMesh(PARTICLE_MODEL, NICK_CAGE);
+	mModel->ResetScale();
+	mModel->Scale(10.0f);
+	mMissileLauncher->ActivateTheCage();
+}

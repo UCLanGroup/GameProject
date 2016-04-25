@@ -74,5 +74,8 @@ public:
 	//Inherited from IEntity : IResource
 	virtual void Reset();
 
+	//Nick Cage Mode
+	virtual void ActivateTheCage();
+
 	~CEnemy();
 };

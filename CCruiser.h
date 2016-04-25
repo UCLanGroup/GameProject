@@ -17,4 +17,7 @@ public:
 	virtual void Move(float delta);
 	virtual void Update(float delta);
 	virtual void Reset();
+
+	//Nick Cage Mode
+	virtual void ActivateTheCage();
 };

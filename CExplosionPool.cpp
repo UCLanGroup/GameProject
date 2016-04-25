@@ -15,11 +15,11 @@ void CExplosionPool::Init()
 
 	for (int i = 1; i <= EXPLOSION_SPRITE_COUNT; i++)
 	{
-		gEngine->AddToLoadQueue(EXPLOSION_MESH, 10, ExplosionTexture(i));
+		gEngine->AddToLoadQueue(EXPLOSION_MESH, 15, ExplosionTexture(i));
 	}
 
 	unique_ptr<SExplosion> explosion;
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		explosion.reset(new SExplosion);
 		explosion->mModel = 0;

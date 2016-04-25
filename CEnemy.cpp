@@ -254,6 +254,14 @@ void CEnemy::Reset()
 	mValue = kValue;
 }
 
+//Nick Cage Mode
+void CEnemy::ActivateTheCage()
+{
+	SetMesh(PARTICLE_MODEL, NICK_CAGE);
+	mModel->ResetScale();
+	mModel->Scale(kRadius);
+}
+
 CEnemy::~CEnemy()
 {
 

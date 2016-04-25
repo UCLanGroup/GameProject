@@ -172,3 +172,12 @@ void CHaloBoss::Reset()
 {
 
 }
+
+void CHaloBoss::ActivateTheCage()
+{
+	SetMesh(PARTICLE_MODEL, NICK_CAGE);
+	mModel->ResetScale();
+	mModel->Scale(kRadius);
+	mLeftMissileBarrage->ActivateTheCage();
+	mRightMissileBarrage->ActivateTheCage();
+}

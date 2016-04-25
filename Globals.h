@@ -81,6 +81,11 @@ const float OFF_SCREEN_X		= 1000.0f;
 const float OFF_SCREEN_Y		= 1000.0f;
 const float OFF_SCREEN_Z		= 1000.0f;
 
+		//Nick Cage
+const string NICK_CAGE			= "Nick Cage.png";
+const string NYAN_CAT			= "Nyan Cat.png";
+const string RAINBOW			= "Rainbow.png";
+
 // Key codes
 const EKeyCode KEY_EXIT = tle::Key_Escape;
 const EKeyCode KEY_START = tle::Key_Space;

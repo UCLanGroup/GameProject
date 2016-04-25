@@ -31,6 +31,8 @@ private:
 
 protected:
 
+	bool mNickMode = false;
+
 	//Factory function allows reuse of code for creating different projectile types based on the weapon's stats
 	//Ignore Target: If false (default) it will create the projectile facing the target rather than the
 	//the parent's rotation + weapon's rotation offset
@@ -127,6 +129,9 @@ public:
 	//Sets the sound that is played when the weapon fires
 	void SetFireSound(ISound* fireSound);
 
+	//Nick Cage mode
+	void ActivateTheCage();
+
 	//Destroys stuff
 	virtual ~CWeapon();
 };
@@ -165,6 +170,8 @@ projectileType* CWeapon::CreateProjectile(bool ignoreTarget)
 	bullet->SetSpeed(mProjSpeed);
 	bullet->SetParent(mpParent);
 	bullet->SetExplodeable(true);
+
+	if (mNickMode) bullet->ActivateTheCage();
 
 	return bullet;
 }

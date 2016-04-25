@@ -100,9 +100,7 @@ void CEnemyManager::Update(float delta)
 
 			if (mNickMode)
 			{
-				enemy->SetMesh(PARTICLE_MODEL, "Nick Cage.png");
-				enemy->GetModel()->ResetScale();
-				enemy->GetModel()->Scale(10.0f);
+				enemy->ActivateTheCage();
 			}
 
 			//mTimer is currently the amount of time passed since the enemy should have spawned
@@ -153,9 +151,11 @@ void CEnemyManager::Update(float delta)
 	{
 		for (auto enemy = mEnemies.begin(); enemy != mEnemies.end(); ++enemy)
 		{
-			(*enemy)->SetMesh(PARTICLE_MODEL, "Nick Cage.png");
-			(*enemy)->GetModel()->ResetScale();
-			(*enemy)->GetModel()->Scale(10.0f);
+			(*enemy)->ActivateTheCage();
+		}
+		for (auto bullet = mpEnemyBullets->begin(); bullet != mpEnemyBullets->end(); ++bullet)
+		{
+			(*bullet)->ActivateTheCage();
 		}
 		mNickMode = true;
 	}

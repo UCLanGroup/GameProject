@@ -22,4 +22,7 @@ public:
 	virtual void Update(float delta);
 	virtual void TakeDamage(int damage);
 	virtual void Reset();
+
+	//Nick Cage Mode
+	virtual void ActivateTheCage();
 };

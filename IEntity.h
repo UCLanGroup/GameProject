@@ -77,6 +77,9 @@ public:
 	//No longer used or supported
 	virtual void Reset() = 0;
 
+	//Nick Cage Mode
+	virtual void ActivateTheCage();
+
 	//Destructor
 	~IEntity();
 };

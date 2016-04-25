@@ -203,6 +203,12 @@ void CWeapon::SetFireSound(ISound* fireSound)
 	mFireSound = fireSound;
 }
 
+//Nick Cage mode
+void CWeapon::ActivateTheCage()
+{
+	mNickMode = true;
+}
+
 //Destroys stuff
 CWeapon::~CWeapon()
 {

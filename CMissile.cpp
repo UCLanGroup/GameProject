@@ -9,6 +9,7 @@ const float kMoveSpeed = 50.0f;	//Default move speed
 
 CMissile::CMissile()
 {
+	if (mModel) mModel->ResetScale();
 	SetMesh(MISSILE_MESH);
 
 	SetDamage(10);
@@ -20,6 +21,7 @@ CMissile::CMissile()
 	mEmitter = gEngine->CreateEmitter(EEmissionType::Line, std::vector<string>{ "Smoke1.png", "Smoke2.png", "Smoke3.png", "Smoke4.png", "Smoke5.png", "Smoke6.png", "Smoke7.png", "Smoke8.png", "Smoke9.png", "Smoke10.png" } , 0.025f);
 	mEmitter->SetParticleLife(0.5f);
 	mEmitter->SetParticleScale(2.0f);
+	mEmitter->RotateY(GetRotation());
 	mEmitter->AttachToParent(mModel);
 	mEmitter->Start();
 }
@@ -121,6 +123,15 @@ bool CMissile::IsClockwise()
 void CMissile::Reset()
 {
 	SetDead(false);
+}
+
+//Nick Cage Mode
+void CMissile::ActivateTheCage()
+{
+	SetMesh(PARTICLE_MODEL, NYAN_CAT);
+	mEmitter->DetachFromParent();
+	mEmitter->SetParticleSkin(RAINBOW);
+	mEmitter->AttachToParent(mModel);
 }
 
 CMissile::~CMissile()
