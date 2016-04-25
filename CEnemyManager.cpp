@@ -96,7 +96,7 @@ void CEnemyManager::Update(float delta)
 			(*spawner)->mEnemyAmount--;
 
 			//Create the enemy
-			unique_ptr<CEnemy> enemy = move( CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset) );
+			unique_ptr<CEnemy> enemy = move(CreateEnemy((*spawner)->mType, (*spawner)->mpPath, (*spawner)->mOffset));
 
 			if (mNickMode)
 			{
@@ -136,7 +136,7 @@ void CEnemyManager::Update(float delta)
 				(*drop)->ApplyDrop(*player);
 			}
 		}
-		
+
 		if ((*drop)->IsOutOfBounds() || (*drop)->IsDead())
 		{
 			drop = mDrops.erase(drop);
@@ -146,8 +146,11 @@ void CEnemyManager::Update(float delta)
 			drop++;
 		}
 	}
+}
 
-	if (!mNickMode && gEngine->KeyHit(tle::EKeyCode::Key_Numpad5))
+void CEnemyManager::DoNickCageMode()
+{
+	if (!mNickMode)
 	{
 		for (auto enemy = mEnemies.begin(); enemy != mEnemies.end(); ++enemy)
 		{

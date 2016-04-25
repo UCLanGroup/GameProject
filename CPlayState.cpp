@@ -62,6 +62,21 @@ void CPlayState::Init()
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
 	
+	mCheatManager.Register("NICKCAGE", "Nick Cage mode enabled", [this]()
+	{
+		mEnemyManager->DoNickCageMode();
+	});
+
+	mCheatManager.Register("IMGOD", "Cheat mode enabled", [this]()
+	{
+		GetPlayer1()->SetCheatMode(true);
+	});
+
+	mCheatManager.Register("IMNOTGOD", "Cheat mode disabled", [this]()
+	{
+		GetPlayer1()->SetCheatMode(false);
+	});
+
 	// Particles
 	mExplosions = CExplosionPool::Instance();
 	mExplosions->Init();
@@ -146,6 +161,8 @@ void CPlayState::Resume() {}
 void CPlayState::HandleEvents(CGameStateHandler * game)
 {
 	// Keypresses go here
+	mCheatManager.Update();
+
 	if (gEngine->KeyHit(KEY_PAUSE))
 	{
 		game->PushState(CPausedState::Instance());
@@ -155,6 +172,7 @@ void CPlayState::HandleEvents(CGameStateHandler * game)
 	{
 		game->Quit();
 	}
+
 }
 
 void CPlayState::Update(CGameStateHandler * game)
@@ -220,10 +238,11 @@ void CPlayState::Update(CGameStateHandler * game)
 	// Move floor
 	for (auto& item : mFloor)
 	{
+		item->MoveLocalZ(kFloorSpeed * mDelta);
+
 		if (item->GetZ() < kFloorResetAmount)
 			item->SetZ(kFloorSize - 24.0f); // weird white line
 
-		item->MoveLocalZ(kFloorSpeed * mDelta);
 
 	}
 
@@ -273,7 +292,7 @@ void CPlayState::DrawText()
 	mFont->Draw(textOut.str(), 1005, 940, kYellow);
 
 	// fps display
-	static float frameTimer = 0.0f;
+	static float frameTimer = 1.0f;
 	static int frames = 0;
 	static string fps = " fps";
 
@@ -288,7 +307,24 @@ void CPlayState::DrawText()
 		frames = 0;
 	}
 
-	mFont->Draw(fps, 0, 0, tle::kWhite);
+	mFont->Draw(fps, 7, 0, tle::kWhite);
+
+	CCheatManager::SCheat* recent;
+	recent = mCheatManager.GetRecentlyActivated();
+
+	if (recent != nullptr)
+	{
+		mRecentCheat = recent;
+		mRecentCheatDisplay = kCheatDisplayTime;
+	}
+
+	//////
+	
+	if (mRecentCheatDisplay > 0.0f)
+	{
+		mFont->Draw(mRecentCheat->description, 7, 840, tle::kWhite);
+		mRecentCheatDisplay -= mDelta;
+	}
 }
 
 void CPlayState::AnimateHealth(float delta)

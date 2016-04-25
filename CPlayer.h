@@ -13,7 +13,9 @@ private:
 	const float kInvulTextureRate = 0.05f;	//The rate at which invul textures are animated
 	const float kShieldRegenRate = 0.25f;	//The rate at which shield health regens
 	const int kMaxLives = 8;
-	const bool kCheatMode = true;			//gg wp
+	
+	// Changed so this can be mutable.
+	bool mCheatMode = false;			//gg wp
 
 	bool mInitialised = false;	//Stores whether the player has been initialised
 
@@ -81,6 +83,9 @@ public:
 
 	//Sets
 
+	//Sets the cheat mode flag.
+	void SetCheatMode(bool cheatmode);
+
 	//Sets the score
 	void SetScore(int score);
 
@@ -110,6 +115,9 @@ public:
 	void SetLists(BulletList* playerBullets, BulletList* enemyBullets);
 
 	//Gets
+
+	//Gets the cheat mode flag.
+	bool GetCheatMode();
 
 	//Returns the player's score
 	int GetScore();

@@ -60,6 +60,8 @@ public:
 	list_ptr<CEnemy>& GetEnemies() { return mEnemies; }
 	list_ptr<IDrop>& GetDrops() { return mDrops; }
 
+	void DoNickCageMode();
+
 	bool IsLevelCleared();
 
 	void Update(float delta);
