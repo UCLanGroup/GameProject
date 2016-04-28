@@ -83,13 +83,13 @@ void CMissile::CheckCollision()
 		if (CollidesSphere(bullet->get()))
 		{
 			//Upon collision with player's bullet destroy self and the bullet
-			//Explosions!
-			CVector3 loc = (*bullet)->GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, (*bullet)->GetRadius());
+			////Explosions!
+			//CVector3 loc = (*bullet)->GetCenterPoint();
+			//CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, (*bullet)->GetRadius());
 			mpPlayerBullets->erase(bullet);
-
+/*
 			loc = GetCenterPoint();
-			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());
+			CExplosionPool::Instance()->Spawn(loc.x, loc.y, loc.z, GetRadius());*/
 
 			SetDead(true);
 			//Don't collide with any of the remaining bullets when dead

@@ -68,6 +68,7 @@ void CPlayer::Cleanup()
 	mShieldMesh->RemoveModel(mShieldModel);
 	mShieldModel = 0;
 	mMainWeapon.reset();
+	if (mBonusWeapon) mBonusWeapon.reset();
 
 	mInitialised = false;
 }

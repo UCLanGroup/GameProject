@@ -93,5 +93,5 @@ public:
 		return &mPlayState;
 	}
 
-protected: CPlayState() {}
+protected: CPlayState();
 };

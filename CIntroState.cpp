@@ -80,6 +80,14 @@ void CIntroState::HandleEvents(CGameStateHandler* game)
 	{
 		mMusic->Stop();
 		mIntroSound->Play();
+
+		//Pause for half a second while the intro sound plays
+		float timer = 0.0f;
+		while (timer < 0.5f)
+		{
+			timer += gEngine->Timer();
+		}
+
 		game->ChangeState(CPlayState::Instance());
 	}
 }

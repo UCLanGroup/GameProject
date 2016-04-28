@@ -27,10 +27,10 @@ void CLaser::Fire()
 	//Calculate the rotation of the parent entity, just so it only needs to be calculated once
 	float rotation = GetParent()->GetRotation();
 
-	//Makes the space between invisible bullets 4.0f instead of 1.0f
-	direction *= 4.0f;
+	//Makes the space between invisible bullets 2.0f instead of 1.0f
+	direction *= 2.0f;
 
-	for (int i = 0; i < 35; i++)
+	for (int i = 0; i < 70; i++)
 	{
 		CProjectile* bullet = new CProjectile();
 
@@ -76,6 +76,17 @@ void CLaser::SetFiring(bool isFiring)
 			mpLaserModel = 0;
 		}
 	}
+	else if (isFiring) //Still firing, ensure laser is attached to parent's current model
+	{
+		mpLaserModel->DetachFromParent();
+		mpLaserModel->AttachToParent(GetParent()->GetModel());
+
+		//Attaching to parent can screw over the scaling, so reset scale
+		mpLaserModel->ResetScale();
+		mpLaserModel->ScaleZ(100.0f);
+		mpLaserModel->ScaleX(3.0f);
+	}
+
 	CWeapon::SetFiring(isFiring);
 }
 

@@ -132,6 +132,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClCompile Include="CComponent.cpp" />
     <ClCompile Include="CContainer.cpp" />
     <ClCompile Include="CCruiser.cpp" />
+    <ClCompile Include="CEndState.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyBoss.cpp" />
     <ClCompile Include="CEnemyManager.cpp" />
@@ -177,6 +178,7 @@ copy "$(TLPath)\3rd Party\TL-Xtreme\shader\*.*" "$(OutDir)" &gt; NUL
     <ClInclude Include="CCheatManager.h" />
     <ClInclude Include="CContainer.h" />
     <ClInclude Include="CCruiser.h" />
+    <ClInclude Include="CEndState.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyBoss.h" />
     <ClInclude Include="CEnemyManager.h" />

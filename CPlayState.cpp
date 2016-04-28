@@ -4,6 +4,7 @@
 #include "CGameStateHandler.h"
 #include "CPlayState.h"
 #include "CPausedState.h"
+#include "CEndState.h"
 #include "CLoadScreen.h"
 #include <iostream>
 #include <sstream>
@@ -14,6 +15,47 @@ const float kLifeSpritePosX = 505;
 const float kLifeSpritePosY = 932;
 const float kLifeSpritePosZ = 0.09;
 const float kLifeSpritePosInc = 35;
+
+CPlayState::CPlayState()
+{
+	mCheatManager.Register("NICKCAGE", "Nick Cage mode enabled", [this]()
+	{
+		mEnemyManager->DoNickCageMode();
+	});
+
+	mCheatManager.Register("IMGOD", "Cheat mode enabled", [this]()
+	{
+		GetPlayer1()->SetCheatMode(true);
+	});
+
+	mCheatManager.Register("IMNOTGOD", "Cheat mode disabled", [this]()
+	{
+		GetPlayer1()->SetCheatMode(false);
+	});
+
+	std::string konamiCode;
+	konamiCode.push_back(static_cast<char>(tle::Key_Up));
+	konamiCode.push_back(static_cast<char>(tle::Key_Up));
+	konamiCode.push_back(static_cast<char>(tle::Key_Down));
+	konamiCode.push_back(static_cast<char>(tle::Key_Down));
+	konamiCode.push_back(static_cast<char>(tle::Key_Left));
+	konamiCode.push_back(static_cast<char>(tle::Key_Right));
+	konamiCode.push_back(static_cast<char>(tle::Key_Left));
+	konamiCode.push_back(static_cast<char>(tle::Key_Right));
+	konamiCode.push_back(static_cast<char>(tle::Key_B));
+	konamiCode.push_back(static_cast<char>(tle::Key_A));
+
+	mCheatManager.Register(konamiCode, "Death", [this]()
+	{
+		while (GetPlayer1()->GetLives())
+		{
+			GetPlayer1()->LoseLife();
+			GetPlayer1()->MakeInvulnerable(-0.1f);
+			GetPlayer1()->Update(0.0f);
+		}
+		GetPlayer1()->TakeDamage(9000);
+	});
+}
 
 void CPlayState::Init()
 {
@@ -61,21 +103,6 @@ void CPlayState::Init()
 	// AI
 	mEnemyManager.reset(new CEnemyManager("level0.txt"));
 	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
-	
-	mCheatManager.Register("NICKCAGE", "Nick Cage mode enabled", [this]()
-	{
-		mEnemyManager->DoNickCageMode();
-	});
-
-	mCheatManager.Register("IMGOD", "Cheat mode enabled", [this]()
-	{
-		GetPlayer1()->SetCheatMode(true);
-	});
-
-	mCheatManager.Register("IMNOTGOD", "Cheat mode disabled", [this]()
-	{
-		GetPlayer1()->SetCheatMode(false);
-	});
 
 	// Particles
 	mExplosions = CExplosionPool::Instance();
@@ -116,6 +143,7 @@ void CPlayState::Init()
 
 void CPlayState::Cleanup()
 {
+	mRecentCheatDisplay = 0.0f;
 	gEngine->RemoveCamera(mCam);
 
 	//Remove the floor models then clear the vector of empty pointers
@@ -272,8 +300,18 @@ void CPlayState::Update(CGameStateHandler * game)
 		else
 		{
 			//No more lives, so end the game
+			//You lose
 			//End the game
+			game->PushState(CEndState::Instance());
+			CEndState::Instance()->SetEndState(false, mPlayer1.GetScore());
 		}
+	}
+
+	if (mEnemyManager->IsLevelCleared())
+	{
+		//You win
+		game->PushState(CEndState::Instance());
+		CEndState::Instance()->SetEndState(true, mPlayer1.GetScore());
 	}
 
 	DrawText();

@@ -13,7 +13,7 @@ CSuicider::CSuicider(std::vector<CPlayer*>* players, BulletList* playerBullets, 
 	mModel->ResetScale();
 	mModel->ResetOrientation();
 
-	mModel->RotateY((*mpPlayers)[0]->GetRotation());
+	SetRotation(BearingTowards((*mpPlayers)[0]->GetCenterPoint()));
 
 	SetHealth(10);
 	SetRadius(10.0f);
