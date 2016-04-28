@@ -103,6 +103,7 @@ void CEndState::Update(CGameStateHandler* game)
 			s.push_back(c);
 			mMessageBuffer.erase(mMessageBuffer.begin());
 			mMessageLabel->SetText(s);
+			if(c == ' ') mTextTimer += 0.2f;
 		}
 		else if (mScoreBuffer.size())
 		{
@@ -111,6 +112,7 @@ void CEndState::Update(CGameStateHandler* game)
 			s.push_back(c);
 			mScoreBuffer.erase(mScoreBuffer.begin());
 			mScoreLabel->SetText(s);
+			if (c == ' ') mTextTimer += 0.2f;
 		}
 		mFrame->Resize();
 	}
