@@ -37,6 +37,8 @@ void CEndState::Init()
 	mScoreLabel->SetHeight(40);
 	mFrame->Add(mScoreLabel.get());
 	mFrame->Resize();
+
+	mTextTimer = 0.0f;
 }
 
 void CEndState::Cleanup()
@@ -88,6 +90,30 @@ void CEndState::Update(CGameStateHandler* game)
 {
 	mDelta = gEngine->Timer();
 	CExplosionPool::Instance()->Update(mDelta);
+
+	mTextTimer += mDelta;
+
+	if (mTextTimer > 0.2f)
+	{
+		mTextTimer -= 0.2f;
+		if (mMessageBuffer.size())
+		{
+			std::string s = mMessageLabel->GetText();
+			char c = mMessageBuffer.front();
+			s.push_back(c);
+			mMessageBuffer.erase(mMessageBuffer.begin());
+			mMessageLabel->SetText(s);
+		}
+		else if (mScoreBuffer.size())
+		{
+			std::string s = mScoreLabel->GetText();
+			char c = mScoreBuffer.front();
+			s.push_back(c);
+			mScoreBuffer.erase(mScoreBuffer.begin());
+			mScoreLabel->SetText(s);
+		}
+		mFrame->Resize();
+	}
 }
 
 //Draws any components that need to be explicitly draw each frame
@@ -104,15 +130,21 @@ void CEndState::SetEndState(bool win, int score)
 	mWinner = win;
 	if (win)
 	{
-		mMessageLabel->SetText("You Win!");
+		mMessageBuffer = "You Win!";
+		mScoreBuffer = "Final Score: " + std::to_string(score);
+
+		mMessageLabel->SetText("");
 		mMessageLabel->SetColor(tle::kWhite);
-		mScoreLabel->SetText("Final Score: " + std::to_string(score));
+		mScoreLabel->SetText("");
 	}
 	else
 	{
-		mMessageLabel->SetText("You Have Died");
+		mMessageBuffer = "You Have Died";
+		mScoreBuffer = "Final Score: " + std::to_string(score);
+
+		mMessageLabel->SetText("");
 		mMessageLabel->SetColor(tle::kRed);
-		mScoreLabel->SetText("Final Score: " + std::to_string(score));
+		mScoreLabel->SetText("");
 	}
 	mFrame->Resize();
 }

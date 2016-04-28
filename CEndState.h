@@ -29,6 +29,10 @@ private:
 	tle::IFont* mFont60;
 
 	float mDelta = 0.0f;
+	float mTextTimer = 0.0f;
+
+	std::string mMessageBuffer;
+	std::string mScoreBuffer;
 
 	bool mWinner = false;
 
