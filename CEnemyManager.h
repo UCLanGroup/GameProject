@@ -33,6 +33,9 @@ private:
 	int mNumOfEnemies;
 	int mNumOfKills;
 
+	int mLevelScore;
+	int mMaxScore;
+
 	//Stuff the enemies need access to
 	std::vector<CPlayer*>* mpPlayers = 0;
 	BulletList* mpPlayerBullets = 0;
@@ -56,6 +59,9 @@ public:
 	//Gets
 	int GetNumOfEnemies() { return mNumOfEnemies; }
 	int GetNumOfKills() { return mNumOfKills; }
+
+	int GetLevelScore() { return mLevelScore; }
+	int GetMaxScore() { return mMaxScore; }
 
 	list_ptr<CEnemy>& GetEnemies() { return mEnemies; }
 	list_ptr<IDrop>& GetDrops() { return mDrops; }

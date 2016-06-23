@@ -28,11 +28,15 @@ const int kLaserDropChance		= 1;	//1 in 1000
 
 CEnemyManager::CEnemyManager(string levelFile)
 {
+	mNumOfEnemies = 0;
+	mNumOfKills = 0;
+
+	mLevelScore = 0;
+	mMaxScore = 0;
+
 	ReadInPaths(MEDIA_FOLDER + "\\Paths.txt");
 	ReadInLevel(MEDIA_FOLDER + "\\" + levelFile);
 
-	mNumOfEnemies = 0;
-	mNumOfKills = 0;
 }
 
 void CEnemyManager::SetLists(std::vector<CPlayer*>* players, BulletList* playerBullets, BulletList* enemyBullets)
@@ -70,6 +74,7 @@ void CEnemyManager::Update(float delta)
 		{
 			CreateRandomDrop((*enemy)->GetCenterPoint());
 			++mNumOfKills;
+			mLevelScore += (*enemy)->GetValue();
 			enemy = mEnemies.erase(enemy);
 		}
 		else if ((*enemy)->IsFinished())
@@ -106,6 +111,9 @@ void CEnemyManager::Update(float delta)
 			//mTimer is currently the amount of time passed since the enemy should have spawned
 			//So update enemy with mTimer for delta
 			enemy->Update((*spawner)->mTimer);
+
+			//Total up the enemy scores
+			mMaxScore += enemy->GetValue();
 
 			//Place the enemy on the list
 			mEnemies.push_back(move(enemy));

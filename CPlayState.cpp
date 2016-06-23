@@ -6,6 +6,7 @@
 #include "CPausedState.h"
 #include "CEndState.h"
 #include "CLoadScreen.h"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
@@ -55,6 +56,48 @@ CPlayState::CPlayState()
 		}
 		GetPlayer1()->TakeDamage(9000);
 	});
+
+	//Create UI container
+	mFrame.reset(new tle_ui::CPanel());
+
+	mLevelLabel.reset(new tle_ui::CLabel(mFont48, "Level 0 Complete!"));
+	mLevelLabel->SetHeight(80);
+	mLevelLabel->SetVertAlignment(tle_ui::Alignment::Top);
+	mFrame->Add(mLevelLabel.get());
+
+	mStatsPanel.reset(new tle_ui::CPanel(tle_ui::Orientation::Vertical));
+	mStatsPanel->SetHorAlignment(tle_ui::Alignment::Left);
+	mFrame->Add(mStatsPanel.get());
+
+	//Score stuff
+	mScorePanel.reset(new tle_ui::CPanel(tle_ui::Orientation::Horizontal));
+	mScorePanel->SetHorAlignment(tle_ui::Alignment::Left);
+	mStatsPanel->Add(mScorePanel.get());
+
+	mScoreLabel.reset(new tle_ui::CLabel(mFont36, "Score: "));
+	mScoreLabel->SetHorAlignment(tle_ui::Alignment::Left);
+	mScoreLabel->SetWidth(250);
+	mScorePanel->Add(mScoreLabel.get());
+
+	mScoreValueLabel.reset(new tle_ui::CLabel(mFont36, "0 / 0"));
+	mScoreValueLabel->SetHorAlignment(tle_ui::Alignment::Right);
+	mScorePanel->Add(mScoreValueLabel.get());
+
+	//Kills stuff
+	mKillsPanel.reset(new tle_ui::CPanel(tle_ui::Orientation::Horizontal));
+	mKillsPanel->SetHorAlignment(tle_ui::Alignment::Left);
+	mStatsPanel->Add(mKillsPanel.get());
+
+	mKillsLabel.reset(new tle_ui::CLabel(mFont36, "Enemies Killed: "));
+	mKillsLabel->SetHorAlignment(tle_ui::Alignment::Left);
+	mKillsLabel->SetWidth(250);
+	mKillsPanel->Add(mKillsLabel.get());
+
+	mKillsValueLabel.reset(new tle_ui::CLabel(mFont36, "0 / 0" ));
+	mKillsValueLabel->SetHorAlignment(tle_ui::Alignment::Right);
+	mKillsPanel->Add(mKillsValueLabel.get());
+
+	mFrame->Resize();
 }
 
 void CPlayState::Init()
@@ -98,10 +141,20 @@ void CPlayState::Init()
 	}
 
 	//Text
-	mFont = gEngine->LoadFont("Rockwell", 60U);
+	mFont60 = gEngine->LoadFont("Rockwell", 60U);
+	mFont48 = gEngine->LoadFont("Rockwell", 48U);
+	mFont36 = gEngine->LoadFont("Rockwell", 36U);
+
+	mLevelLabel->SetFont(mFont48);
+	mScoreLabel->SetFont(mFont36);
+	mScoreValueLabel->SetFont(mFont36);
+	mKillsLabel->SetFont(mFont36);
+	mKillsValueLabel->SetFont(mFont36);
+	mFrame->SetSize(gEngine->GetWidth(), gEngine->GetHeight());
 
 	// AI
-	mEnemyManager.reset(new CEnemyManager("level0.txt"));
+	mCurrentLevel = 1;
+	mEnemyManager.reset(new CEnemyManager("Level1.txt"));
 	mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
 
 	// Particles
@@ -157,7 +210,9 @@ void CPlayState::Cleanup()
 	mEnemyManager.reset();
 	mExplosions->CleanUp();
 
-	gEngine->RemoveFont(mFont);
+	gEngine->RemoveFont(mFont60);
+	gEngine->RemoveFont(mFont48);
+	gEngine->RemoveFont(mFont36);
 
 	gEngine->RemoveMusic(mMusic);
 
@@ -303,9 +358,46 @@ void CPlayState::Update(CGameStateHandler * game)
 
 	if (mEnemyManager->IsLevelCleared())
 	{
-		//You win
-		game->PushState(CEndState::Instance());
-		CEndState::Instance()->SetEndState(true, mPlayer1.GetScore());
+		if (mDisplayTimer < 8.0f)
+		{
+			int scoreValue = static_cast<int>(static_cast<float>(mEnemyManager->GetLevelScore()) * min(0.25f * mDisplayTimer, 1.0f));
+			mScoreValueLabel->SetText(to_string(scoreValue) + " / " + to_string(mEnemyManager->GetMaxScore()));
+
+			int killValue = static_cast<int>(static_cast<float>(mEnemyManager->GetNumOfKills()) * min(0.25f * mDisplayTimer, 1.0f));
+			mKillsValueLabel->SetText(to_string(killValue) + " / " + to_string(mEnemyManager->GetNumOfEnemies()));
+
+			mFrame->Draw();
+			mDisplayTimer += mDelta;
+
+			if (!(mDisplayTimer < 8.0f))
+			{
+				if (mCurrentLevel < kMaxLevels)
+				{
+					//Go to next level
+					++mCurrentLevel;
+					mEnemyManager.reset(new CEnemyManager("Level" + to_string(mCurrentLevel) + ".txt"));
+					mEnemyManager->SetLists(&mPlayerList, &mPBullets, &mEBullets);
+				}
+				else
+				{
+					//If no next level, you win!
+					game->PushState(CEndState::Instance());
+					CEndState::Instance()->SetEndState(true, mPlayer1.GetScore());
+				}
+			}
+		}
+		else
+		{
+			//Start the display timer for end of level results
+			mDisplayTimer = 0.0f;
+			mEBullets.clear();
+
+			//Ensure display fits the score text
+			mLevelLabel->SetText("Level " + to_string(mCurrentLevel) + " Complete!");
+			mScoreValueLabel->SetText(to_string(mEnemyManager->GetMaxScore()) + " / " + to_string(mEnemyManager->GetMaxScore()));
+			mKillsValueLabel->SetText(to_string(mEnemyManager->GetNumOfEnemies()) + " / " + to_string(mEnemyManager->GetNumOfEnemies()));
+			mFrame->Resize();
+		}
 	}
 
 	DrawText();
@@ -321,7 +413,7 @@ void CPlayState::DrawText()
 	stringstream textOut;
 	//textOut.precision(2);
 	textOut << mPlayer1.GetScore();
-	mFont->Draw(textOut.str(), 1005, 940, kYellow);
+	mFont60->Draw(textOut.str(), 1005, 940, kYellow);
 
 	// fps display
 	static float frameTimer = 1.0f;
@@ -339,7 +431,7 @@ void CPlayState::DrawText()
 		frames = 0;
 	}
 
-	mFont->Draw(fps, 7, 0, tle::kWhite);
+	mFont60->Draw(fps, 7, 0, tle::kWhite);
 
 	CCheatManager::SCheat* recent;
 	recent = mCheatManager.GetRecentlyActivated();
@@ -354,7 +446,7 @@ void CPlayState::DrawText()
 	
 	if (mRecentCheatDisplay > 0.0f)
 	{
-		mFont->Draw(mRecentCheat->description, 7, 840, tle::kWhite);
+		mFont60->Draw(mRecentCheat->description, 7, 840, tle::kWhite);
 		mRecentCheatDisplay -= mDelta;
 	}
 }

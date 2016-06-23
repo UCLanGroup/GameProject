@@ -12,12 +12,18 @@
 #include "CExplosionPool.h"
 #include "CClouds.h"
 #include "CCheatManager.h"
+#include "CLabel.h"
+#include "CPanel.h"
 
 using namespace tle;
 
 class CPlayState : public CGameState
 {
 private:
+	using CLabel_ptr = std::unique_ptr<tle_ui::CLabel>;
+	using CPanel_ptr = std::unique_ptr<tle_ui::CPanel>;
+
+	//Constants
 
 	const float kCheatDisplayTime = 2.0f;
 
@@ -29,14 +35,40 @@ private:
 	const float kFloorStart = 500.0f;
 	const float kFloorSpeed = -500.0f;
 	const int kFloorAmount = 2;
+	const int kMaxLevels = 3;
 
 	const float kFloorResetAmount = -kFloorSize + 1.0f;
 
 	static CPlayState mPlayState;
 
-	ICamera* mCam;
+	//UI
+
 	ISprite* mUI;
 	ISprite* mUI2;
+
+	vector<ISprite*> mLifeSprites;
+	ISprite* mpHealthBar;
+	ISprite* mpShieldBar;
+
+	IFont* mFont60;
+	IFont* mFont48;
+	IFont* mFont36;
+
+	CPanel_ptr mFrame;
+	CLabel_ptr mLevelLabel;
+	CPanel_ptr mStatsPanel;
+
+	CPanel_ptr mScorePanel;
+	CLabel_ptr mScoreLabel;
+	CLabel_ptr mScoreValueLabel;
+
+	CPanel_ptr mKillsPanel;
+	CLabel_ptr mKillsLabel;
+	CLabel_ptr mKillsValueLabel;
+
+	//Scene
+
+	ICamera* mCam;
 	IMesh* mFloorMesh;
 	vector<IModel*> mFloor;
 	unique_ptr<CClouds> mClouds;
@@ -47,12 +79,6 @@ private:
 	CCheatManager::SCheat* mRecentCheat;
 	
 	float mRecentCheatDisplay = 0.0f;
-
-	vector<ISprite*> mLifeSprites;
-	ISprite* mpHealthBar;
-	ISprite* mpShieldBar;
-
-	IFont* mFont;
 
 	CPlayer mPlayer1;
 	//CPlayer mPlayer2;
@@ -65,7 +91,9 @@ private:
 	BulletList mPBullets; //Player Projectiles
 	BulletList mEBullets; //Enemy Projectiles
 
-	float mDelta = 0.0f;		// Delta time (to render previous frame)
+	float mDelta = 0.0f;			// Delta time (to render previous frame)
+	float mDisplayTimer = 10.0f;	// Used to display level results for a set duration
+	int mCurrentLevel = 1;
 
 public:
 	// Setup and destroy state

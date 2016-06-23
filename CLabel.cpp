@@ -14,8 +14,14 @@ namespace tle_ui
 	//Resizes the component to fit the text
 	void CLabel::Resize()
 	{
-		int textWidth = mpFont->MeasureTextWidth(mText);
-		int textHeight = mpFont->MeasureTextHeight(mText);
+		int textWidth = 0;
+		int textHeight = 0;
+
+		if (mpFont)
+		{
+			textWidth = mpFont->MeasureTextWidth(mText);
+			textHeight = mpFont->MeasureTextHeight(mText);
+		}
 
 		//Calc width
 		if (mWidth == kAutoScale)
@@ -80,6 +86,9 @@ namespace tle_ui
 	//Called by parent component's Draw function
 	void CLabel::Draw()
 	{
+		//Skip draw if there is no font
+		if (!mpFont) return;
+
 		mpFont->Draw(mText, mTextX - 3, mTextY - 3, tle::kBlack);
 		mpFont->Draw(mText, mTextX, mTextY, mTextColor);
 	}
