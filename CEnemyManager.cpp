@@ -262,7 +262,7 @@ unique_ptr<CEnemy> CEnemyManager::CreateEnemy(EnemyType type, Path* path, CVecto
 
 	case Heavy:
 		enemy.reset(new CEnemy(mpPlayers, mpPlayerBullets, mpEnemyBullets));
-		enemy->SetMesh("ling.x");
+		enemy->SetMesh(HEAVY_ENEMY_MESH);
 		enemy->SetPath(path, offset);
 		enemy->SetHealth(5);
 		return move(enemy);

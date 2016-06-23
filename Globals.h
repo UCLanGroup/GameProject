@@ -55,6 +55,7 @@ const string LASER_BEAM_TEX		= "LaserBeam.png";
 const string QUAD_MESH			= "Quad.x";
 
 const string F16_ENEMY_MESH		= "f16.x";
+const string HEAVY_ENEMY_MESH	= "ling.x";
 const string HAVOC_BOSS_MESH	= "Mi28Havoc.x";
 const string MIG142_ENEMY_MESH	= "Mig142.x";
 const string HALO_BOSS_MESH		= "Mi-26_Halo.x";

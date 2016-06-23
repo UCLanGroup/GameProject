@@ -111,6 +111,7 @@ void CPlayState::Init()
 	//Preload any assets at the start before they are needed
 
 	gEngine->AddToLoadQueue(F16_ENEMY_MESH, 30);
+	gEngine->AddToLoadQueue(HEAVY_ENEMY_MESH, 30);
 	gEngine->AddToLoadQueue(HAVOC_BOSS_MESH, 1);
 	gEngine->AddToLoadQueue(HALO_BOSS_MESH, 1);
 	gEngine->AddToLoadQueue(MISSILE_MESH, 50);
@@ -131,11 +132,10 @@ void CPlayState::Init()
 	gEngine->LoadQueuedObjects(loadScreen);
 	delete loadScreen;
 
-	if (!mMusic) //If it doesn't already exist
-	{
-		mMusic = gEngine->CreateMusic( GAME_MUSIC );
-		mMusic->Play();
-	}
+	//Create the music
+	mMusic = gEngine->CreateMusic( GAME_MUSIC );
+	mMusic->Play();
+	mMusic->SetLoop(true);
 
 	//Reset timer after finished loading assets
 	gEngine->Timer();
@@ -159,6 +159,8 @@ void CPlayState::Cleanup()
 
 	gEngine->RemoveFont(mFont);
 
+	gEngine->RemoveMusic(mMusic);
+
 	//Remove the life sprites then clear the vector of empty pointers
 	for (auto& item : mLifeSprites) gEngine->RemoveSprite(item);
 	mLifeSprites.clear();
@@ -178,8 +180,8 @@ void CPlayState::Cleanup()
 	//Clear the cache of particles and other preloaded models/meshes
 	gEngine->ClearModelCache();
 	gEngine->ClearMeshCache();
-
-	mMusic->Stop();
+	gEngine->ClearMusic();
+	gEngine->ClearSounds();
 }
 
 void CPlayState::Pause() {}
@@ -219,14 +221,6 @@ void CPlayState::Update(CGameStateHandler * game)
 	mPlayer1.CheckCollision();
 
 	mClouds->Move( mDelta );
-
-	/*if (gEngine->KeyHeld(KEY_FIRE)) //Needs moving into CWeapon
-	{
-		if (mSound.getStatus() == sf::SoundSource::Stopped)
-		{
-			mSound.play();
-		}
-	}*/
 
 	mEnemyManager->Update(mDelta);
 

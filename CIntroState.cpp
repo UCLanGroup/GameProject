@@ -35,12 +35,8 @@ void CIntroState::Init()
 	mCam->RotateLocalX(10.0f);
 
 	// GAME_MUSIC
-	//Warning, this is never destroyed, engine does handle clean up of non-destroyed stuff so it's not really bad, just shitty
-	if (!mMusic) //If it doesn't already exist
-	{
-		mMusic = gEngine->CreateMusic(MENU_MUSIC);
-		mMusic->Play();
-	}
+	mMusic = gEngine->CreateMusic(MENU_MUSIC);
+	mMusic->Play();
 
 	// SOUND
 	mIntroSound = gEngine->CreateSound(SOUND_START);
@@ -60,6 +56,7 @@ void CIntroState::Cleanup()
 	mPlaneMesh->RemoveModel(mPlane);
 	gEngine->RemoveMesh(mPlaneMesh);
 	gEngine->RemoveSound(mIntroSound);
+	gEngine->RemoveMusic(mMusic);
 }
 
 
