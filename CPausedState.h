@@ -5,6 +5,7 @@
 
 #include "CPanel.h"
 #include "CLabel.h"
+#include "CButton.h"
 #include "IMouseEventHandler.h"
 
 using namespace tle_ui;
@@ -14,14 +15,15 @@ class CPausedState : public CGameState, public IMouseEventHandler
 private:
 	using CLabel_ptr = std::unique_ptr<CLabel>;
 	using CPanel_ptr = std::unique_ptr<CPanel>;
+	using CButton_ptr = std::unique_ptr<CButton>;
 
 	static CPausedState mPausedState;
 
 	CPanel_ptr mFrame;
 	CLabel_ptr mPausedLabel;
-	CLabel_ptr mResumeLabel;
-	CLabel_ptr mOptionsLabel;
-	CLabel_ptr mQuitLabel;
+	CButton_ptr mResumeButton;
+	CButton_ptr mOptionsButton;
+	CButton_ptr mQuitButton;
 
 	//UI Interface sounds
 	tle::ISound* mMouseOverSound;

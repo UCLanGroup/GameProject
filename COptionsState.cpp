@@ -6,8 +6,6 @@
 
 COptionsState COptionsState::mOptionsState;
 
-EKeyCode GetKeyHit();
-
 // Setup and destroy state
 void COptionsState::Init()
 {
@@ -42,17 +40,17 @@ void COptionsState::Init()
 	mFireKeyPanel.reset(new CPanel());
 	mFireKeyPanel->SetOrientation(Orientation::Horizontal);
 
-	mFireKey1Label.reset(new CLabel(mFont36, "Fire Key "));
-	mFireKey1Label->SetHorAlignment(Alignment::Left);
-	mFireKey1Label->SetWidth(200);
-	mFireKeyPanel->Add(mFireKey1Label.get());
+	mFireKeyLabel.reset(new CLabel(mFont36, "Fire Key "));
+	mFireKeyLabel->SetHorAlignment(Alignment::Left);
+	mFireKeyLabel->SetWidth(200);
+	mFireKeyPanel->Add(mFireKeyLabel.get());
 
-	mFireKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Fire)));
-	mFireKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
-	mFireKey2Label->SetHorAlignment(Alignment::Left);;
-	mFireKey2Label->SetWidth(200);
-	mFireKey2Label->SetEventHandler(this);
-	mFireKeyPanel->Add(mFireKey2Label.get());
+	mFireKeyButton.reset(new CButton(mFont36, KeyBinds::ToString(KeyBinds::Fire)));
+	mFireKeyButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mFireKeyButton->SetHorAlignment(Alignment::Left);;
+	mFireKeyButton->SetWidth(200);
+	mFireKeyButton->SetEventHandler(this);
+	mFireKeyPanel->Add(mFireKeyButton.get());
 
 	mFrame->Add(mFireKeyPanel.get());
 
@@ -60,17 +58,17 @@ void COptionsState::Init()
 	mUpKeyPanel.reset(new CPanel());
 	mUpKeyPanel->SetOrientation(Orientation::Horizontal);
 
-	mUpKey1Label.reset(new CLabel(mFont36, "Up Key "));
-	mUpKey1Label->SetHorAlignment(Alignment::Left);
-	mUpKey1Label->SetWidth(200);
-	mUpKeyPanel->Add(mUpKey1Label.get());
+	mUpKeyLabel.reset(new CLabel(mFont36, "Up Key "));
+	mUpKeyLabel->SetHorAlignment(Alignment::Left);
+	mUpKeyLabel->SetWidth(200);
+	mUpKeyPanel->Add(mUpKeyLabel.get());
 
-	mUpKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Up)));
-	mUpKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
-	mUpKey2Label->SetHorAlignment(Alignment::Left);;
-	mUpKey2Label->SetWidth(200);
-	mUpKey2Label->SetEventHandler(this);
-	mUpKeyPanel->Add(mUpKey2Label.get());
+	mUpKeyButton.reset(new CButton(mFont36, KeyBinds::ToString(KeyBinds::Up)));
+	mUpKeyButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mUpKeyButton->SetHorAlignment(Alignment::Left);;
+	mUpKeyButton->SetWidth(200);
+	mUpKeyButton->SetEventHandler(this);
+	mUpKeyPanel->Add(mUpKeyButton.get());
 
 	mFrame->Add(mUpKeyPanel.get());
 
@@ -78,17 +76,17 @@ void COptionsState::Init()
 	mDownKeyPanel.reset(new CPanel());
 	mDownKeyPanel->SetOrientation(Orientation::Horizontal);
 
-	mDownKey1Label.reset(new CLabel(mFont36, "Down Key "));
-	mDownKey1Label->SetHorAlignment(Alignment::Left);
-	mDownKey1Label->SetWidth(200);
-	mDownKeyPanel->Add(mDownKey1Label.get());
+	mDownKeyLabel.reset(new CLabel(mFont36, "Down Key "));
+	mDownKeyLabel->SetHorAlignment(Alignment::Left);
+	mDownKeyLabel->SetWidth(200);
+	mDownKeyPanel->Add(mDownKeyLabel.get());
 
-	mDownKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Down)));
-	mDownKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
-	mDownKey2Label->SetHorAlignment(Alignment::Left);;
-	mDownKey2Label->SetWidth(200);
-	mDownKey2Label->SetEventHandler(this);
-	mDownKeyPanel->Add(mDownKey2Label.get());
+	mDownKeyButton.reset(new CButton(mFont36, KeyBinds::ToString(KeyBinds::Down)));
+	mDownKeyButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mDownKeyButton->SetHorAlignment(Alignment::Left);;
+	mDownKeyButton->SetWidth(200);
+	mDownKeyButton->SetEventHandler(this);
+	mDownKeyPanel->Add(mDownKeyButton.get());
 
 	mFrame->Add(mDownKeyPanel.get());
 
@@ -96,17 +94,17 @@ void COptionsState::Init()
 	mLeftKeyPanel.reset(new CPanel());
 	mLeftKeyPanel->SetOrientation(Orientation::Horizontal);
 
-	mLeftKey1Label.reset(new CLabel(mFont36, "Left Key "));
-	mLeftKey1Label->SetHorAlignment(Alignment::Left);
-	mLeftKey1Label->SetWidth(200);
-	mLeftKeyPanel->Add(mLeftKey1Label.get());
+	mLeftKeyLabel.reset(new CLabel(mFont36, "Left Key "));
+	mLeftKeyLabel->SetHorAlignment(Alignment::Left);
+	mLeftKeyLabel->SetWidth(200);
+	mLeftKeyPanel->Add(mLeftKeyLabel.get());
 
-	mLeftKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Left)));
-	mLeftKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
-	mLeftKey2Label->SetHorAlignment(Alignment::Left);;
-	mLeftKey2Label->SetWidth(200);
-	mLeftKey2Label->SetEventHandler(this);
-	mLeftKeyPanel->Add(mLeftKey2Label.get());
+	mLeftKeyButton.reset(new CButton(mFont36, KeyBinds::ToString(KeyBinds::Left)));
+	mLeftKeyButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mLeftKeyButton->SetHorAlignment(Alignment::Left);;
+	mLeftKeyButton->SetWidth(200);
+	mLeftKeyButton->SetEventHandler(this);
+	mLeftKeyPanel->Add(mLeftKeyButton.get());
 
 	mFrame->Add(mLeftKeyPanel.get());
 
@@ -114,17 +112,17 @@ void COptionsState::Init()
 	mRightKeyPanel.reset(new CPanel());
 	mRightKeyPanel->SetOrientation(Orientation::Horizontal);
 
-	mRightKey1Label.reset(new CLabel(mFont36, "Right Key "));
-	mRightKey1Label->SetHorAlignment(Alignment::Left);
-	mRightKey1Label->SetWidth(200);
-	mRightKeyPanel->Add(mRightKey1Label.get());
+	mRightKeyLabel.reset(new CLabel(mFont36, "Right Key "));
+	mRightKeyLabel->SetHorAlignment(Alignment::Left);
+	mRightKeyLabel->SetWidth(200);
+	mRightKeyPanel->Add(mRightKeyLabel.get());
 
-	mRightKey2Label.reset(new CLabel(mFont36, KeyBinds::ToString(KeyBinds::Right)));
-	mRightKey2Label->SetSounds(mMouseOverSound, mMouseClickSound);
-	mRightKey2Label->SetHorAlignment(Alignment::Left);;
-	mRightKey2Label->SetWidth(200);
-	mRightKey2Label->SetEventHandler(this);
-	mRightKeyPanel->Add(mRightKey2Label.get());
+	mRightKeyButton.reset(new CButton(mFont36, KeyBinds::ToString(KeyBinds::Right)));
+	mRightKeyButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mRightKeyButton->SetHorAlignment(Alignment::Left);;
+	mRightKeyButton->SetWidth(200);
+	mRightKeyButton->SetEventHandler(this);
+	mRightKeyPanel->Add(mRightKeyButton.get());
 
 	mFrame->Add(mRightKeyPanel.get());
 
@@ -209,10 +207,10 @@ void COptionsState::Init()
 	mFrame->Add(mInterfaceVolumePanel.get());
 
 	//Return button
-	mBackLabel.reset(new CLabel(mFont36, "Back"));
-	mBackLabel->SetSounds(mMouseOverSound, mMouseClickSound);
-	mBackLabel->SetEventHandler(this);
-	mFrame->Add(mBackLabel.get());
+	mBackButton.reset(new CButton(mFont36, "Back"));
+	mBackButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mBackButton->SetEventHandler(this);
+	mFrame->Add(mBackButton.get());
 	mFrame->Resize();
 
 	mPopFlag = false;
@@ -224,7 +222,7 @@ void COptionsState::Cleanup()
 	mOptionsLabel.reset();
 	mControlsLabel.reset();
 	mSoundLabel.reset();
-	mBackLabel.reset();
+	mBackButton.reset();
 
 	//Remove fonts
 	gEngine->RemoveFont(mFont60);
@@ -268,7 +266,7 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 					if (KeyBinds::Fire == keyHit || !KeyBinds::IsKeyBinded(keyHit))
 					{
 						KeyBinds::Fire = keyHit;
-						mFireKey2Label->SetText(KeyBinds::ToString(keyHit));
+						mFireKeyButton->SetText(KeyBinds::ToString(keyHit));
 						mFireKeyFlag = false;
 						mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Moved, gEngine->GetMouseX(), gEngine->GetMouseY()));
 					}
@@ -278,7 +276,7 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 					if (KeyBinds::Up == keyHit || !KeyBinds::IsKeyBinded(keyHit))
 					{
 						KeyBinds::Up = keyHit;
-						mUpKey2Label->SetText(KeyBinds::ToString(keyHit));
+						mUpKeyButton->SetText(KeyBinds::ToString(keyHit));
 						mUpKeyFlag = false;
 						mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Moved, gEngine->GetMouseX(), gEngine->GetMouseY()));
 					}
@@ -288,7 +286,7 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 					if (KeyBinds::Down == keyHit || !KeyBinds::IsKeyBinded(keyHit))
 					{
 						KeyBinds::Down = keyHit;
-						mDownKey2Label->SetText(KeyBinds::ToString(keyHit));
+						mDownKeyButton->SetText(KeyBinds::ToString(keyHit));
 						mDownKeyFlag = false;
 						mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Moved, gEngine->GetMouseX(), gEngine->GetMouseY()));
 					}
@@ -298,7 +296,7 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 					if (KeyBinds::Right == keyHit || !KeyBinds::IsKeyBinded(keyHit))
 					{
 						KeyBinds::Right = keyHit;
-						mRightKey2Label->SetText(KeyBinds::ToString(keyHit));
+						mRightKeyButton->SetText(KeyBinds::ToString(keyHit));
 						mRightKeyFlag = false;
 						mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Moved, gEngine->GetMouseX(), gEngine->GetMouseY()));
 					}
@@ -308,7 +306,7 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 					if (KeyBinds::Left == keyHit || !KeyBinds::IsKeyBinded(keyHit))
 					{
 						KeyBinds::Left = keyHit;
-						mLeftKey2Label->SetText(KeyBinds::ToString(keyHit));
+						mLeftKeyButton->SetText(KeyBinds::ToString(keyHit));
 						mLeftKeyFlag = false;
 						mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Moved, gEngine->GetMouseX(), gEngine->GetMouseY()));
 					}
@@ -327,6 +325,8 @@ void COptionsState::HandleEvents(CGameStateHandler* game)
 		{
 			mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Clicked, gEngine->GetMouseX(), gEngine->GetMouseY()));
 		}
+
+		mFrame->KeyEvent(GetKeyHit());
 
 		if (gEngine->KeyHit(KEY_EXIT) || mPopFlag)
 		{
@@ -358,87 +358,41 @@ void COptionsState::Draw(CGameStateHandler* game)
 //Handles events from the mouse being moved over a component
 void COptionsState::MouseEnteredEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mBackLabel.get())
-	{
-		mBackLabel->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mFireKey2Label.get())
-	{
-		mFireKey2Label->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mUpKey2Label.get())
-	{
-		mUpKey2Label->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mDownKey2Label.get())
-	{
-		mDownKey2Label->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mLeftKey2Label.get())
-	{
-		mLeftKey2Label->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mRightKey2Label.get())
-	{
-		mRightKey2Label->SetColor(tle::kRed);
-	}
+
 }
 
 //Handles events from the mouse being moved off of a component
 void COptionsState::MouseExittedEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mBackLabel.get())
-	{
-		mBackLabel->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mFireKey2Label.get())
-	{
-		mFireKey2Label->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mUpKey2Label.get())
-	{
-		mUpKey2Label->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mDownKey2Label.get())
-	{
-		mDownKey2Label->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mLeftKey2Label.get())
-	{
-		mLeftKey2Label->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mRightKey2Label.get())
-	{
-		mRightKey2Label->SetColor(tle::kWhite);
-	}
+
 }
 
 //Handles events from the a component being clicked on
 void COptionsState::MouseClickedEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mFireKey2Label.get())
+	if (mouseEvent.GetSource() == mFireKeyButton.get())
 	{
-		mFireKey2Label->SetText("");
+		mFireKeyButton->SetText("");
 		mFireKeyFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mUpKey2Label.get())
+	else if (mouseEvent.GetSource() == mUpKeyButton.get())
 	{
-		mUpKey2Label->SetText("");
+		mUpKeyButton->SetText("");
 		mUpKeyFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mDownKey2Label.get())
+	else if (mouseEvent.GetSource() == mDownKeyButton.get())
 	{
-		mDownKey2Label->SetText("");
+		mDownKeyButton->SetText("");
 		mDownKeyFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mLeftKey2Label.get())
+	else if (mouseEvent.GetSource() == mLeftKeyButton.get())
 	{
-		mLeftKey2Label->SetText("");
+		mLeftKeyButton->SetText("");
 		mLeftKeyFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mRightKey2Label.get())
+	else if (mouseEvent.GetSource() == mRightKeyButton.get())
 	{
-		mRightKey2Label->SetText("");
+		mRightKeyButton->SetText("");
 		mRightKeyFlag = true;
 	}
 	else if (mouseEvent.GetSource() == mMasterVolumeSpinner.get())
@@ -457,7 +411,7 @@ void COptionsState::MouseClickedEvent(const CMouseEvent& mouseEvent)
 	{
 		gEngine->SetVolume(static_cast<float>(mInterfaceVolumeSpinner->GetValue()), SoundType::Interface);
 	}
-	else if (mouseEvent.GetSource() == mBackLabel.get())
+	else if (mouseEvent.GetSource() == mBackButton.get())
 	{
 		mPopFlag = true;
 	}

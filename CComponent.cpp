@@ -30,7 +30,7 @@ namespace tle_ui
 				else
 				{
 					mMouseOver = true;
-					if (mpMouseOverSound) mpMouseOverSound->Play();
+					if (!mHasFocus) RequestFocus(); //This will trigger the mouse over sound to play
 					eventHandler->MouseEnteredEvent(CMouseEvent(this, CMouseEvent::Mouse_Entered, mouseEvent.GetX(), mouseEvent.GetY()));
 				}
 			}
@@ -38,6 +38,30 @@ namespace tle_ui
 			{
 				mMouseOver = false;
 				eventHandler->MouseExittedEvent(CMouseEvent(this, CMouseEvent::Mouse_Exitted, mouseEvent.GetX(), mouseEvent.GetY()));
+			}
+		}
+	}
+
+	//Key event handler
+	void CComponent::KeyEvent(tle::EKeyCode keyCode)
+	{
+		if (mpParent)
+		{
+			if (keyCode == tle::EKeyCode::Key_Up)
+			{
+				mpParent->PassFocusUp();
+			}
+			if (keyCode == tle::EKeyCode::Key_Down)
+			{
+				mpParent->PassFocusDown();
+			}
+			if (keyCode == tle::EKeyCode::Key_Left)
+			{
+				mpParent->PassFocusLeft();
+			}
+			if (keyCode == tle::EKeyCode::Key_Right)
+			{
+				mpParent->PassFocusRight();
 			}
 		}
 	}
@@ -241,5 +265,97 @@ namespace tle_ui
 	tle::ISound* CComponent::SetMouseClickSound()
 	{
 		return mpMouseClickSound;
+	}
+
+	/*******************************
+		  Focus event handling
+	********************************/
+
+	//Gets a pointer to the parent component, returns 0 if there isn't one
+	CComponent* CComponent::GetParent()
+	{
+		return mpParent;
+	}
+
+	//Sets the component's parent
+	void CComponent::SetParent(CComponent* parent)
+	{
+		mpParent = parent;
+	}
+
+	//Returns whether the component has focus
+	bool CComponent::HasFocus()
+	{
+		return mHasFocus;
+	}
+
+	//Return whether the component can be focused
+	bool CComponent::IsFocusable()
+	{
+		return mIsFocusable;
+	}
+
+	//The component will gain focus if it is focusable
+	void CComponent::RequestFocus()
+	{
+		//Do not gain focus if not focusable
+		if (!mIsFocusable) return;
+
+		if (mpParent)
+		{
+			mpParent->PassFocusTo(this);
+		}
+		else
+		{
+			SetFocus(true);
+		}
+	}
+
+	//Sets whether the component is now in focus
+	void CComponent::SetFocus(bool hasFocus)
+	{
+		mHasFocus = hasFocus;
+		if (mpMouseOverSound) mpMouseOverSound->Play();
+	}
+
+	//Passes focus to the specific sub component
+	void CComponent::PassFocusTo(CComponent* component)
+	{
+		if (mpParent)
+		{
+			mpParent->PassFocusTo(this);
+		}
+		else if (component == this)
+		{
+			SetFocus(true);
+		}
+		else
+		{
+			SetFocus(false);
+		}
+	}
+
+	//Passes focus to the next component to the right
+	void CComponent::PassFocusRight()
+	{
+
+	}
+
+	//Passes focus to the next component to the left
+	void CComponent::PassFocusLeft()
+	{
+
+	}
+
+	//Passes focus to the next component to the up
+	void CComponent::PassFocusUp()
+	{
+
+	}
+
+	//Passes focus to the next component to the down
+	void CComponent::PassFocusDown()
+	{
+
 	}
 }

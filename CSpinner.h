@@ -2,6 +2,7 @@
 #include "ExtendedEngine.h"
 #include "CComponent.h"
 #include "CLabel.h"
+#include "CButton.h"
 #include "IMouseEventHandler.h"
 
 namespace tle_ui
@@ -9,8 +10,8 @@ namespace tle_ui
 	class CSpinner : public CComponent, public IMouseEventHandler
 	{
 	private:
-		CLabel* mRightLabel;
-		CLabel* mLeftLabel;
+		CButton* mRightButton;
+		CButton* mLeftButton;
 		CLabel* mValueLabel;
 
 		unsigned int mTextColor = tle::kWhite;
@@ -53,6 +54,12 @@ namespace tle_ui
 		//Checks if the mouse event location is within the component
 		//If so triggers the event call to the event handler
 		virtual void CheckEvent(CMouseEvent& mouseEvent);
+
+		//Key event handler
+		virtual void KeyEvent(tle::EKeyCode keyCode);
+
+		//Sets whether the component is now in focus
+		void SetFocus(bool hasFocus);
 
 		//Sets the font used for the label's text
 		void SetFont(tle::IFont* font);

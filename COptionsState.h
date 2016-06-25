@@ -11,11 +11,14 @@
 
 using namespace tle_ui;
 
+EKeyCode GetKeyHit();
+
 class COptionsState : public CGameState, public IMouseEventHandler
 {
 private:
 	using CLabel_ptr = std::unique_ptr<CLabel>;
 	using CPanel_ptr = std::unique_ptr<CPanel>;
+	using CButton_ptr = std::unique_ptr<CButton>;
 	using CSpinner_ptr = std::unique_ptr<CSpinner>;
 
 	static COptionsState mOptionsState;
@@ -30,28 +33,28 @@ private:
 
 	//Fire key control
 	CPanel_ptr mFireKeyPanel;
-	CLabel_ptr mFireKey1Label;
-	CLabel_ptr mFireKey2Label;
+	CLabel_ptr mFireKeyLabel;
+	CButton_ptr mFireKeyButton;
 
 	//Up key control
 	CPanel_ptr mUpKeyPanel;
-	CLabel_ptr mUpKey1Label;
-	CLabel_ptr mUpKey2Label;
+	CLabel_ptr mUpKeyLabel;
+	CButton_ptr mUpKeyButton;
 
 	//Down key control
 	CPanel_ptr mDownKeyPanel;
-	CLabel_ptr mDownKey1Label;
-	CLabel_ptr mDownKey2Label;
+	CLabel_ptr mDownKeyLabel;
+	CButton_ptr mDownKeyButton;
 
 	//Left key control
 	CPanel_ptr mLeftKeyPanel;
-	CLabel_ptr mLeftKey1Label;
-	CLabel_ptr mLeftKey2Label;
+	CLabel_ptr mLeftKeyLabel;
+	CButton_ptr mLeftKeyButton;
 
 	//Right key control
 	CPanel_ptr mRightKeyPanel;
-	CLabel_ptr mRightKey1Label;
-	CLabel_ptr mRightKey2Label;
+	CLabel_ptr mRightKeyLabel;
+	CButton_ptr mRightKeyButton;
 
 	//Sound controls header
 	CLabel_ptr mSoundLabel;
@@ -77,7 +80,7 @@ private:
 	CSpinner_ptr mInterfaceVolumeSpinner;
 
 	//Return button
-	CLabel_ptr mBackLabel;
+	CButton_ptr mBackButton;
 
 	tle::IFont* mFont60;
 	tle::IFont* mFont48;

@@ -1,6 +1,7 @@
 #pragma once
 #include "IMouseEventHandler.h"
 #include "CMouseEvent.h"
+#include <Input.h>
 #include <ISound.h>
 #include <list>
 
@@ -14,11 +15,6 @@ namespace tle_ui
 	//Base UI component
 	class CComponent
 	{
-	private:
-
-		tle::ISound* mpMouseOverSound = 0; //If not null (zero), the sound is played when the mouse is moved over the component
-		tle::ISound* mpMouseClickSound = 0; //If not null (zero), the sound is played when the component is clicked on
-
 	public:
 
 		//Resizes the component based on child components
@@ -34,6 +30,9 @@ namespace tle_ui
 		//Checks if the mouse event location is within the component
 		//If so triggers the event call to the event handler
 		virtual void CheckEvent(CMouseEvent& mouseEvent);
+
+		//Key event handler
+		virtual void KeyEvent(tle::EKeyCode keyCode);
 
 		//Sets the width of the component
 		//Set to -1 for auto scale
@@ -134,8 +133,45 @@ namespace tle_ui
 		//If no sound then zero is returned
 		tle::ISound* SetMouseClickSound();
 
+		//Gets a pointer to the parent component, returns 0 if there isn't one
+		CComponent* GetParent();
+
+		//Sets the component's parent
+		void SetParent(CComponent* parent);
+
+		//Returns whether the component has focus
+		bool HasFocus();
+
+		//Return whether the component can be focused
+		virtual bool IsFocusable();
+
+		//Gives the component focus if it is focusable
+		void RequestFocus();
+
+		//Sets whether the component is now in focus
+		virtual void SetFocus(bool hasFocus);
+
+		//Passes focus to the specific sub component
+		virtual void PassFocusTo(CComponent* component);
+
+		//Passes focus to the next component to the right
+		virtual void PassFocusRight();
+
+		//Passes focus to the next component to the left
+		virtual void PassFocusLeft();
+
+		//Passes focus to the next component to the up
+		virtual void PassFocusUp();
+
+		//Passes focus to the next component to the down
+		virtual void PassFocusDown();
+
 	protected:
 		bool mMouseOver = false; //Is the mouse currently over this component
+		bool mIsFocusable = true;
+		bool mHasFocus = false;
+
+		CComponent* mpParent = 0; //Used for hierarchy climbing ONLY!
 
 		int mX = 0;
 		int mY = 0;
@@ -151,7 +187,11 @@ namespace tle_ui
 		Orientation mOrientation = Orientation::Vertical;
 		Alignment mVertical = Alignment::Center; //The vertical alignment
 		Alignment mHorizontal = Alignment::Center; //The horizontal alignment
+
+		tle::ISound* mpMouseOverSound = 0; //If not null (zero), the sound is played when the mouse is moved over the component
+		tle::ISound* mpMouseClickSound = 0; //If not null (zero), the sound is played when the component is clicked on
 		
 		IMouseEventHandler* eventHandler = nullptr;
+
 	};
 }

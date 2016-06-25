@@ -33,20 +33,20 @@ void CPausedState::Init()
 	mPausedLabel->SetVertAlignment(Alignment::Top);
 	mFrame->Add(mPausedLabel.get());
 
-	mResumeLabel.reset(new CLabel(mFont36, "Resume"));
-	mResumeLabel->SetEventHandler(this);
-	mResumeLabel->SetSounds(mMouseOverSound, mMouseClickSound);
-	mFrame->Add(mResumeLabel.get());
+	mResumeButton.reset(new CButton(mFont36, "Resume"));
+	mResumeButton->SetEventHandler(this);
+	mResumeButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mFrame->Add(mResumeButton.get());
 
-	mOptionsLabel.reset(new CLabel(mFont36, "Options"));
-	mOptionsLabel->SetEventHandler(this);
-	mOptionsLabel->SetSounds(mMouseOverSound, mMouseClickSound);
-	mFrame->Add(mOptionsLabel.get());
+	mOptionsButton.reset(new CButton(mFont36, "Options"));
+	mOptionsButton->SetEventHandler(this);
+	mOptionsButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mFrame->Add(mOptionsButton.get());
 
-	mQuitLabel.reset(new CLabel(mFont36, "Quit"));
-	mQuitLabel->SetEventHandler(this);
-	mQuitLabel->SetSounds(mMouseOverSound, mMouseClickSound);
-	mFrame->Add(mQuitLabel.get());
+	mQuitButton.reset(new CButton(mFont36, "Quit"));
+	mQuitButton->SetEventHandler(this);
+	mQuitButton->SetSounds(mMouseOverSound, mMouseClickSound);
+	mFrame->Add(mQuitButton.get());
 
 	mPopFlag = false;
 	mOptionsFlag = false;
@@ -57,9 +57,9 @@ void CPausedState::Cleanup()
 {
 	mFrame.reset();
 	mPausedLabel.reset();
-	mResumeLabel.reset();
-	mOptionsLabel.reset();
-	mQuitLabel.reset();
+	mResumeButton.reset();
+	mOptionsButton.reset();
+	mQuitButton.reset();
 
 	//Remove fonts
 	gEngine->RemoveFont(mFont60);
@@ -87,9 +87,9 @@ void CPausedState::Resume()
 	mOptionsFlag = false;
 	mQuitFlag = false;
 
-	mResumeLabel->SetColor(tle::kWhite);
-	mOptionsLabel->SetColor(tle::kWhite);
-	mQuitLabel->SetColor(tle::kWhite);
+	mResumeButton->SetFocus(false);
+	mOptionsButton->SetFocus(false);
+	mQuitButton->SetFocus(false);
 }
 
 // Game loop actions
@@ -106,6 +106,8 @@ void CPausedState::HandleEvents(CGameStateHandler* game)
 	{
 		mFrame->CheckEvent(CMouseEvent(0, CMouseEvent::Mouse_Clicked, gEngine->GetMouseX(), gEngine->GetMouseY()));
 	}
+
+	mFrame->KeyEvent(GetKeyHit());
 
 	if(gEngine->KeyHit(KEY_PAUSE) || mPopFlag)
 	{
@@ -139,49 +141,27 @@ void CPausedState::Draw(CGameStateHandler* game)
 //Handles events from the mouse being moved over a component
 void CPausedState::MouseEnteredEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mResumeLabel.get())
-	{
-		mResumeLabel->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mOptionsLabel.get())
-	{
-		mOptionsLabel->SetColor(tle::kRed);
-	}
-	else if (mouseEvent.GetSource() == mQuitLabel.get())
-	{
-		mQuitLabel->SetColor(tle::kRed);
-	}
+
 }
 
 //Handles events from the mouse being moved off of a component
 void CPausedState::MouseExittedEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mResumeLabel.get())
-	{
-		mResumeLabel->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mOptionsLabel.get())
-	{
-		mOptionsLabel->SetColor(tle::kWhite);
-	}
-	else if (mouseEvent.GetSource() == mQuitLabel.get())
-	{
-		mQuitLabel->SetColor(tle::kWhite);
-	}
+
 }
 
 //Handles events from the a component being clicked on
 void CPausedState::MouseClickedEvent(const CMouseEvent& mouseEvent)
 {
-	if (mouseEvent.GetSource() == mResumeLabel.get())
+	if (mouseEvent.GetSource() == mResumeButton.get())
 	{
 		mPopFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mOptionsLabel.get())
+	else if (mouseEvent.GetSource() == mOptionsButton.get())
 	{
 		mOptionsFlag = true;
 	}
-	else if (mouseEvent.GetSource() == mQuitLabel.get())
+	else if (mouseEvent.GetSource() == mQuitButton.get())
 	{
 		mQuitFlag = true;
 	}

@@ -8,6 +8,7 @@ namespace tle_ui
 		mpFont = font;
 		mText = text;
 		mTextColor = color;
+		mIsFocusable = false;
 		Resize();
 	}
 

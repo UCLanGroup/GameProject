@@ -8,6 +8,7 @@ namespace tle_ui
 		mpSprite = sprite;
 		mImageWidth = width;
 		mImageHeight = height;
+		mIsFocusable = false;
 		Resize();
 	}
 

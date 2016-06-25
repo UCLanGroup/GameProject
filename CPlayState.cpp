@@ -360,12 +360,14 @@ void CPlayState::Update(CGameStateHandler * game)
 	{
 		if (mDisplayTimer < 8.0f)
 		{
+			//Make the score raise from 0 to actual score within 4 seconds
 			int scoreValue = static_cast<int>(static_cast<float>(mEnemyManager->GetLevelScore()) * min(0.25f * mDisplayTimer, 1.0f));
 			mScoreValueLabel->SetText(to_string(scoreValue) + " / " + to_string(mEnemyManager->GetMaxScore()));
 
 			int killValue = static_cast<int>(static_cast<float>(mEnemyManager->GetNumOfKills()) * min(0.25f * mDisplayTimer, 1.0f));
 			mKillsValueLabel->SetText(to_string(killValue) + " / " + to_string(mEnemyManager->GetNumOfEnemies()));
 
+			//Draw display
 			mFrame->Draw();
 			mDisplayTimer += mDelta;
 
@@ -390,7 +392,7 @@ void CPlayState::Update(CGameStateHandler * game)
 		{
 			//Start the display timer for end of level results
 			mDisplayTimer = 0.0f;
-			mEBullets.clear();
+			mEBullets.clear(); //So the player doesn't die during the results display
 
 			//Ensure display fits the score text
 			mLevelLabel->SetText("Level " + to_string(mCurrentLevel) + " Complete!");
